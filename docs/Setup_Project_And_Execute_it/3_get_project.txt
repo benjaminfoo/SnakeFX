@@ -1,0 +1,2 @@
+1. Checkout the project at: https://github.com/Bummelnderboris/Patterns_and_Frameworks
+git checkout https://github.com/Bummelnderboris/Patterns_and_Frameworks.git

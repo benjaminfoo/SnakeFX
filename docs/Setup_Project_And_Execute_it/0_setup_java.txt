@@ -1,0 +1,7 @@
+1. Get Java
+https://bell-sw.com/pages/downloads/#/java-11-lts
+
+Direct Download: https://download.bell-sw.com/java/11.0.8+10/bellsoft-jdk11.0.8+10-windows-amd64.msi
+
+2. (Optional) Setup JAVA_HOME
+https://confluence.atlassian.com/doc/setting-the-java_home-variable-in-windows-8895.html

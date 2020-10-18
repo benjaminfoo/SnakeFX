@@ -1,0 +1,8 @@
+1. Get apache maven
+http://maven.apache.org/
+https://apache.lauf-forum.at/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip
+
+2. Extract it somewhere (for example C:\dev\maven3\
+
+3. Set MAVEN_HOME as a env. variable, and add it to the system:
+https://ronasoft.de/einrichtung-von-apache-maven-unter-microsoft-windows-10/

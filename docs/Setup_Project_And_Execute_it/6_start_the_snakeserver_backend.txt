@@ -1,0 +1,1 @@
+Right-click on the SnakeServerApplication class -> Press Run "SnakeServerApplication.main()"
