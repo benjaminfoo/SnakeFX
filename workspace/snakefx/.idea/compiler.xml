@@ -16,12 +16,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SnakeServer" />
         <module name="snakefx" />
+        <module name="SnakeServer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="snakefx" target="11" />
+      <module name="snakefx" target="8" />
       <module name="snakefx-server" target="1.5" />
       <module name="SnakeServer" target="11" />
     </bytecodeTargetLevel>

@@ -8,10 +8,12 @@ import javafx.stage.Stage;
 
 public class AppSnakeFX extends Application {
 
-
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage window) throws Exception{
         Parent root;
 
         // this loads the login-controller and the corresponding fxml
@@ -21,17 +23,14 @@ public class AppSnakeFX extends Application {
         root = FXMLLoader.load(getClass().getClassLoader().getResource("game_canvas.fxml"));
 
         // setup the stage of the application
-        primaryStage.setTitle("SnakeFX");
-        primaryStage.setMinWidth(300);
-        primaryStage.setMinHeight(400);
-        primaryStage.setScene(new Scene(root));
+        window.setTitle("SnakeFX");
+        window.setMinWidth(300);
+        window.setMinHeight(400);
+        window.setScene(new Scene(root));
 
         // show the application stage
-        primaryStage.show();
+        window.show();
+
     }
 
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
