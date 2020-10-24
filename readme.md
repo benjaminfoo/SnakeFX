@@ -12,11 +12,11 @@ Note: Die UML-Diagramme wurden mit der Software "Dia" erstellt.
   - Enthält eine gemeinsame Projektbeschreibung (siehe /workspace/readme.md)
 
 ## Changelog
-09.10. - Sichtung der Anforderung, erste Besprechung der Aufgaben
-09.10. - Erster Entwurf der Diagramme, Update der Ressourcen
-18.10. - Überarbeitung der Diagramme
-23.10. - Entwurf von UI-Mockups, Ergänzung der Diagramme
-24.10. - Ergänzung der Diagramme
+09.10.2020 - Sichtung der Anforderung, erste Besprechung der Aufgaben
+09.10.2020 - Erster Entwurf der Diagramme, Update der Ressourcen
+18.10.2020 - Überarbeitung der Diagramme
+23.10.2020 - Entwurf von UI-Mockups, Ergänzung der Diagramme
+24.10.2020 - Ergänzung der Diagramme
 
 ## Offene Tasks
 Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisiert werden müssen
@@ -36,6 +36,10 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
 - Neue UI "Spielrunde" o. "Aktives Spiel"
   - Beinhaltet alle Spieler einer Spielrunde
   - Stellt die Spieler, deren Figuren, das Spielfeld und den Punktestand dar 
+    - Die Spielerfiguren müssen bewegt werden
+    - PowerUps dargestellt werden
+    - Die Map, evtl. Hindernisse oder sonstiges
+    - Punktestand jedes Spielers
 - ...
 
 ### Backend
@@ -58,3 +62,10 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
   - Position der Spieler
   - Punkte der Spieler
   - ...
+- wie werden die Benutzereingaben während des Spiels verarbeitet?
+  - Ein Spieler betätigt W,A,S oder D -> Was passiert?
+  - Alternative Eingabemöglichkeiten
+- was passiert, wenn ein Spieler die Lobby verlässt?
+- was passiert, wenn ein Spieler ein aktives Spiel verlässt?
+  - oder evtl. die Verbindung unterbrochen wird?
+ 
