@@ -1,4 +1,4 @@
-package de.ostfalia.teamx.controller;
+package de.ostfalia.teamx.controller.game;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

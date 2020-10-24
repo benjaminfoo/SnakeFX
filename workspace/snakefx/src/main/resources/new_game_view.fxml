@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+   fx:controller="de.ostfalia.teamx.controller.homescreen.NewGameController"
+>
+   <top>
+      <Label text="SnakeFX - Neues Spiel" BorderPane.alignment="CENTER_LEFT">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </top>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField promptText="Maximale Spieleranzahl" />
+            <HBox spacing="15.0">
+               <children>
+                  <TextField promptText="Breite d. Karte" />
+                  <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" text="x" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
+                  <TextField promptText="Höhe der Karte" />
+               </children>
+            </HBox>
+            <TextField layoutX="10.0" layoutY="10.0" promptText="Anzahl der Powerups" />
+            <VBox VBox.vgrow="ALWAYS">
+               <children>
+                  <Label text="Spielregeln / Typ" />
+                  <ComboBox maxWidth="1.7976931348623157E308" />
+               </children>
+            </VBox>
+            <HBox spacing="15.0">
+               <children>
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Erstelle Spiel" HBox.hgrow="ALWAYS" />
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Abbruch" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets top="15.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

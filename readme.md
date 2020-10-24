@@ -24,14 +24,23 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
 ### Frontend
 - Registrierung mittels Frontend am Backend
 - Login mittels Frontend am Backend
+- Neue UI "LoginScreen"
+  - Impl. des User-Interfaces [DONE]
+  - Anfrage an den Server -> Login 
+- Neue UI "RegisterScreen"
+  - Impl. des User-Interfaces [DONE]
+  - Anfrage an den Server -> Neues Konto erstellen
 - Neue UI "Homescreen"
+  - Impl. des User-Interfaces [DONE]
   - Wechsel von Login auf Homescreen (Scene-Handling)
   - Neue UI "Lobby" - ist Teil vom Homescreen
   - Button: Betrete existierendes Spiel
-- Neue UI "Erstelle Spiel"
+- Neue UI "Erstelle Spiel" 
+  - Impl. des User-Interfaces [DONE]
   - Definition einer Spielrunde
   - Senden der Spielrunde an das Backend
 - Neue UI "Spielhistorie"
+  - Impl. des User-Interfaces [DONE]
   - Bezug bisheriger Spielerunden vom Backend
 - Neue UI "Spielrunde" o. "Aktives Spiel"
   - Beinhaltet alle Spieler einer Spielrunde
