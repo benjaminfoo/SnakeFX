@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2020-09-06" view-index="0" gantt-divider-location="543" resource-divider-location="300" version="2.8.11" locale="de">
+    <description/>
+    <view zooming-state="default:7" id="gantt-chart">
+        <field id="tpd3" name="Vorgang" width="355" order="0"/>
+        <field id="tpd4" name="Anfang" width="96" order="1"/>
+        <field id="tpd5" name="Ende" width="88" order="2"/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Ressource" width="210" order="0"/>
+        <field id="1" name="Rolle" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="Meilenstein 1" color="#8cb6ce" meeting="false" start="2020-10-01" duration="1" complete="0" thirdDate="2020-10-27" thirdDate-constraint="0" expand="true">
+            <notes>
+                <![CDATA[In den Wochen bis zur Pflichtpräsenz führen Sie die Planung Ihres Softwareprojektes durch. Starten Sie dabei in der ersten Woche mit einer Anpassung des folgenden Planungsablaufs an die Bedürfnisse Ihrer Gruppe. Halten Sie Ihre Entscheidungen schriftlich fest.
+Beginnen Sie mit der konzeptionellen Modellierung. Verwenden Sie die Notation der UML. Erstellen Sie Use-Case Diagramme zur Verdeutlichung der funktionalen Anforderungen. Nutzen Sie Aktivitätsdiagramme zur Darstellung von Abläufen. Entwerfen Sie Klassendiagramme für ein erstes fachliches Datenmodell als Grundlage für die spätere Implementierung.
+Meilenstein 1: Klassendiagramm]]>
+            </notes>
+        </task>
+        <task id="4" name="Meilenstein 2" color="#8cb6ce" meeting="false" start="2020-10-01" duration="34" complete="50" thirdDate="2020-10-27" thirdDate-constraint="0" expand="true">
+            <notes>
+                <![CDATA[Verfeinern Sie Ihr Klassendiagramm. Notieren Sie Komponenten- und Verteilungsdiagramme zur Darstellung der Zielarchitektur. Vereinbaren Sie die Schnittstelle zwischen Client(s) und Server.
+Meilenstein 2: Schnittstellenbeschreibung Client – Server]]>
+            </notes>
+            <task id="23" name="Verfeinern des Klassendiagramm" color="#8cb6ce" meeting="false" start="2020-10-01" duration="17" complete="100" thirdDate="2020-10-01" thirdDate-constraint="0" expand="true"/>
+            <task id="18" name="Vereinbaren der Schnittstelle" color="#8cb6ce" meeting="false" start="2020-10-26" duration="17" complete="0" thirdDate="2020-10-01" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="8" name="Abgabe Konzept" color="#8cb6ce" meeting="false" start="2020-11-18" duration="1" complete="0" thirdDate="2020-10-19" thirdDate-constraint="0" expand="true"/>
+        <task id="6" name="Meilenstein 3 - Pflichtpräsenz" color="#8cb6ce" meeting="false" start="2020-11-20" duration="1" complete="0" thirdDate="2020-10-22" thirdDate-constraint="0" expand="true">
+            <notes>
+                <![CDATA[Beginnen Sie mit der Umsetzung von Prototypen von Client und Server. Ausgewählte Anwendungsfälle werden realisiert, ggf. aber noch nicht integriert. Der Betrachter bekommt einen ersten Eindruck von Ihrer avisierten Umsetzung.
+Meilenstein 3 – Pflichtpräsenz: Abgabe einer schriftlichen Zusammenfassung / Überblick Ihrer Planungen und Ihres Lösungskonzeptes VOR Beginn der Präsenz. Vorstellung Ihrer Planungen und Vorführung Ihrer Prototypen.]]>
+            </notes>
+        </task>
+        <task id="13" name="Abgabe Kurzbericht + Projektplan" color="#8cb6ce" meeting="false" start="2021-01-20" duration="1" complete="0" thirdDate="2020-10-19" thirdDate-constraint="0" expand="true"/>
+        <task id="15" name="Abschlusskolloquium" color="#8cb6ce" meeting="false" start="2021-01-22" duration="1" complete="0" thirdDate="2020-10-19" thirdDate-constraint="0" expand="true"/>
+        <task id="67" name="ORM - Grundlegende Einrichtung" meeting="false" start="2020-11-23" duration="5" complete="0" expand="true"/>
+        <task id="102" name="Schnittstellen - Grundlegende Beschreibung" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+        <task id="103" name="GUI - Grundlegende UI, ohne Funktionalität" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+        <task id="109" name="GUI - Nutzen der Schnittstellen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="false">
+            <task id="110" name="Login am Server (Frontend)" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+            <task id="111" name="Registrierung am Server (Frontend)" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+        </task>
+        <task id="113" name="GUI - Logik der einzelnen Bildschirme" meeting="false" start="2020-09-14" duration="1" complete="0" expand="false">
+            <task id="117" name="HomeScreen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+            <task id="115" name="Lobby anzeigen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+            <task id="116" name="Spielhistorie anzeigen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+        </task>
+        <task id="118" name="Schnittstelle" meeting="false" start="2020-09-14" duration="1" complete="0" expand="false">
+            <task id="123" name="Spielhistorie - Daten beziehen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+            <task id="119" name="Lobby Daten beziehen - Liste der Spiele in der Lobby" color="#8cb6ce" meeting="false" start="2020-09-14" duration="1" complete="0" thirdDate="2020-09-14" thirdDate-constraint="0" expand="true"/>
+            <task id="124" name="Lobby Daten beziehen - Details des aktuellen Spiels" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+        </task>
+        <task id="126" name="Spiel-Logik" meeting="false" start="2020-09-07" duration="6" complete="0" expand="true">
+            <task id="104" name="Logik - Spielerposition / Schlangenbewegung" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+            <task id="127" name="Spawn der PowerUps" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+            <task id="128" name="Spawn der Spieler" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+        </task>
+        <task id="129" name="" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+</project>

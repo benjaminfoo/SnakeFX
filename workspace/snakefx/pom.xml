@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.ostfalia.teamx</groupId>
@@ -9,6 +10,32 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>SnakeFX</name>
     <description>The SnakeFX client using JavaFX</description>
+
+    <!-- the used libraries in this project -->
+    <dependencies>
+
+        <!-- This library is used for the httpclient -->
+        <dependency>
+            <groupId>com.mashape.unirest</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>1.4.9</version>
+        </dependency>
+
+        <!-- This library is used for parsing json content -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+
+        <!-- This library is used for navigating within json objects -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <plugins>
