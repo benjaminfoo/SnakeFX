@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2020-09-06" view-index="0" gantt-divider-location="543" resource-divider-location="300" version="2.8.11" locale="de">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2020-09-06" view-index="0" gantt-divider-location="839" resource-divider-location="300" version="2.8.11" locale="de">
     <description/>
     <view zooming-state="default:7" id="gantt-chart">
-        <field id="tpd3" name="Vorgang" width="355" order="0"/>
-        <field id="tpd4" name="Anfang" width="96" order="1"/>
-        <field id="tpd5" name="Ende" width="88" order="2"/>
+        <field id="tpd3" name="Vorgang" width="558" order="0"/>
+        <field id="tpd4" name="Anfang" width="81" order="1"/>
+        <field id="tpd5" name="Ende" width="181" order="2"/>
     </view>
     <view id="resource-table">
         <field id="0" name="Ressource" width="210" order="0"/>
@@ -40,7 +40,7 @@ Beginnen Sie mit der konzeptionellen Modellierung. Verwenden Sie die Notation de
 Meilenstein 1: Klassendiagramm]]>
             </notes>
         </task>
-        <task id="4" name="Meilenstein 2" color="#8cb6ce" meeting="false" start="2020-10-01" duration="34" complete="50" thirdDate="2020-10-27" thirdDate-constraint="0" expand="true">
+        <task id="4" name="Meilenstein 2" color="#8cb6ce" meeting="false" start="2020-10-01" duration="34" complete="50" thirdDate="2020-10-27" thirdDate-constraint="0" expand="false">
             <notes>
                 <![CDATA[Verfeinern Sie Ihr Klassendiagramm. Notieren Sie Komponenten- und Verteilungsdiagramme zur Darstellung der Zielarchitektur. Vereinbaren Sie die Schnittstelle zwischen Client(s) und Server.
 Meilenstein 2: Schnittstellenbeschreibung Client – Server]]>
@@ -57,29 +57,72 @@ Meilenstein 3 – Pflichtpräsenz: Abgabe einer schriftlichen Zusammenfassung / 
         </task>
         <task id="13" name="Abgabe Kurzbericht + Projektplan" color="#8cb6ce" meeting="false" start="2021-01-20" duration="1" complete="0" thirdDate="2020-10-19" thirdDate-constraint="0" expand="true"/>
         <task id="15" name="Abschlusskolloquium" color="#8cb6ce" meeting="false" start="2021-01-22" duration="1" complete="0" thirdDate="2020-10-19" thirdDate-constraint="0" expand="true"/>
-        <task id="67" name="ORM - Grundlegende Einrichtung" meeting="false" start="2020-11-23" duration="5" complete="0" expand="true"/>
-        <task id="102" name="Schnittstellen - Grundlegende Beschreibung" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
-        <task id="103" name="GUI - Grundlegende UI, ohne Funktionalität" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
-        <task id="109" name="GUI - Nutzen der Schnittstellen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="false">
-            <task id="110" name="Login am Server (Frontend)" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
-            <task id="111" name="Registrierung am Server (Frontend)" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+        <task id="218" name="Implementierung / Realisierung" meeting="false" start="2020-09-07" duration="6" complete="0" expand="true">
+            <task id="201" name="Core" meeting="false" start="2020-09-07" duration="6" complete="0" expand="true">
+                <task id="203" name="Core - Modell (Jeweils als Klasse coden)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true">
+                    <task id="205" name="Benutzer" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="213" name="Spieler" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="207" name="Spielfeld" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="209" name="Spielhistorie" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="217" name="Spielrunde" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="211" name="PowerUp" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="215" name="Lobby" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                </task>
+                <task id="136" name="Core - Logik" meeting="false" start="2020-09-07" duration="6" complete="0" expand="true">
+                    <task id="137" name="Logik - Spielerposition / Schlangenbewegung" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+                    <task id="138" name="Spawn der PowerUps" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="139" name="Spawn der Spieler" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                </task>
+            </task>
+            <task id="133" name="Front-End - Design" meeting="false" start="2020-09-07" duration="1" complete="0" expand="false">
+                <task id="152" name="Login - Screen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="154" name="Registrierung - Screen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="156" name="Home - Screen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="158" name="Spielhistorie - Screen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="160" name="Neues Spiel - Screen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+            </task>
+            <task id="145" name="Front-End - Schnittstelle" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true">
+                <task id="161" name="Login - Absenden der Anmeldedaten" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="163" name="Login - Empfang d. Server-Antwort" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="166" name="Registrierung - Absenden der Daten (Erfolg, Misserfolg)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="168" name="Registrierung - Empfang der Daten (Erfolg, Misserfolg)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="220" name="Homescreen - Alle Lobbies beziehen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="222" name="Homescreen - In Lobby eintragen (an Spiel teilnehmen)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="224" name="Spielhistorie - Daten vergangener Spiele beziehen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="226" name="Spielrunde - Daten aktiver Spieler beziehen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="229" name="Spielrunde - Daten über Spielfeld beziehen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="231" name="Spielrunde - Daten über PowerUps beziehen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="233" name="Spielrunde - Eingabedaten senden (Wenn ein Spieler W,A,S oder D betätigt)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+            </task>
+            <task id="134" name="Front-End - Logik" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true">
+                <task id="169" name="Wechsel zwischen den Bildschirmen (Screens)" color="#000000" meeting="false" start="2020-09-07" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true">
+                    <task id="173" name="Login -&gt; Registrierung" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="171" name="Login -&gt; Homescreen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="175" name="Registrierung -&gt; Login" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="177" name="Homescreen -&gt; Spielhistorie" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="179" name="Spielhistorie -&gt; Homescreen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="181" name="Homescreen -&gt; Neues Spiel erstellen (Dialog ?)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                </task>
+                <task id="189" name="Benachrichtigungen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true">
+                    <task id="191" name="Anmeldung nicht erfolgreich" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="193" name="Registrierung nicht erfolgreich" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="195" name="Beitritt der Lobby nicht erfolgreich ?" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                    <task id="197" name="Bezug der Spieldaten nicht erfolgreich ?" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                </task>
+            </task>
+            <task id="135" name="Backend - Logik" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true">
+                <task id="164" name="Session-Handling (Welche Spieler sind aktuell angemeldet?)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="151" name="ORM - Grundlegend implementieren (Benutzer Speichern)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="199" name="ORM - Grundlegende Spielhistorie (Welche Spieler, Highscore, Datum)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+            </task>
+            <task id="140" name="Backend - Schnittstelle" meeting="false" start="2020-09-07" duration="6" complete="0" expand="true">
+                <task id="148" name="Login bereitstellen (Empfang Credentials)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="150" name="Registrierung bereitstellen (Empfang Credentials, Abgleich, Erfolg, Misserfolg)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="141" name="Spielhistorie - Daten beziehen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+                <task id="142" name="Lobby Daten beziehen - Liste der Spiele in der Lobby" color="#8cb6ce" meeting="false" start="2020-09-14" duration="1" complete="0" thirdDate="2020-09-14" thirdDate-constraint="0" expand="true"/>
+                <task id="143" name="Lobby Daten beziehen - Details des aktuellen Spiels" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+            </task>
         </task>
-        <task id="113" name="GUI - Logik der einzelnen Bildschirme" meeting="false" start="2020-09-14" duration="1" complete="0" expand="false">
-            <task id="117" name="HomeScreen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
-            <task id="115" name="Lobby anzeigen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
-            <task id="116" name="Spielhistorie anzeigen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
-        </task>
-        <task id="118" name="Schnittstelle" meeting="false" start="2020-09-14" duration="1" complete="0" expand="false">
-            <task id="123" name="Spielhistorie - Daten beziehen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
-            <task id="119" name="Lobby Daten beziehen - Liste der Spiele in der Lobby" color="#8cb6ce" meeting="false" start="2020-09-14" duration="1" complete="0" thirdDate="2020-09-14" thirdDate-constraint="0" expand="true"/>
-            <task id="124" name="Lobby Daten beziehen - Details des aktuellen Spiels" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
-        </task>
-        <task id="126" name="Spiel-Logik" meeting="false" start="2020-09-07" duration="6" complete="0" expand="true">
-            <task id="104" name="Logik - Spielerposition / Schlangenbewegung" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
-            <task id="127" name="Spawn der PowerUps" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
-            <task id="128" name="Spawn der Spieler" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
-        </task>
-        <task id="129" name="" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
     </tasks>
     <resources/>
     <allocations/>
