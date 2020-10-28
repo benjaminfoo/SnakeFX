@@ -114,7 +114,8 @@ Meilenstein 3 – Pflichtpräsenz: Abgabe einer schriftlichen Zusammenfassung / 
                     <task id="197" name="Bezug der Spieldaten nicht erfolgreich ?" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
                 </task>
             </task>
-            <task id="135" name="Backend - Logik" meeting="false" start="2020-09-07" duration="38" complete="0" expand="true">
+            <task id="135" name="Backend - Logik" meeting="false" start="2020-08-24" duration="48" complete="0" expand="true">
+                <task id="266" name="JSON-Web-Tokens" meeting="false" start="2020-08-24" duration="1" complete="0" expand="true"/>
                 <task id="164" name="Session-Handling (Welche Spieler sind aktuell angemeldet?)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
                 <task id="151" name="ORM - Grundlegend implementieren (Benutzer Speichern)" color="#00ff00" meeting="false" start="2020-10-28" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
                 <task id="199" name="ORM - Grundlegende Spielhistorie (Welche Spieler, Highscore, Datum)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
