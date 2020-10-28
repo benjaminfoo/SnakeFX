@@ -1,8 +1,17 @@
 package de.ostfalia.teamx.SnakeServer.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Spieler {
 
     @Id
@@ -15,21 +24,4 @@ public class Spieler {
     @Column(nullable = false, length = 255)
     public String pass;
 
-    public Spieler() {
-    }
-
-    public Spieler(long id, String name, String pass) {
-        this.id = id;
-        this.name = name;
-        this.pass = pass;
-    }
-
-    @Override
-    public String toString() {
-        return "Spieler{" +
-                "id=" + id +
-                ", email='" + name + '\'' +
-                ", pass='" + pass + '\'' +
-                '}';
-    }
 }

@@ -1,15 +1,16 @@
 package de.ostfalia.teamx.SnakeServer.controller;
 
+import de.ostfalia.teamx.SnakeServer.model.Lobby;
 import de.ostfalia.teamx.SnakeServer.model.Spieler;
+import de.ostfalia.teamx.SnakeServer.model.Spielhistorie;
 import de.ostfalia.teamx.SnakeServer.persistance.SpielerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.persistence.Lob;
 import java.util.Optional;
 
 /**
@@ -21,6 +22,12 @@ public class ApiController {
  
     @Autowired
     private SpielerRepository spielerRepository;
+
+    @Autowired
+    private LobbyController lobbyController;
+
+    @Autowired
+    private HistorienController historienController;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @RequestMapping("api/spieler/{name}")
@@ -42,6 +49,26 @@ public class ApiController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(path = {"api/lobby", "api/lobby/"})
+    public ResponseEntity<Lobby> getLobby() {
+        try {
+            return new ResponseEntity<Lobby>(lobbyController.lobby, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(path = {"api/historie", "api/historie/"})
+    public ResponseEntity<Spielhistorie> getHistorie() {
+        try {
+            return new ResponseEntity<Spielhistorie>(historienController.spielhistorie, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 

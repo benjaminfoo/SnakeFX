@@ -84,13 +84,11 @@
 
 
 		<!-- This dependency allows the usage of the lombok framework -->
-		<!--
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		-->
 
 		<!-- This is used for executing junit-tests -->
 		<dependency>
@@ -104,6 +102,15 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!--
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -111,6 +118,18 @@
 			<scope>test</scope>
 		</dependency>
 		-->
+
+		<!-- this dependency is used for handling json webtokens -->
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
