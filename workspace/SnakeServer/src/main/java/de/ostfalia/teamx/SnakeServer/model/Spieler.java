@@ -2,18 +2,15 @@ package de.ostfalia.teamx.SnakeServer.model;
 
 import javax.persistence.*;
 
-/**
- * @author Benjamin Wulfert
- * The model for a player.
- */
 @Entity
 public class Spieler {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
     @Column(nullable = false, length = 255)
-    public String email;
+    public String name;
 
     @Column(nullable = false, length = 255)
     public String pass;
@@ -21,9 +18,9 @@ public class Spieler {
     public Spieler() {
     }
 
-    public Spieler(long id, String email, String pass) {
+    public Spieler(long id, String name, String pass) {
         this.id = id;
-        this.email = email;
+        this.name = name;
         this.pass = pass;
     }
 
@@ -31,7 +28,7 @@ public class Spieler {
     public String toString() {
         return "Spieler{" +
                 "id=" + id +
-                ", email='" + email + '\'' +
+                ", email='" + name + '\'' +
                 ", pass='" + pass + '\'' +
                 '}';
     }

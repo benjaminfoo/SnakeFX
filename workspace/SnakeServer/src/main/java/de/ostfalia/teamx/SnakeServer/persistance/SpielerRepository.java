@@ -1,10 +1,12 @@
 package de.ostfalia.teamx.SnakeServer.persistance;
 
 import de.ostfalia.teamx.SnakeServer.model.Spieler;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Benjamin Wulfert
@@ -13,6 +15,8 @@ import java.util.List;
 @Repository
 public interface SpielerRepository extends CrudRepository<Spieler, Long> {
  
-    public List<Spieler> findAllByEmailLike(String name);
+    public List<Spieler> findAllByName(String name);
+
+    public Optional<Spieler> findByName(String name);
 
 }

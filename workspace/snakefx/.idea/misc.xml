@@ -6,6 +6,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/../snakefx-server/pom.xml" />
         <option value="$PROJECT_DIR$/../SnakeServer/pom.xml" />
+        <option value="$PROJECT_DIR$/../SnakeCore/pom.xml" />
       </list>
     </option>
   </component>

@@ -1,7 +1,7 @@
 package de.ostfalia.teamx.SnakeServer.runner;
 
-import de.ostfalia.teamx.SnakeServer.persistance.SpielerRepository;
 import de.ostfalia.teamx.SnakeServer.model.Spieler;
+import de.ostfalia.teamx.SnakeServer.persistance.SpielerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -25,8 +25,8 @@ public class DataInitRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        spielerRepository.save(new Spieler(-1, "test@localhost", "test"));
-        spielerRepository.save(new Spieler(-1, "test2@localhost", "test"));
+        spielerRepository.save(new Spieler(-1, "test", "test"));
+        spielerRepository.save(new Spieler(-1, "test2", "test2"));
 
     }
      

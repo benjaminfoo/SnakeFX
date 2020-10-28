@@ -17,17 +17,20 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="snakefx" />
+        <module name="SnakeCore" />
         <module name="SnakeServer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="SnakeCore" target="8" />
       <module name="snakefx" target="8" />
       <module name="snakefx-server" target="1.5" />
-      <module name="SnakeServer" target="11" />
+      <module name="SnakeServer" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SnakeCore" options="" />
       <module name="SnakeServer" options="-parameters" />
     </option>
   </component>
