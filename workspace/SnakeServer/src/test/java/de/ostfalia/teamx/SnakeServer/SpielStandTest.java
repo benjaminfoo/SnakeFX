@@ -26,11 +26,12 @@ class SpielStandTest {
 	void Test_Save_Spielstand() {
 
 		// Definition Test-Spieler
-		Spieler testSpieler = new Spieler(-1, "Test-Spieler", "Test-Passwort");
-		Spieler testSpieler2 = new Spieler(-1, "Test-Spieler-2", "Test-Passwort-2");
+		Spieler testSpieler = new Spieler(1L, "Test-Spieler", "Test-Passwort");
+		Spieler testSpieler2 = new Spieler(2L, "Test-Spieler2", "Test-Passwort");
 
 		// Def. eines Ergebnisses
-		SpielstandErgebnis s = new SpielstandErgebnis(-1, testSpieler, 37);
+		SpielstandErgebnis s = new SpielstandErgebnis(testSpieler, 37);
+		SpielstandErgebnis s2 = new SpielstandErgebnis(testSpieler2, 100);
 
 		// Speichern des Ergebnisses
 		// spielstandErgebnisRepository.save(s);
@@ -38,9 +39,10 @@ class SpielStandTest {
 		// Definition eines Spielstands
 		Spielstand spielstand = new Spielstand();
 		spielstand.getErgebnisse().add(s);
+		spielstand.getErgebnisse().add(s2);
 
 		// Speichern des Spielstands
-		spielstandRepository.save(spielstand);
+		spielstandRepository.saveAndFlush(spielstand);
 	}
 
 }

@@ -19,7 +19,7 @@ class SpielerTests {
 	void Test_Save_Player_To_Database_And_Retrieve_It() {
 
 		// Create a new player
-		Spieler testSpieler = new Spieler(-1, "Test-Spieler", "Test-Passwort");
+		Spieler testSpieler = new Spieler(1L, "Test-Spieler", "Test-Passwort");
 
 		// save it to the database
 		spielerRepository.save(testSpieler);

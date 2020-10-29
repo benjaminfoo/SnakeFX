@@ -1,10 +1,11 @@
-package de.ostfalia.teamx.SnakeServer.model;
+package de.ostfalia.teamx.SnakeServer.testmodel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.annotation.Generated;
 import javax.persistence.*;
 
 @Entity
@@ -12,16 +13,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Spieler {
+public class Chef {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(nullable = false, length = 255)
     public String name;
-
-    @Column(nullable = false, length = 255)
-    public String pass;
 
 }

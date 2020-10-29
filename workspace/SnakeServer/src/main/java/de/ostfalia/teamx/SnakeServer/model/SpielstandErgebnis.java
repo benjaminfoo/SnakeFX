@@ -10,31 +10,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Benjami Wulfert
+ * @author Benjamin Wulfert
  * Ein SpielstandErgebnis enthält einen Spieler und dessen erreichten Score beim Ende einer Spielrunde.
  */
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class SpielstandErgebnis {
 
-    public SpielstandErgebnis(long id, Spieler spieler, Integer score) {
-        this.id = id;
+    public SpielstandErgebnis(Spieler spieler, Integer score) {
         this.spieler = spieler;
         this.score = score;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    public Long id;
 
     public Integer score;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     public Spieler spieler;
 
     @ManyToOne
+    @JoinColumn(name="Spielstand_id", nullable=false)
     public Spielstand spielstand;
 
 }
