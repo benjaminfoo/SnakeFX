@@ -26,10 +26,10 @@ class SpielstandErgebnisTest {
 	@Test
 	void Test_Save_Spielstand() {
 
-		Spieler testSpieler = new Spieler(-1, "Test-Spieler", "Test-Passwort");
-		Spieler testSpieler2 = new Spieler(-1, "Test-Spieler-2", "Test-Passwort-2");
+		Spieler testSpieler = new Spieler(1L, "Test-Spieler", "Test-Passwort");
+		Spieler testSpieler2 = new Spieler(2L, "Test-Spieler-2", "Test-Passwort-2");
 
-		SpielstandErgebnis s = new SpielstandErgebnis(-1, testSpieler, 37);
+		SpielstandErgebnis s = new SpielstandErgebnis(testSpieler, 37);
 
 		spielstandErgebnisRepository.save(s);
 	}

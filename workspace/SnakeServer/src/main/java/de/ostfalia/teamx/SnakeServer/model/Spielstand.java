@@ -19,7 +19,7 @@ public class Spielstand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    public Long id;
 
     @OneToMany(mappedBy = "spielstand")
     public Set<SpielstandErgebnis> ergebnisse = new HashSet<>();

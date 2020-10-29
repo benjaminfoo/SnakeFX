@@ -4,6 +4,7 @@ import de.ostfalia.teamx.SnakeServer.model.Spieler;
 import de.ostfalia.teamx.SnakeServer.model.Spielhistorie;
 import de.ostfalia.teamx.SnakeServer.model.Spielrunde;
 import de.ostfalia.teamx.SnakeServer.model.Spielstand;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,6 @@ import java.util.Optional;
  * The Player DAO (Data Access Object) returns every object within the RDBMS
  */
 @Repository
-public interface SpielstandRepository extends CrudRepository<Spielstand, Long> {
+public interface SpielstandRepository extends JpaRepository<Spielstand, Long> {
  
 }
