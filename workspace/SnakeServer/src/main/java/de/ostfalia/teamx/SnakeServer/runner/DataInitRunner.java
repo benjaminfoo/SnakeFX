@@ -1,15 +1,12 @@
 package de.ostfalia.teamx.SnakeServer.runner;
 
+import de.ostfalia.teamx.SnakeServer.model.Spieler;
 import de.ostfalia.teamx.SnakeServer.persistance.*;
-import de.ostfalia.teamx.SnakeServer.testmodel.Chef;
-import de.ostfalia.teamx.SnakeServer.testmodel.Employee;
-import de.ostfalia.teamx.SnakeServer.testmodel.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
@@ -44,13 +41,15 @@ public class DataInitRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        /*
-        // Definition Test-Spieler
         Spieler testSpieler = new Spieler(1L, "Test-Spieler", "Test-Passwort");
         Spieler testSpieler2 = new Spieler(2L, "Test-Spieler-2", "Test-Passwort-2");
 
         spielerRepository.save(testSpieler);
         spielerRepository.save(testSpieler2);
+
+        /*
+        // Definition Test-Spieler
+
 
         SpielstandErgebnis ergebnisSpieler1 = new SpielstandErgebnis(testSpieler, 42);
         SpielstandErgebnis ergebnisSpieler2 = new SpielstandErgebnis(testSpieler2, 100);
@@ -71,6 +70,7 @@ public class DataInitRunner implements ApplicationRunner {
         */
 
 
+        /*
         // One to One relationShip
         Employee e = new Employee();
         e.name = "Herbert";
@@ -97,6 +97,7 @@ public class DataInitRunner implements ApplicationRunner {
         e.getProjects().add(p1);
         e.getProjects().add(p2);
         e.getProjects().add(p3);
+        */
 
     }
 

@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Lob;
 import java.util.Optional;
 
 /**
@@ -28,6 +27,10 @@ public class ApiController {
 
     @Autowired
     private HistorienController historienController;
+
+    // TODO: Implement password encryption with bCrypt
+    // @Autowired
+    // BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @RequestMapping("api/spieler/{name}")
@@ -69,6 +72,13 @@ public class ApiController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping
+    @RequestMapping(path = {"api/register", "api/register/"})
+    public void register(@RequestBody Spieler spieler) {
+        // spieler.pass(bCryptPasswordEncoder.encode(user.getPasswordHash()));
+        spielerRepository.save(spieler);
     }
 
 

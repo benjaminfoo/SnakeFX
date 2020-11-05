@@ -24,6 +24,13 @@
 
 	<dependencies>
 
+		<!-- This is the core library of snakeFX - it contains the core mechanics and the shared api -->
+		<dependency>
+			<groupId>de.ostfalia.teamx</groupId>
+			<artifactId>snakecore</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 		<!-- we're using these in order to simply monitor endpoints in the future -->
 		<!--
 		<dependency>
@@ -116,6 +123,15 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		-->
+
+		<!-- this dependency introduces spring-security to the proejct -->
+		<!-- we'll also use this for encrypting / decrypting passwords / password-hashes -->
+		<!--
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		-->
 

@@ -14,6 +14,13 @@
     <!-- the used libraries in this project -->
     <dependencies>
 
+        <!-- This is the core library of snakeFX - it contains the core mechanics and the shared api -->
+        <dependency>
+            <groupId>de.ostfalia.teamx</groupId>
+            <artifactId>snakecore</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- This library is used for the httpclient -->
         <dependency>
             <groupId>com.mashape.unirest</groupId>
