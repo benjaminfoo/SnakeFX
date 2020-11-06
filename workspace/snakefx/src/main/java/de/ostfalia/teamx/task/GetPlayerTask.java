@@ -1,11 +1,7 @@
 package de.ostfalia.teamx.task;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -20,7 +16,7 @@ public class GetPlayerTask {
 
     public List<Spieler> getPlayer() throws UnirestException {
 
-        String url = ProjectEndpoints.HOST_URL_API_SPIELER;
+        String url = ProjectEndpoints.URL_API_SPIELER;
 
         HttpResponse<JsonNode> resJson = Unirest.get(url).header("Accept", "application/json").asJson();
         String json = resJson.getBody().toString();

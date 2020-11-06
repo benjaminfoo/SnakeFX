@@ -8,7 +8,6 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.teamx.ProjectEndpoints;
 import de.ostfalia.teamx.model.SpielDefinition;
-import de.ostfalia.teamx.model.Spieler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,8 @@ public class GetGamesTask {
 
     public List<SpielDefinition> getSpiele() throws UnirestException {
 
-        String url = ProjectEndpoints.HOST_URL_API_LOBBY;
+        String url = ProjectEndpoints.URL_API_LOBBY;
+        System.out.println(url);
 
         HttpResponse<JsonNode> resJson = Unirest.get(url).header("Accept", "application/json").asJson();
         String json = resJson.getBody().toString();

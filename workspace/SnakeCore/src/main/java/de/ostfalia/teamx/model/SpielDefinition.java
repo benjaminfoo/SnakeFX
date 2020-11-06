@@ -2,11 +2,11 @@ package de.ostfalia.teamx.model;
 
 public class SpielDefinition {
 
-    public String nameOfTheGame;
-    public int numberOfPlayer;
-    public int maxNumberOfPowerUps;
-    public int mapWidth, mapHeight;
-    public Spielregel spielregel;
+    private String nameOfTheGame;
+    private int numberOfPlayer;
+    private int maxNumberOfPowerUps;
+    private int mapWidth, mapHeight;
+    private Spielregel spielregel;
 
     public SpielDefinition() {
     }

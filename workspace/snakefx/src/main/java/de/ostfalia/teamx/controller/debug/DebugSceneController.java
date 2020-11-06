@@ -1,92 +1,38 @@
 package de.ostfalia.teamx.controller.debug;
 
+import de.ostfalia.teamx.ApplicationConstants;
+import de.ostfalia.teamx.controller.BaseController;
+import de.ostfalia.teamx.controller.Scenes;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class DebugSceneController {
+/**
+ * @author Benjamin Wulfert
+ *
+ * The DebugSceneController is used within the debug_scenechooser.xml - view.
+ * The DebugSceneController allows the user to show every stage (window) of the application - its useful for debugging
+ * different scenarios without clicking through the happy path first.
+ */
+public class DebugSceneController extends BaseController {
 
     @FXML Button login;
-    @FXML Button register;
     @FXML Button homescreen;
     @FXML Button newgame;
     @FXML Button gamehistorie;
     @FXML Button gamescene;
     @FXML CheckBox debugMode;
 
+
+
     public void initialize () {
+        super.initialize();
 
-        login.setOnAction(click -> {
-            try {
-                Stage window = new Stage();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("login_view.fxml")));
-                window.setScene(scene);
-                window.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        register.setOnAction(click -> {
-            try {
-                Stage window = new Stage();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("register_view.fxml")));
-                window.setScene(scene);
-                window.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        homescreen.setOnAction(click -> {
-            try {
-                Stage window = new Stage();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("homescreen_view.fxml")));
-                window.setScene(scene);
-                window.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        gamehistorie.setOnAction(click -> {
-            try {
-                Stage window = new Stage();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("gamehistory_view.fxml")));
-                window.setScene(scene);
-                window.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        newgame.setOnAction(click -> {
-            try {
-                Stage window = new Stage();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("new_game_view.fxml")));
-                window.setScene(scene);
-                window.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        gamescene.setOnAction(click -> {
-            try {
-                Stage window = new Stage();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("gamecanvas_view.fxml")));
-                window.setScene(scene);
-                window.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        login.setOnAction(click -> { showLayout(Scenes.VIEW_LOGIN, ApplicationConstants.TITLE_LOGIN); });
+        homescreen.setOnAction(click -> { showLayout(Scenes.VIEW_HOMESCREEN, ApplicationConstants.TITLE_HOMESCREEN); });
+        gamehistorie.setOnAction(click -> { showLayout(Scenes.VIEW_HISTORY,  ApplicationConstants.TITLE_HISTORY); });
+        newgame.setOnAction(click -> { showLayout(Scenes.VIEW_NEW_GAME, ApplicationConstants.TITLE_NEW_GAME); });
+        gamescene.setOnAction(click -> { showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME); });
 
     }
 

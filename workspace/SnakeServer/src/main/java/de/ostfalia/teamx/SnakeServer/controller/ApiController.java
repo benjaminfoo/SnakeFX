@@ -1,6 +1,5 @@
 package de.ostfalia.teamx.SnakeServer.controller;
 
-import de.ostfalia.teamx.SnakeServer.model.Lobby;
 import de.ostfalia.teamx.SnakeServer.model.Spieler;
 import de.ostfalia.teamx.SnakeServer.model.Spielhistorie;
 import de.ostfalia.teamx.SnakeServer.model.Spielrunde;
@@ -13,11 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
+import static de.ostfalia.teamx.ProjectEndpoints.*;
 
 /**
  * @author Benjamin Wulfert
- * The model for a player.
+ * The ApiController handles the interaction between the web and the database, and other various mechanics from the system.
  */
 @RestController
 public class ApiController {
@@ -36,29 +36,17 @@ public class ApiController {
     // BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    @RequestMapping("api/spieler/{name}")
-    public ResponseEntity getSpieler(@PathVariable("name") String name) {
-        Optional<Spieler> product = spielerRepository.findByName(name);
-        if (product.isPresent()) {
-            return ResponseEntity.ok(product);
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    @RequestMapping(path = {"api/spieler", "api/spieler/"})
+    @RequestMapping(path = {API_PATH + API_ENDPOINT_SPIELER})
     public ResponseEntity<Iterable<Spieler>> getSpieler() {
         try {
             return new ResponseEntity<>(spielerRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    @RequestMapping(path = {"api/historie", "api/historie/"})
+    @RequestMapping(path = {API_PATH + API_ENDPOINT_HISTORIE})
     public ResponseEntity<Spielhistorie> getHistorie() {
         try {
             return new ResponseEntity<Spielhistorie>(historienController.spielhistorie, HttpStatus.OK);
@@ -68,21 +56,20 @@ public class ApiController {
     }
 
     @PostMapping
-    @RequestMapping(path = {"api/register", "api/register/"})
+    @RequestMapping(path = {API_PATH + API_ENDPOINT_REGISTER})
     public void register(@RequestBody Spieler spieler) {
         // spieler.pass(bCryptPasswordEncoder.encode(user.getPasswordHash()));
         spielerRepository.save(spieler);
     }
 
 
-    @PostMapping
-    @RequestMapping(path = {"api/login", "api/login/"})
+    @PostMapping(path = {API_PATH + API_ENDPOINT_LOGIN})
     public void login(@RequestBody Spieler spieler) {
         // spieler.pass(bCryptPasswordEncoder.encode(user.getPasswordHash()));
         lobbyController.lobby.aktiveSpieler.add(spieler);
     }
 
-    @GetMapping(path = {"api/lobby", "api/lobby/"})
+    @GetMapping(path = {API_PATH + API_ENDPOINT_LOBBY})
     public ResponseEntity<List<SpielDefinition>> getLobby() {
         try {
             return new ResponseEntity<List<SpielDefinition>>(lobbyController.getSpiele(), HttpStatus.OK);
@@ -91,12 +78,12 @@ public class ApiController {
         }
     }
 
-    @PostMapping(path = {"api/lobby", "api/lobby/"})
+    @PostMapping(path = {API_PATH + API_ENDPOINT_LOBBY})
     public void postNewGame(@RequestBody SpielDefinition neuesSpiel) {
 
         // erzeuge eine neue Spielrunde anhand der Spieldefinition
         Spielrunde spielrunde = new Spielrunde();
-        spielrunde.name = neuesSpiel.nameOfTheGame;
+        spielrunde.name = neuesSpiel.getNameOfTheGame();
 
         // füge die neue Spielrunde der Lobby hinzu
         lobbyController.lobby.aktiveSpiele.add(spielrunde);

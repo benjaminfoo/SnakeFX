@@ -16,7 +16,7 @@ public class PostNewGame {
 
     public List<Spieler> getPlayer() throws UnirestException {
 
-        String url = ProjectEndpoints.HOST_URL_API_SPIELER;
+        String url = ProjectEndpoints.URL_API_SPIELER;
 
         HttpResponse<JsonNode> resJson = Unirest.get(url).header("Accept", "application/json").asJson();
         String json = resJson.getBody().toString();
