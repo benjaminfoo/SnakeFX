@@ -7,7 +7,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.teamx.ProjectEndpoints;
-import de.ostfalia.teamx.model.Spieler;
+import de.ostfalia.teamx.shared.Spieler;
 
 import java.util.ArrayList;
 import java.util.List;

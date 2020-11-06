@@ -24,7 +24,9 @@ public class DebugSceneController extends BaseController {
     @FXML CheckBox debugMode;
 
 
-
+    /**
+     * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader
+     */
     public void initialize () {
         super.initialize();
 

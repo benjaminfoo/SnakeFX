@@ -4,7 +4,7 @@ import de.ostfalia.teamx.SnakeServer.model.Spieler;
 import de.ostfalia.teamx.SnakeServer.model.Spielhistorie;
 import de.ostfalia.teamx.SnakeServer.model.Spielrunde;
 import de.ostfalia.teamx.SnakeServer.persistance.SpielerRepository;
-import de.ostfalia.teamx.model.SpielDefinition;
+import de.ostfalia.teamx.shared.SpielDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

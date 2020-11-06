@@ -1,5 +1,10 @@
 package de.ostfalia.teamx.controller;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * The Scenes class contains every name of a view as a constant.
+ */
 public class Scenes {
 
     public static final String VIEW_DEBUG = "debug_scenechooser.fxml";

@@ -7,11 +7,16 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.teamx.ProjectEndpoints;
-import de.ostfalia.teamx.model.SpielDefinition;
+import de.ostfalia.teamx.shared.SpielDefinition;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * The GetGamesTask is responsible for the retrieval of active games from the web-server.
+ */
 public class GetGamesTask {
 
     public List<SpielDefinition> getSpiele() throws UnirestException {

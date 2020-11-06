@@ -1,8 +1,8 @@
 package de.ostfalia.teamx;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-import de.ostfalia.teamx.model.SpielDefinition;
-import de.ostfalia.teamx.model.Spieler;
+import de.ostfalia.teamx.shared.SpielDefinition;
+import de.ostfalia.teamx.shared.Spieler;
 import de.ostfalia.teamx.task.GetGamesTask;
 import de.ostfalia.teamx.task.GetPlayerTask;
 import org.junit.Assert;

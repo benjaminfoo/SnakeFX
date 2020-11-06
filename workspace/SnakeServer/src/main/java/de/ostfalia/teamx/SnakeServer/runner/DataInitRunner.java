@@ -1,7 +1,9 @@
 package de.ostfalia.teamx.SnakeServer.runner;
 
 import de.ostfalia.teamx.SnakeServer.model.Spieler;
-import de.ostfalia.teamx.SnakeServer.persistance.*;
+import de.ostfalia.teamx.SnakeServer.persistance.SpielerRepository;
+import de.ostfalia.teamx.SnakeServer.persistance.SpielstandErgebnisRepository;
+import de.ostfalia.teamx.SnakeServer.persistance.SpielstandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -25,15 +27,6 @@ public class DataInitRunner implements ApplicationRunner {
 
     @Autowired
     private SpielstandErgebnisRepository spielstandErgebnisRepository;
-
-    @Autowired
-    private ChefRepository chefRepository;
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @Autowired
-    private ProjectRepository projectRepository;
 
     @Autowired
     private EntityManagerFactory emf;

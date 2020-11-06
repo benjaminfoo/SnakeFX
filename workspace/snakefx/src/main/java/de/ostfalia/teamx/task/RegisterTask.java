@@ -5,7 +5,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.teamx.ProjectEndpoints;
-import de.ostfalia.teamx.model.Spieler;
+import de.ostfalia.teamx.shared.Spieler;
 
 public class RegisterTask {
 

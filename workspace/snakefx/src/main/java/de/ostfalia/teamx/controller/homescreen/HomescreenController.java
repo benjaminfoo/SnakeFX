@@ -4,8 +4,8 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.teamx.ApplicationConstants;
 import de.ostfalia.teamx.controller.BaseController;
 import de.ostfalia.teamx.controller.Scenes;
-import de.ostfalia.teamx.model.SpielDefinition;
-import de.ostfalia.teamx.model.Spieler;
+import de.ostfalia.teamx.shared.SpielDefinition;
+import de.ostfalia.teamx.shared.Spieler;
 import de.ostfalia.teamx.task.GetGamesTask;
 import de.ostfalia.teamx.task.GetPlayerTask;
 import javafx.collections.FXCollections;
@@ -15,6 +15,13 @@ import javafx.scene.control.ListView;
 
 import java.util.List;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * The HomescreenController is the first UI after a user got logged into the system.
+ * The HomescreenController is responsible for the visualization of current players, active games.
+ * Its also responsible for allowing access to the game history, creating a new game and joining a game.
+ */
 public class HomescreenController extends BaseController {
 
     @FXML
@@ -30,7 +37,7 @@ public class HomescreenController extends BaseController {
     // TODO: implement controller inheritence - with shared members (like debug mode)
 
     /**
-     * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader
+     * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader.
      * This initializes the currently active players and the active games.
      */
     public void initialize(){

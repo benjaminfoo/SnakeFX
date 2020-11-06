@@ -11,6 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * The LoginController is responsible the login- or registration-process.
+ * The LoginController is the first user interface which the user has access to in the application.
+ */
 public class LoginController extends BaseController {
 
     @FXML
@@ -22,7 +28,9 @@ public class LoginController extends BaseController {
     @FXML
     Label lblStatus;
 
-    // this method gets called by mapping it in the login_view.fxml
+    /**
+     * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader
+     */
     public void initialize(){
         super.initialize();
 
@@ -55,7 +63,23 @@ public class LoginController extends BaseController {
 
         username = username.trim();
 
-        new LoginTask().login(username, password);
+        LoginTask loginTask = new LoginTask(username, password);
+
+        loginTask.setOnRunning(event -> {
+            lblStatus.setText("Connecting ...");
+        });
+
+        loginTask.setOnFailed(event -> {
+            System.out.println("Login not successful for user: " + loginTask.getValue());
+            lblStatus.setText("Error on login!");
+        });
+
+        loginTask.setOnSucceeded(event -> {
+            System.out.println("Login successful for user: " + loginTask.getValue());
+            lblStatus.setText("Login succesful!");
+        });
+
+        new Thread(loginTask).start();
     }
 
     public void executeRegistration(){

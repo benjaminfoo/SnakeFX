@@ -15,7 +15,9 @@ public class GameCanvasController extends BaseController {
     @FXML
     Label statusLabel;
 
-    // gets called once upon the controller start
+    /**
+     * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader
+     */
     public void initialize(){
         super.initialize();
         statusLabel.setText("Hello World!");
