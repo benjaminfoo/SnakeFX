@@ -18,4 +18,6 @@ public class Lobby {
 
     public List<Spielrunde> aktiveSpiele = new LinkedList<>();
 
+    public List<Spieler> aktiveSpieler = new LinkedList<>();
+
 }

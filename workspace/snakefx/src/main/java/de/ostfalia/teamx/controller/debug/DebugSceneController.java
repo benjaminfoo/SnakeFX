@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,8 +18,10 @@ public class DebugSceneController {
     @FXML Button newgame;
     @FXML Button gamehistorie;
     @FXML Button gamescene;
+    @FXML CheckBox debugMode;
 
     public void initialize () {
+
         login.setOnAction(click -> {
             try {
                 Stage window = new Stage();

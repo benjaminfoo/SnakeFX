@@ -1,11 +1,7 @@
 package de.ostfalia.teamx.task;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -16,7 +12,7 @@ import de.ostfalia.teamx.model.Spieler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetPlayerTask {
+public class PostNewGame {
 
     public List<Spieler> getPlayer() throws UnirestException {
 

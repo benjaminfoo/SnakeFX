@@ -11,6 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Spielrunde {
 
+    public String name;
+
+    // TODO: implement missing
+
     public List<Spieler> spieler;
 
 }
