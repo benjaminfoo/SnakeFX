@@ -5,13 +5,19 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.teamx.ProjectEndpoints;
-import de.ostfalia.teamx.model.SpielDefinition;
-import de.ostfalia.teamx.model.Spieler;
-import de.ostfalia.teamx.model.Spielregel;
+import de.ostfalia.teamx.controller.BaseController;
+import de.ostfalia.teamx.shared.SpielDefinition;
+import de.ostfalia.teamx.shared.Spielregel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class NewGameController {
+/**
+ * @author Benjamin Wulfert
+ *
+ * The NewGameController is responsible for creating new games (Spielrunden / Spieldefinitionen).
+ * The NewGameController can be accessed from the HomescreenController.
+ */
+public class NewGameController extends BaseController {
 
     @FXML
     Button newGame;
@@ -29,19 +35,17 @@ public class NewGameController {
     ComboBox<Spielregel> ruleSet;
 
     /**
-     * Initialize the user-interface.
-     * Setup the creation of a new game with the provided values from the UI.
+     * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader
      */
     public void initialize(){
+        super.initialize();
 
         numberOfPlayers.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2,10,1));
         numberOfPowerups.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,50,1));
         ruleSet.setValue(new Spielregel("Highscore: 100Pts", false));
 
-        newGame.setOnAction(onclick -> {
-            executeCreateNewGame();
-        });
-
+        newGame.setOnAction(onclick -> { executeCreateNewGame(); });
+        abort.setOnAction(onclick -> { closeStage();});
     }
 
     private void executeCreateNewGame() {
@@ -69,7 +73,7 @@ public class NewGameController {
         try {
             System.out.println("Registering new game: " + gson.toJson(spielDefinition));
             HttpResponse<String> res = Unirest
-                    .post(ProjectEndpoints.HOST_URL_API_LOBBY)
+                    .post(ProjectEndpoints.URL_API_LOBBY)
                     .header("Content-Type", "application/json")
                     .body(gson.toJson(spielDefinition))
                     .asString();

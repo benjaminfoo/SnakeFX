@@ -1,5 +1,7 @@
 package de.ostfalia.teamx;
 
+import de.ostfalia.teamx.controller.BaseController;
+import de.ostfalia.teamx.controller.Scenes;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,10 +29,15 @@ public class AppSnakeFX extends Application {
 
         // this loads the game-canvas controller and the corresponding fxml
         // root = FXMLLoader.load(getClass().getClassLoader().getResource("gamecanvas_view.fxml"));
-        root = FXMLLoader.load(getClass().getClassLoader().getResource("debug_scenechooser.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getClassLoader().getResource(Scenes.VIEW_DEBUG));
+        root = fxmlLoader.load();
+
+        BaseController baseController = fxmlLoader.getController();
+        baseController.currentStage = window;
+        baseController.setTitle(ApplicationConstants.TITLE_DEBUG_CHOOSER);
 
         // setup the stage of the application
-        window.setTitle("SnakeFX");
         window.setMinWidth(300);
         window.setMinHeight(400);
         window.setScene(new Scene(root));

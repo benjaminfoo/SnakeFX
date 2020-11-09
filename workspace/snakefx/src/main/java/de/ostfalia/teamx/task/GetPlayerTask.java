@@ -1,26 +1,27 @@
 package de.ostfalia.teamx.task;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.teamx.ProjectEndpoints;
-import de.ostfalia.teamx.model.Spieler;
+import de.ostfalia.teamx.shared.Spieler;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * The GetPlayerTask is responsible for the retrieval of active players from the web-server.
+ */
 public class GetPlayerTask {
 
     public List<Spieler> getPlayer() throws UnirestException {
 
-        String url = ProjectEndpoints.HOST_URL_API_SPIELER;
+        String url = ProjectEndpoints.URL_API_SPIELER;
 
         HttpResponse<JsonNode> resJson = Unirest.get(url).header("Accept", "application/json").asJson();
         String json = resJson.getBody().toString();

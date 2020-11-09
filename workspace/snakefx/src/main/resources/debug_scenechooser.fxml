@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.ostfalia.teamx.controller.debug.DebugSceneController">
    <children>
       <VBox spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -22,7 +17,6 @@
             <HBox maxWidth="1.7976931348623157E308" spacing="15.0">
                <children>
                   <Button fx:id="login" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="login" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="register" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="register" HBox.hgrow="ALWAYS" />
                   <Button fx:id="homescreen" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="homescreen" HBox.hgrow="ALWAYS" />
                   <Button fx:id="newgame" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="new game" HBox.hgrow="ALWAYS" />
                   <Button fx:id="gamehistorie" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="game history" HBox.hgrow="ALWAYS" />

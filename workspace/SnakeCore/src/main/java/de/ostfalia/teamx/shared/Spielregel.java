@@ -1,4 +1,4 @@
-package de.ostfalia.teamx.model;
+package de.ostfalia.teamx.shared;
 
 public class Spielregel {
 
@@ -20,4 +20,5 @@ public class Spielregel {
                 ", regelErfuellt=" + regelErfuellt +
                 '}';
     }
+
 }

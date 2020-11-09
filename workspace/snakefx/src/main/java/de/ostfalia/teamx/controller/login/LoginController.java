@@ -1,25 +1,23 @@
 package de.ostfalia.teamx.controller.login;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import de.ostfalia.teamx.ApplicationConstants;
 import de.ostfalia.teamx.ProjectEndpoints;
-import de.ostfalia.teamx.model.Spieler;
+import de.ostfalia.teamx.controller.BaseController;
+import de.ostfalia.teamx.task.LoginTask;
+import de.ostfalia.teamx.task.RegisterTask;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class LoginController {
+/**
+ * @author Benjamin Wulfert
+ *
+ * The LoginController is responsible the login- or registration-process.
+ * The LoginController is the first user interface which the user has access to in the application.
+ */
+public class LoginController extends BaseController {
 
     @FXML
     TextField tfName, tfPassword, tfServerURL;
@@ -30,8 +28,12 @@ public class LoginController {
     @FXML
     Label lblStatus;
 
-    // this method gets called by mapping it in the login_view.fxml
+    /**
+     * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader
+     */
     public void initialize(){
+        super.initialize();
+
         btnLogin.setOnAction(clickEvent -> {
             executeLogin();
         });
@@ -59,19 +61,25 @@ public class LoginController {
         String username = tfName.getText();
         String password = tfPassword.getText();
 
-        Spieler neuerSpieler = new Spieler(-1, username, password);
-        Gson gson = new Gson();
+        username = username.trim();
 
-        try {
-            System.out.println("Login: " + gson.toJson(neuerSpieler));
-            HttpResponse<String> res = Unirest
-                    .post(ProjectEndpoints.HOST_URL_API_REGISTER)
-                    .header("Content-Type", "application/json")
-                    .body(gson.toJson(neuerSpieler))
-                    .asString();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
+        LoginTask loginTask = new LoginTask(username, password);
+
+        loginTask.setOnRunning(event -> {
+            lblStatus.setText("Connecting ...");
+        });
+
+        loginTask.setOnFailed(event -> {
+            System.out.println("Login not successful for user: " + loginTask.getValue());
+            lblStatus.setText("Error on login!");
+        });
+
+        loginTask.setOnSucceeded(event -> {
+            System.out.println("Login successful for user: " + loginTask.getValue());
+            lblStatus.setText("Login succesful!");
+        });
+
+        new Thread(loginTask).start();
     }
 
     public void executeRegistration(){
@@ -79,20 +87,9 @@ public class LoginController {
         String username = tfName.getText();
         String password = tfPassword.getText();
 
-        Spieler neuerSpieler = new Spieler(-1, username, password);
-        Gson gson = new Gson();
+        username = username.trim();
 
-        try {
-            System.out.println("Register new player: " + gson.toJson(neuerSpieler));
-            HttpResponse<String> res = Unirest
-                    .post(ProjectEndpoints.HOST_URL_API_REGISTER)
-                    .header("Content-Type", "application/json")
-                    .body(gson.toJson(neuerSpieler))
-                    .asString();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-
+        new RegisterTask().register(username, password);
     }
 
 

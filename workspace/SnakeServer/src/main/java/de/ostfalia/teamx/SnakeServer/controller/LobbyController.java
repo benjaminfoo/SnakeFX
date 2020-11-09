@@ -2,10 +2,8 @@ package de.ostfalia.teamx.SnakeServer.controller;
 
 import de.ostfalia.teamx.SnakeServer.model.Lobby;
 import de.ostfalia.teamx.SnakeServer.model.Spielrunde;
-import de.ostfalia.teamx.model.SpielDefinition;
+import de.ostfalia.teamx.shared.SpielDefinition;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import sun.security.provider.ConfigFile;
 
 import java.util.LinkedList;
 import java.util.List;
