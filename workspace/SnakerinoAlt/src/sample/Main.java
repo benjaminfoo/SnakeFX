@@ -5,9 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -19,7 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -203,7 +201,7 @@ public class Main extends Application {
         }
     }
 
-    // HIER NOCH DIE VERSCHIEDENEN MÖGLIHCKEITEN FÜR FOOD EINBAUEN
+    //HIER NOCH DIE VERSCHIEDENEN MÖGLIHCKEITEN FÜR FOOD EINBAUEN
     private void eatFood() {
         if (snakeHead.getX() == foodX && snakeHead.getY() == foodY) {
             snakeBody.add(new Point(-1, -1));
