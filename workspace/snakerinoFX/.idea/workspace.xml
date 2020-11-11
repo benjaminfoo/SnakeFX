@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a90057c-d432-481b-91be-feba9343117a" name="Default Changelist" comment="" />
+    <list default="true" id="2a90057c-d432-481b-91be-feba9343117a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SnakerinoAlt/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SnakerinoAlt/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/src/Game/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Snake/src/Game/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_apple.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_berry.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_cherry.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_coconut_.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_orange.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_peach.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_pomegranate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_tomato.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_watermelon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/snakefx.iml" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx.iml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="ProjectId" id="1k8j3KLlr8oklxLDDgpj7bViN81" />
   <component name="ProjectViewState">
@@ -17,6 +52,28 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SnakerinoAlt" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.14941406" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Game.Main" />
+      <module name="snakefx" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\openjfx-11.0.2_windows-x64_bin-sdk\javafx-sdk-11.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Game.Main" />
+      <option name="VM_PARAMETERS" value="--module-path %PATH_TO_FX% --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -28,5 +85,50 @@
       <updated>1605088912426</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605089692669">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605089692669" />
+    <state x="689" y="309" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1605089452091">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="689" y="309" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605089452091" />
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1605089324485">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1605089324485" />
+    <state width="1877" height="271" key="GridCell.Tab.0.bottom" timestamp="1605113698774">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="271" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605113698774" />
+    <state width="1877" height="271" key="GridCell.Tab.0.center" timestamp="1605113698774">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="271" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605113698774" />
+    <state width="1877" height="271" key="GridCell.Tab.0.left" timestamp="1605113698774">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="271" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605113698774" />
+    <state width="1877" height="271" key="GridCell.Tab.0.right" timestamp="1605113698774">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="271" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605113698774" />
+    <state x="440" y="94" key="SettingsEditor" timestamp="1605089285408">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1605089285408" />
   </component>
 </project>

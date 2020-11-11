@@ -19,9 +19,7 @@ import java.awt.Point;
 public class Main extends Application {
     static Config config = new Config();
 
-    private static final String[] FOODS_IMAGE = new String[]{"/img/ic_orange.png", "/img/ic_apple.png", "/img/ic_cherry.png",
-            "/img/ic_berry.png", "/img/ic_coconut_.png", "/img/ic_peach.png", "/img/ic_watermelon.png", "/img/ic_orange.png",
-            "/img/ic_pomegranate.png"};
+    private static final String[] FOODS_IMAGE = new String[]{"/img/benni.png", "/img/leo.png"};
 
 
     public enum Direction {
@@ -171,10 +169,17 @@ public class Main extends Application {
 
 
     public void gameOver() {
-        if (snake.head.x < 0 || snake.head.y < 0 ||
-                snake.head.x * config.square_size >= config.width ||
-                snake.head.y * config.square_size >= config.width) {
-            gameOver = true;
+        if (snake.head.x < 0) {
+            snake.head.x = config.rows;
+        }
+        else if (snake.head.y < 0){
+            snake.head.y = config.columns;
+        }
+        else if (snake.head.x * config.square_size >= config.width){
+            snake.head.x = 0;
+        }
+        else if (snake.head.y * config.square_size >= config.width){
+            snake.head.y = 0;
         }
 
         //destroy itself
