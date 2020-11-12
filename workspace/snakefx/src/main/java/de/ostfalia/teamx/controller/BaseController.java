@@ -25,6 +25,13 @@ public abstract class BaseController {
 
     }
 
+    /**
+     * This optional method gets called AFTER the UI has been initialized.
+     */
+    public void postInitialize(){
+        // accessing the UI within the initialize method would cause a NullPointerException
+    }
+
     public void setTitle(String title){
         currentStage.setTitle(title);
     }
@@ -60,12 +67,16 @@ public abstract class BaseController {
             baseController.currentStage.getIcons().add(new Image("icon.png"));
             baseController.setTitle(newTitle);
 
+            // initialize everything related to the user-interface
+            baseController.postInitialize();
+
             // show the setup and referenced window
             window.show();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
     }
 

@@ -44,7 +44,6 @@ public class AppSnakeFX extends Application {
 
         // show the application stage
         window.show();
-
     }
 
 }

@@ -1,21 +1,21 @@
-package de.ostfalia.teamx.snakorino.Game;
+package de.ostfalia.teamx.snakorino.model;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Snake {
 
-    public Point head;
-    public List<Point> body = new ArrayList();
-    {
+    public Vector2 head;
+
+    public List<Vector2> body = new ArrayList();
+
+    public Snake() {
         for (int i = 0; i < 3; i++) {
-            Point bodyPart = new Point(0, 0);
+            Vector2 bodyPart = new Vector2(0, 0);
             body.add(bodyPart);
         }
         head = body.get(0);
     }
-
 
     public void moveright() {
         head.x++;
@@ -29,5 +29,6 @@ public class Snake {
     public void moveDown() {
         head.y++;
     }
+
 
 }
