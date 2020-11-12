@@ -1,5 +1,6 @@
 package de.ostfalia.teamx.controller.debug;
 
+import de.ostfalia.teamx.AppSnakeFX;
 import de.ostfalia.teamx.ApplicationConstants;
 import de.ostfalia.teamx.controller.BaseController;
 import de.ostfalia.teamx.controller.Scenes;
@@ -21,6 +22,8 @@ public class DebugSceneController extends BaseController {
     @FXML Button newgame;
     @FXML Button gamehistorie;
     @FXML Button gamescene;
+
+    // allows to setup the application in debug-mode
     @FXML CheckBox debugMode;
 
 
@@ -35,6 +38,12 @@ public class DebugSceneController extends BaseController {
         gamehistorie.setOnAction(click -> { showLayout(Scenes.VIEW_HISTORY,  ApplicationConstants.TITLE_HISTORY); });
         newgame.setOnAction(click -> { showLayout(Scenes.VIEW_NEW_GAME, ApplicationConstants.TITLE_NEW_GAME); });
         gamescene.setOnAction(click -> { showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME); });
+
+        // Manage the debugmode of the application
+        AppSnakeFX.inDebugMode = debugMode.isSelected();
+        debugMode.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            AppSnakeFX.inDebugMode = newValue;
+        });
 
     }
 
