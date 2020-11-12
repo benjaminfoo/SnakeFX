@@ -247,7 +247,7 @@ public class GameController extends BaseController {
      * @param gc
      */
     private void run(GraphicsContext gc) {
-        
+
         if (gameOver) {
             gc.setFill(Color.RED);
             gc.setFont(new Font("Digital-7", 70));
