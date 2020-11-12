@@ -12,24 +12,22 @@ Note: Die UML-Diagramme wurden mit der Software "Dia" erstellt.
   - Enthält eine gemeinsame Projektbeschreibung (siehe /workspace/readme.md)
 
 ## Changelog
-09.10.2020 - Sichtung der Anforderung, erste Besprechung der Aufgaben
-09.10.2020 - Erster Entwurf der Diagramme, Update der Ressourcen
-18.10.2020 - Überarbeitung der Diagramme
-23.10.2020 - Entwurf von UI-Mockups, Ergänzung der Diagramme
-24.10.2020 - Ergänzung der Diagramme
+- 09.10.2020 - Sichtung der Anforderung, erste Besprechung der Aufgaben
+- 09.10.2020 - Erster Entwurf der Diagramme, Update der Ressourcen
+- 18.10.2020 - Überarbeitung der Diagramme
+- 23.10.2020 - Entwurf von UI-Mockups, Ergänzung der Diagramme
+- 24.10.2020 - Ergänzung der Diagramme
+- 25.10. - 05.10. - Partielle Implemntierung der Schnittstelle
 
 ## Offene Tasks
 Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisiert werden müssen
 
 ### Frontend
-- Registrierung mittels Frontend am Backend
-- Login mittels Frontend am Backend
+- Registrierung mittels Frontend am Backend [DONE]
+- Login mittels Frontend am Backend 
 - Neue UI "LoginScreen"
   - Impl. des User-Interfaces [DONE]
-  - Anfrage an den Server -> Login 
-- Neue UI "RegisterScreen"
-  - Impl. des User-Interfaces [DONE]
-  - Anfrage an den Server -> Neues Konto erstellen
+  - Anfrage an den Server -> Login [DONE]
 - Neue UI "Homescreen"
   - Impl. des User-Interfaces [DONE]
   - Wechsel von Login auf Homescreen (Scene-Handling)

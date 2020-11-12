@@ -19,6 +19,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="snakefx" />
         <module name="SnakeCore" />
+        <module name="snakerinoFX" />
         <module name="SnakeServer" />
       </profile>
     </annotationProcessing>
@@ -26,6 +27,7 @@
       <module name="SnakeCore" target="8" />
       <module name="snakefx" target="8" />
       <module name="snakefx-server" target="1.5" />
+      <module name="snakerinoFX" target="1.5" />
       <module name="SnakeServer" target="8" />
     </bytecodeTargetLevel>
   </component>

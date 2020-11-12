@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2020-08-23" view-index="0" gantt-divider-location="839" resource-divider-location="300" version="2.8.11" locale="de">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2020-08-17" view-index="0" gantt-divider-location="839" resource-divider-location="300" version="2.8.11" locale="de">
     <description/>
     <view zooming-state="default:7" id="gantt-chart">
-        <field id="tpd3" name="Vorgang" width="563" order="0"/>
-        <field id="tpd4" name="Anfang" width="86" order="1"/>
-        <field id="tpd5" name="Ende" width="186" order="2"/>
-        <option id="color.recent">
-            <![CDATA[#00ff00 #f4f4f4 #ff0000 #ff6666]]>
-        </option>
+        <field id="tpd3" name="Vorgang" width="553" order="0"/>
+        <field id="tpd4" name="Anfang" width="85" order="1"/>
+        <field id="tpd5" name="Ende" width="182" order="2"/>
+        <option id="color.recent"><![CDATA[#00ff00 #f4f4f4 #ff0000 #ff6666]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Ressource" width="210" order="0"/>
@@ -37,32 +35,26 @@
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
         <task id="0" name="Meilenstein 1" color="#8cb6ce" meeting="false" start="2020-10-01" duration="1" complete="0" thirdDate="2020-10-27" thirdDate-constraint="0" expand="true">
-            <notes>
-                <![CDATA[In den Wochen bis zur Pflichtpräsenz führen Sie die Planung Ihres Softwareprojektes durch. Starten Sie dabei in der ersten Woche mit einer Anpassung des folgenden Planungsablaufs an die Bedürfnisse Ihrer Gruppe. Halten Sie Ihre Entscheidungen schriftlich fest.
+            <notes><![CDATA[In den Wochen bis zur Pflichtpräsenz führen Sie die Planung Ihres Softwareprojektes durch. Starten Sie dabei in der ersten Woche mit einer Anpassung des folgenden Planungsablaufs an die Bedürfnisse Ihrer Gruppe. Halten Sie Ihre Entscheidungen schriftlich fest.
 Beginnen Sie mit der konzeptionellen Modellierung. Verwenden Sie die Notation der UML. Erstellen Sie Use-Case Diagramme zur Verdeutlichung der funktionalen Anforderungen. Nutzen Sie Aktivitätsdiagramme zur Darstellung von Abläufen. Entwerfen Sie Klassendiagramme für ein erstes fachliches Datenmodell als Grundlage für die spätere Implementierung.
-Meilenstein 1: Klassendiagramm]]>
-            </notes>
+Meilenstein 1: Klassendiagramm]]></notes>
         </task>
         <task id="4" name="Meilenstein 2" color="#8cb6ce" meeting="false" start="2020-10-01" duration="34" complete="50" thirdDate="2020-10-27" thirdDate-constraint="0" expand="false">
-            <notes>
-                <![CDATA[Verfeinern Sie Ihr Klassendiagramm. Notieren Sie Komponenten- und Verteilungsdiagramme zur Darstellung der Zielarchitektur. Vereinbaren Sie die Schnittstelle zwischen Client(s) und Server.
-Meilenstein 2: Schnittstellenbeschreibung Client – Server]]>
-            </notes>
+            <notes><![CDATA[Verfeinern Sie Ihr Klassendiagramm. Notieren Sie Komponenten- und Verteilungsdiagramme zur Darstellung der Zielarchitektur. Vereinbaren Sie die Schnittstelle zwischen Client(s) und Server.
+Meilenstein 2: Schnittstellenbeschreibung Client – Server]]></notes>
             <task id="23" name="Verfeinern des Klassendiagramm" color="#8cb6ce" meeting="false" start="2020-10-01" duration="17" complete="100" thirdDate="2020-10-01" thirdDate-constraint="0" expand="true"/>
             <task id="18" name="Vereinbaren der Schnittstelle" color="#8cb6ce" meeting="false" start="2020-10-26" duration="17" complete="0" thirdDate="2020-10-01" thirdDate-constraint="0" expand="true"/>
         </task>
         <task id="8" name="Abgabe Konzept" color="#8cb6ce" meeting="false" start="2020-11-18" duration="1" complete="0" thirdDate="2020-10-19" thirdDate-constraint="0" expand="true"/>
         <task id="6" name="Meilenstein 3 - Pflichtpräsenz" color="#8cb6ce" meeting="false" start="2020-11-20" duration="1" complete="0" thirdDate="2020-10-22" thirdDate-constraint="0" expand="true">
-            <notes>
-                <![CDATA[Beginnen Sie mit der Umsetzung von Prototypen von Client und Server. Ausgewählte Anwendungsfälle werden realisiert, ggf. aber noch nicht integriert. Der Betrachter bekommt einen ersten Eindruck von Ihrer avisierten Umsetzung.
-Meilenstein 3 – Pflichtpräsenz: Abgabe einer schriftlichen Zusammenfassung / Überblick Ihrer Planungen und Ihres Lösungskonzeptes VOR Beginn der Präsenz. Vorstellung Ihrer Planungen und Vorführung Ihrer Prototypen.]]>
-            </notes>
+            <notes><![CDATA[Beginnen Sie mit der Umsetzung von Prototypen von Client und Server. Ausgewählte Anwendungsfälle werden realisiert, ggf. aber noch nicht integriert. Der Betrachter bekommt einen ersten Eindruck von Ihrer avisierten Umsetzung.
+Meilenstein 3 – Pflichtpräsenz: Abgabe einer schriftlichen Zusammenfassung / Überblick Ihrer Planungen und Ihres Lösungskonzeptes VOR Beginn der Präsenz. Vorstellung Ihrer Planungen und Vorführung Ihrer Prototypen.]]></notes>
         </task>
         <task id="13" name="Abgabe Kurzbericht + Projektplan" color="#8cb6ce" meeting="false" start="2021-01-20" duration="1" complete="0" thirdDate="2020-10-19" thirdDate-constraint="0" expand="true"/>
         <task id="15" name="Abschlusskolloquium" color="#8cb6ce" meeting="false" start="2021-01-22" duration="1" complete="0" thirdDate="2020-10-19" thirdDate-constraint="0" expand="true"/>
         <task id="218" name="Implementierung / Realisierung" meeting="false" start="2020-08-17" duration="53" complete="0" expand="true">
             <task id="201" name="Core" meeting="false" start="2020-08-17" duration="21" complete="0" expand="true">
-                <task id="203" name="Core - Modell (Jeweils als Klasse coden)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true">
+                <task id="203" name="Core - Modell (Jeweils als Klasse coden)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="false">
                     <task id="205" name="Benutzer" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
                     <task id="213" name="Spieler" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
                     <task id="207" name="Spielfeld" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
@@ -80,15 +72,14 @@ Meilenstein 3 – Pflichtpräsenz: Abgabe einer schriftlichen Zusammenfassung / 
             </task>
             <task id="133" name="Front-End - Design" meeting="false" start="2020-10-26" duration="1" complete="0" expand="true">
                 <task id="152" name="Login - Screen" color="#00ff00" meeting="false" start="2020-10-26" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
-                <task id="154" name="Registrierung - Screen" color="#00ff00" meeting="false" start="2020-10-26" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
                 <task id="156" name="Home - Screen" color="#00ff00" meeting="false" start="2020-10-26" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
                 <task id="158" name="Spielhistorie - Screen" color="#00ff00" meeting="false" start="2020-10-26" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
                 <task id="160" name="Neues Spiel - Screen" color="#00ff00" meeting="false" start="2020-10-26" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
             </task>
-            <task id="145" name="Front-End - Schnittstelle" meeting="false" start="2020-09-07" duration="1" complete="0" expand="false">
-                <task id="161" name="Login - Absenden der Anmeldedaten" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
-                <task id="163" name="Login - Empfang d. Server-Antwort" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
-                <task id="166" name="Registrierung - Absenden der Daten (Erfolg, Misserfolg)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+            <task id="145" name="Front-End - Schnittstelle" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true">
+                <task id="161" name="Login - Absenden der Anmeldedaten" color="#00ff00" meeting="false" start="2020-09-07" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
+                <task id="163" name="Login - Empfang d. Server-Antwort" color="#8cb6ce" meeting="false" start="2020-09-07" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
+                <task id="166" name="Registrierung - Absenden der Daten (Erfolg, Misserfolg)" color="#00ff00" meeting="false" start="2020-09-07" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
                 <task id="168" name="Registrierung - Empfang der Daten (Erfolg, Misserfolg)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
                 <task id="220" name="Homescreen - Alle Lobbies beziehen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
                 <task id="222" name="Homescreen - In Lobby eintragen (an Spiel teilnehmen)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
@@ -98,7 +89,7 @@ Meilenstein 3 – Pflichtpräsenz: Abgabe einer schriftlichen Zusammenfassung / 
                 <task id="231" name="Spielrunde - Daten über PowerUps beziehen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
                 <task id="233" name="Spielrunde - Eingabedaten senden (Wenn ein Spieler W,A,S oder D betätigt)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
             </task>
-            <task id="134" name="Front-End - Logik" meeting="false" start="2020-09-07" duration="1" complete="0" expand="false">
+            <task id="134" name="Front-End - Logik" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true">
                 <task id="169" name="Wechsel zwischen den Bildschirmen (Screens)" color="#000000" meeting="false" start="2020-09-07" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true">
                     <task id="173" name="Login -&gt; Registrierung" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
                     <task id="171" name="Login -&gt; Homescreen" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
@@ -121,11 +112,12 @@ Meilenstein 3 – Pflichtpräsenz: Abgabe einer schriftlichen Zusammenfassung / 
                 <task id="199" name="ORM - Grundlegende Spielhistorie (Welche Spieler, Highscore, Datum)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
             </task>
             <task id="140" name="Backend - Schnittstelle" meeting="false" start="2020-09-07" duration="6" complete="0" expand="true">
-                <task id="148" name="Login bereitstellen (Empfang Credentials)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
-                <task id="150" name="Registrierung bereitstellen (Empfang Credentials, Abgleich, Erfolg, Misserfolg)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="148" name="Login bereitstellen (Empfang Credentials)" color="#00ff00" meeting="false" start="2020-09-07" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
+                <task id="269" name="API absichern (JWT)" meeting="false" start="2020-09-07" duration="1" complete="0" expand="true"/>
+                <task id="150" name="Registrierung bereitstellen (Empfang Credentials, Abgleich, Erfolg, Misserfolg)" color="#00ff00" meeting="false" start="2020-09-07" duration="1" complete="0" thirdDate="2020-09-07" thirdDate-constraint="0" expand="true"/>
                 <task id="141" name="Spielhistorie - Daten beziehen" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
-                <task id="142" name="Lobby Daten beziehen - Liste der Spiele in der Lobby" color="#8cb6ce" meeting="false" start="2020-09-14" duration="1" complete="0" thirdDate="2020-09-14" thirdDate-constraint="0" expand="true"/>
-                <task id="143" name="Lobby Daten beziehen - Details des aktuellen Spiels" meeting="false" start="2020-09-14" duration="1" complete="0" expand="true"/>
+                <task id="142" name="Lobby Daten beziehen - Liste der Spiele in der Lobby" color="#00ff00" meeting="false" start="2020-09-14" duration="1" complete="0" thirdDate="2020-09-14" thirdDate-constraint="0" expand="true"/>
+                <task id="143" name="Lobby Daten beziehen - Details des aktuellen Spiels" color="#00ff00" meeting="false" start="2020-09-14" duration="1" complete="0" thirdDate="2020-09-14" thirdDate-constraint="0" expand="true"/>
             </task>
         </task>
     </tasks>
