@@ -21,19 +21,16 @@ public class Main extends Application {
 
     private static final String[] FOODS_IMAGE = new String[]{"/img/benni.png", "/img/leo.png"};
 
-
-    public enum Direction {
-        right, left, up, down
-
-    }
-
     private GraphicsContext gc;
     private Image foodImage;
-
     private int foodX;
     private int foodY;
     private int score = 0;
     private boolean gameOver;
+
+    public enum Direction {
+        right, left, up, down
+    }
     private Direction currentDirection = Direction.right; // Snake property
 
     private final Snake snake = new Snake();
@@ -73,6 +70,10 @@ public class Main extends Application {
             } else if (code == KeyCode.ESCAPE) {
                 primaryStage.close();
             }
+            //
+            // else if (code == KeyCode.SPACE) {
+             //   start(Stage primaryStage);
+            //}
         });
 
         generateFood();

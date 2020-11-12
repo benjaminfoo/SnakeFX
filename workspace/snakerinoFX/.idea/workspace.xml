@@ -20,22 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a90057c-d432-481b-91be-feba9343117a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SnakerinoAlt/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SnakerinoAlt/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Snake/src/Game/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Snake/src/Game/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_apple.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_berry.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_cherry.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_coconut_.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_orange.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_peach.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_pomegranate.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_tomato.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/src/img/ic_watermelon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx.iml" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/snakefx/Game/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/snakefx/Game/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/snakefx/Game/Main$Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/snakefx/Game/Main$Direction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/snakefx/Game/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/snakefx/Game/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +85,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605089692669">
@@ -110,22 +100,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1605089324485" />
-    <state width="1877" height="271" key="GridCell.Tab.0.bottom" timestamp="1605113698774">
+    <state width="1877" height="271" key="GridCell.Tab.0.bottom" timestamp="1605141916393">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="271" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605113698774" />
-    <state width="1877" height="271" key="GridCell.Tab.0.center" timestamp="1605113698774">
+    <state width="1877" height="271" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605141916393" />
+    <state width="1877" height="271" key="GridCell.Tab.0.center" timestamp="1605141916393">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="271" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605113698774" />
-    <state width="1877" height="271" key="GridCell.Tab.0.left" timestamp="1605113698774">
+    <state width="1877" height="271" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605141916393" />
+    <state width="1877" height="271" key="GridCell.Tab.0.left" timestamp="1605141916393">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="271" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605113698774" />
-    <state width="1877" height="271" key="GridCell.Tab.0.right" timestamp="1605113698774">
+    <state width="1877" height="271" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605141916393" />
+    <state width="1877" height="271" key="GridCell.Tab.0.right" timestamp="1605141916393">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="271" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605113698774" />
+    <state width="1877" height="271" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605141916393" />
     <state x="440" y="94" key="SettingsEditor" timestamp="1605089285408">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
