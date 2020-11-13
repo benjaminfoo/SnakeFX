@@ -19,14 +19,15 @@ public class Snake {
 
     public List<Vector2> body = new ArrayList();
 
-    public Direction currentDirection = Direction.right; // Snake property
+    // The current direction gets added to the heads position on every game tick (each iteration of the game-loop)
+    public Vector2 currentDirection = Vector2.RIGHT; // Snake property
 
     public Color color;
 
     public boolean isNPC;
     public int currentInputButton = 0;
 
-    public int initialLength = 3;
+    public int initialLength = 10;
 
     /**
      * Initialize the snakes head and its body parts at @param spawn
@@ -49,19 +50,6 @@ public class Snake {
         */
 
         this.color = color;
-    }
-
-    public void moveright() {
-        head.x++;
-    }
-    public void moveLeft() {
-        head.x--;
-    }
-    public void moveUp() {
-        head.y--;
-    }
-    public void moveDown() {
-        head.y++;
     }
 
     @Override

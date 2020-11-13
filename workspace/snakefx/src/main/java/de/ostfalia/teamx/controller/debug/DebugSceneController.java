@@ -45,6 +45,8 @@ public class DebugSceneController extends BaseController {
             AppSnakeFX.inDebugMode = newValue;
         });
 
+        gamescene.fire();
+
     }
 
 }
