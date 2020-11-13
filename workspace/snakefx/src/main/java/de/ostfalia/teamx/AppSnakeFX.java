@@ -46,6 +46,8 @@ public class AppSnakeFX extends Application {
         window.show();
     }
 
+    // is the application executed in debug-mode?
     public static boolean inDebugMode = false;
+
 
 }

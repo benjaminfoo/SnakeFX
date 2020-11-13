@@ -9,6 +9,6 @@ public class Config {
     public final int height = width;
     public final int rows = 20;
     public final int columns = 20;
-    public final int square_size = width / rows;
+    public final int tileSize = width / rows;
 
 }

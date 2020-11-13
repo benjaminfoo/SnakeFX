@@ -1,6 +1,5 @@
 package de.ostfalia.teamx.snakorino.controller;
 
-import com.sun.javafx.scene.traversal.Direction;
 import de.ostfalia.teamx.AppSnakeFX;
 import de.ostfalia.teamx.ApplicationConstants;
 import de.ostfalia.teamx.controller.BaseController;
@@ -26,9 +25,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import static de.ostfalia.teamx.util.DebugOptions.*;
+
 /**
- * @author Leonard Reidel
  * @author Benjamin Wulfert
+ * @author Leonard Reidel
  *
  * The GameCanvasController manages the state of the game canvas - it also contains the game-logic for realizing
  * the snake-game.
@@ -39,7 +40,7 @@ public class GameController extends BaseController {
     // TODO: this needs to get connected with a SpielDefinition, i guess
     private Config config = new Config();
 
-    private static final String[] FOODS_IMAGE = new String[]{
+    private static final String[] FOOD_IMAGE_PATHS = new String[]{
             "food/ic_orange.png",
             "food/ic_apple.png",
             "food/ic_cherry.png",
@@ -55,7 +56,9 @@ public class GameController extends BaseController {
     private Timeline timeline;
 
     // the amount of milliseconds each game-tick needs in order to update the games state
+    // public double TICK_TIME_AMOUNT = 130;
     public double TICK_TIME_AMOUNT = 130;
+    public double TICK_TIME_CHANGE_AMOUNT = 10;
 
     // FOOD STUFF - Extract to class Food.java
     // The image of the current food
@@ -68,10 +71,7 @@ public class GameController extends BaseController {
     private boolean gameOver;
     private boolean paused;
 
-    // SNAKE STUFF - REFACTOR TO THE SNAKE CLASS
-    // related to one player
-    // private Snake snake = new Snake();
-    // the score of the first player
+    // PLAYER STUFF - REFACTOR TO THE SNAKE CLASS
     private int score = 0;
     // SNAKE STUFF
 
@@ -93,23 +93,7 @@ public class GameController extends BaseController {
     };
     // refactor for multiplayer
 
-    // For debugging - Sets up a low stress game profile
-    private static final boolean DEBUG_SINGLEPLAYER = true;
 
-    // For debugging - Sets up a low stress game profile
-    private static final boolean DEBUG_LOWCORE = false;
-
-    // For debugging - Sets up a high stress game profile
-    private static final boolean DEBUG_HARDCORE = false;
-
-    // For debugging - Sets up the npc movement - walking randomly within the map
-    private static final boolean DEBUG_NPC_MOVEMENT_RANDOM_PATHS = true;
-
-    // For debugging - Sets up the npc movement - every npc just circles around
-    private static final boolean DEBUG_NPC_MOVEMENT_CIRCLING = false;
-
-    // For debugging - Every player is an npc ( = not controlled by a player )
-    private static final boolean DEBUG_EVERYBODY_NPC = true;
 
 
     @Override
@@ -119,15 +103,12 @@ public class GameController extends BaseController {
         // This is a debug setup!
         if(AppSnakeFX.inDebugMode){
 
-
             if(DEBUG_LOWCORE){
                 // we gonna stress test this b!atch
                 numPlayers = 3;
                 for (int i = 0; i < numPlayers; i++) {
-
                     int newY = i % 4 * 3 + 3;
                     int newX = i / 4 * 5 + 3;
-
                     snakeList.add (
                             new Snake (
                                     new Vector2(newX, newY),
@@ -161,8 +142,8 @@ public class GameController extends BaseController {
             }
 
             if(DEBUG_EVERYBODY_NPC){
-                for (int i = 0; i < snakeList.size(); i++) {
-                    snakeList.get(i).isNPC = true;
+                for (Snake snake : snakeList) {
+                    snake.isNPC = true;
                 }
             }
 
@@ -227,20 +208,22 @@ public class GameController extends BaseController {
 
             if(playerInput == KeyCode.PLUS){
                 // increase the tick amount <=> faster game
-                TICK_TIME_AMOUNT -= 5;
+                if(TICK_TIME_AMOUNT > 10){
+                    TICK_TIME_AMOUNT -= TICK_TIME_CHANGE_AMOUNT;
+                }
                 timeline.stop();
                 timeline = null;
-                timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event2 -> run(gc)));
+                timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event2 -> update(gc)));
                 timeline.setCycleCount(Animation.INDEFINITE);
                 timeline.play();
             }
 
             if(playerInput == KeyCode.MINUS){
                 // increase the tick amount <=> slower game
-                TICK_TIME_AMOUNT += 5;
+                TICK_TIME_AMOUNT += TICK_TIME_CHANGE_AMOUNT;
                 timeline.stop();
                 timeline = null;
-                timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event2 -> run(gc)));
+                timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event2 -> update(gc)));
                 timeline.setCycleCount(Animation.INDEFINITE);
                 timeline.play();
             }
@@ -253,7 +236,7 @@ public class GameController extends BaseController {
         // The game animation happens because of the timeline
         // every change happens in a new keyFrame (update-loop)
         // and the keyframe is generated by run
-        timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event -> run(gc)));
+        timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event -> update(gc)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
@@ -289,7 +272,7 @@ public class GameController extends BaseController {
      * Gets called every TICK_TIME_AMOUNT until someone wins or some other kind of rule is fulfilled.
      * @param gc
      */
-    private void run(GraphicsContext gc) {
+    private void update(GraphicsContext gc) {
 
         if (gameOver) {
             gc.setFill(Color.RED);
@@ -297,6 +280,8 @@ public class GameController extends BaseController {
             gc.fillText("Game Over", config.width / 3.5, config.width / 2);
             return;
         }
+
+        drawBackground(gc);
 
         // cpu mechanism
         for (Snake snake : snakeList) {
@@ -337,26 +322,22 @@ public class GameController extends BaseController {
                         // we check if the snakes head + the next direction would result in a crash into the wall
                         boolean hitWallX = currentPosition.x + nextDirection.x < 0 || currentPosition.x + nextDirection.x > config.rows - 1;
                         boolean hitWallY = currentPosition.y + nextDirection.y < 0 || currentPosition.y + nextDirection.y > config.columns - 1;
+                        boolean snakeHitItself = false;
 
-                        // we check if a snake bites itself
-                        boolean snakeBitesItself = false;
-                        /*
-                        for (Vector2 bodyPart : snake.body) {
+                        for (Vector2 bodyPartPosition : snake.body) {
                             if
                             (
-                                currentPosition.x + nextDirection.x == bodyPart.x &&
-                                currentPosition.y + nextDirection.y == bodyPart.y
+                                currentPosition.x + nextDirection.x == bodyPartPosition.x &&
+                                currentPosition.y + nextDirection.y == bodyPartPosition.y
                             )
                             {
-                                System.out.println("Snake bites itself!");
-                                snakeBitesItself = true;
-                                break;
+                                snakeHitItself = true;
                             }
                         }
-                        */
+
 
                         // if one of the cases happens, the position is invalid <=> recalculate another position
-                        if (hitWallX || hitWallY || !snakeBitesItself) {
+                        if (hitWallX || hitWallY || snakeHitItself) {
                             nextDirectionInvalid = true;
                         } else {
                             nextDirectionInvalid = false;
@@ -385,13 +366,36 @@ public class GameController extends BaseController {
 
 
         // visualize the game with its players (the snakes), the food, the score, etc.
-        drawBackground(gc);
+
         drawFood(gc);
         drawSnake(gc);
         drawScore(gc);
 
         checkGameOver();
         checkEatFood();
+
+
+        drawDirections(gc);
+    }
+
+    private void drawDirections(GraphicsContext gc) {
+        if(DEBUG_DRAW_DIRECTIONS){
+            int tileSize = config.tileSize;
+            int halfTileSize = tileSize / 2;
+            for (Snake snake : snakeList) {
+                Vector2 current = snake.head;
+                Vector2 next = new Vector2(current).add(snake.currentDirection);
+
+                gc.setLineWidth(10);
+                gc.setStroke(Color.GREEN);
+                gc.strokeLine(
+                        current.x * tileSize + halfTileSize,
+                        current.y * tileSize + halfTileSize,
+                        next.x    * tileSize + halfTileSize,
+                        next.y    * tileSize + halfTileSize
+                );
+            }
+        }
     }
 
     /**
@@ -411,8 +415,8 @@ public class GameController extends BaseController {
                     gc.setFill(Color.web("34383B"));
                 }
                 // draw the rect
-                gc.fillRect(i * config.square_size, j * config.square_size,
-                        config.square_size, config.square_size);
+                gc.fillRect(i * config.tileSize, j * config.tileSize,
+                        config.tileSize, config.tileSize);
             }
         }
     }
@@ -434,7 +438,7 @@ public class GameController extends BaseController {
                 }
             }
 
-            foodImage = new Image(FOODS_IMAGE[(int) (Math.random() * FOODS_IMAGE.length)]);
+            foodImage = new Image(FOOD_IMAGE_PATHS[(int) (Math.random() * FOOD_IMAGE_PATHS.length)]);
             break;
         }
 
@@ -447,10 +451,10 @@ public class GameController extends BaseController {
     private void drawFood(GraphicsContext gc) {
         gc.drawImage(
                 foodImage,
-                foodX * config.square_size,
-                foodY * config.square_size,
-                config.square_size,
-                config.square_size
+                foodX * config.tileSize,
+                foodY * config.tileSize,
+                config.tileSize,
+                config.tileSize
         );
     }
 
@@ -465,10 +469,10 @@ public class GameController extends BaseController {
             // draw the head of the snake
             gc.setFill(snake.color.brighter());
             gc.fillRoundRect(
-                    snake.head.getX() * config.square_size,
-                    snake.head.getY() * config.square_size,
-                    config.square_size - 1,
-                    config.square_size - 1,
+                    snake.head.getX() * config.tileSize,
+                    snake.head.getY() * config.tileSize,
+                    config.tileSize - 1,
+                    config.tileSize - 1,
                     35,
                     35
             );
@@ -477,10 +481,10 @@ public class GameController extends BaseController {
             gc.setFill(snake.color);
             for (int i = 1; i < snake.body.size(); i++) {
                 gc.fillRoundRect(
-                        snake.body.get(i).getX() * config.square_size,
-                        snake.body.get(i).getY() * config.square_size,
-                        config.square_size - 1,
-                        config.square_size - 1,
+                        snake.body.get(i).getX() * config.tileSize,
+                        snake.body.get(i).getY() * config.tileSize,
+                        config.tileSize - 1,
+                        config.tileSize - 1,
                         20,
                         20
                 );
@@ -497,8 +501,8 @@ public class GameController extends BaseController {
         for (Snake snake : snakeList) {
 
             if (snake.head.x < 0 || snake.head.y < 0 ||
-                    snake.head.x * config.square_size >= config.width ||
-                    snake.head.y * config.square_size >= config.width) {
+                    snake.head.x * config.tileSize >= config.width ||
+                    snake.head.y * config.tileSize >= config.width) {
                 gameOver = true;
             }
 

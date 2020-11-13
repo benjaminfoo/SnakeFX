@@ -22,11 +22,58 @@
                   <Button fx:id="gamehistorie" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="game history" HBox.hgrow="ALWAYS" />
                   <Button fx:id="gamescene" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="ingame-scene" HBox.hgrow="ALWAYS" />
                </children>
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
             </HBox>
-            <CheckBox fx:id="debugMode" mnemonicParsing="false" selected="true" text="Debug-Mode" />
+            <VBox spacing="15.0">
+               <children>
+                  <HBox>
+                     <children>
+                        <CheckBox fx:id="debugMode" mnemonicParsing="false" selected="true" text="Debug-Mode" />
+                     </children>
+                  </HBox>
+                  <VBox>
+                     <children>
+                        <Label text="Game-Setup - Initialization" />
+                        <HBox>
+                           <children>
+                              <CheckBox fx:id="debugLowCore" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="200.0" text="Lowcore (4 Players)" HBox.hgrow="ALWAYS" />
+                              <CheckBox fx:id="debugHardCore" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="200.0" text="Hardcore (20 Players)" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label text="NPC-Settings" />
+                        <HBox>
+                           <children>
+                              <CheckBox fx:id="debugEveryoneNPC" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="200.0" selected="true" text="Everyone is NPC" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label text="NPC Movement" />
+                        <HBox>
+                           <children>
+                              <CheckBox fx:id="debugCircling" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="200.0" text="Circling" HBox.hgrow="ALWAYS" />
+                              <CheckBox fx:id="debungRandomMovement" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="200.0" selected="true" text="Random" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="42.0">
+                     <children>
+                        <Label text="Visualization" />
+                        <HBox>
+                           <children>
+                              <CheckBox fx:id="debugDrawDirection" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="200.0" text="Draw direction" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
          </children>
       </VBox>
    </children>

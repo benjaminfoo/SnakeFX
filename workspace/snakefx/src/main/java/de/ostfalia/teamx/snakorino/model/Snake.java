@@ -1,6 +1,5 @@
 package de.ostfalia.teamx.snakorino.model;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -8,26 +7,33 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @author Lenoard Reidel
  * @author Benjamin Wulfert
+ * @author Lenoard Reidel
  *
  * The model of the snake.
  */
 public class Snake {
 
+    // The head of the snake <=> the leading position
     public Vector2 head;
 
+    // the body parts of the snake
     public List<Vector2> body = new ArrayList();
 
     // The current direction gets added to the heads position on every game tick (each iteration of the game-loop)
     public Vector2 currentDirection = Vector2.RIGHT; // Snake property
 
+    // the color of the snake
     public Color color;
 
+    // Flag that determines if this snake is controlled by a human player or by the pc
     public boolean isNPC;
+
+    // the current input button (W,A,S,D) - for example
     public int currentInputButton = 0;
 
-    public int initialLength = 10;
+    // the initial length of the snake
+    public int initialLength = 3;
 
     /**
      * Initialize the snakes head and its body parts at @param spawn
