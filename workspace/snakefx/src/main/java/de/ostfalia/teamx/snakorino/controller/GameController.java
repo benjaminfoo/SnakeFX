@@ -5,25 +5,28 @@ import de.ostfalia.teamx.ApplicationConstants;
 import de.ostfalia.teamx.controller.BaseController;
 import de.ostfalia.teamx.controller.Scenes;
 import de.ostfalia.teamx.snakorino.model.Config;
+import de.ostfalia.teamx.snakorino.model.Food;
 import de.ostfalia.teamx.snakorino.model.Snake;
 import de.ostfalia.teamx.snakorino.model.Vector2;
+import de.ostfalia.teamx.util.RNG;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import static de.ostfalia.teamx.util.DebugOptions.*;
 
@@ -33,8 +36,13 @@ import static de.ostfalia.teamx.util.DebugOptions.*;
  *
  * The GameCanvasController manages the state of the game canvas - it also contains the game-logic for realizing
  * the snake-game.
+ *
+ * TODO: document every method and every member
+ * TODO: reduce for-loops
+ * TODO: make config setable externally
+ * TODO: implement multiple scores (their needs to be one for every player)
  */
-public class GameController extends BaseController {
+public class GameController extends BaseController implements EventHandler<KeyEvent> {
 
     // the configuration in order to setup a game
     // TODO: this needs to get connected with a SpielDefinition, i guess
@@ -62,9 +70,7 @@ public class GameController extends BaseController {
 
     // FOOD STUFF - Extract to class Food.java
     // The image of the current food
-    private Image foodImage;
-    private int foodX;
-    private int foodY;
+    List<Food> foodList = new LinkedList<Food>();
     // FOOD STUFF
 
     // States
@@ -73,7 +79,7 @@ public class GameController extends BaseController {
 
     // PLAYER STUFF - REFACTOR TO THE SNAKE CLASS
     private int score = 0;
-    // SNAKE STUFF
+    // PLAYER STUFF
 
     // refactor for multiplayer
     private int numPlayers;
@@ -84,7 +90,6 @@ public class GameController extends BaseController {
             KeyCode.S,
             KeyCode.D
     };
-
     KeyCode[] secondPlayerControls = {
             KeyCode.UP,
             KeyCode.LEFT,
@@ -93,63 +98,51 @@ public class GameController extends BaseController {
     };
     // refactor for multiplayer
 
-
+    // the graphicsContext which is used to draw to the screen manually
+    private GraphicsContext gc;
 
 
     @Override
     public void postInitialize() {
         super.postInitialize();
 
-        // This is a debug setup!
+        // setup everything related to the debug-mode
         if(AppSnakeFX.inDebugMode){
 
+            // we gonna be gentle to the cpu
             if(DEBUG_LOWCORE){
-                // we gonna stress test this b!atch
                 numPlayers = 3;
-                for (int i = 0; i < numPlayers; i++) {
-                    int newY = i % 4 * 3 + 3;
-                    int newX = i / 4 * 5 + 3;
-                    snakeList.add (
-                            new Snake (
-                                    new Vector2(newX, newY),
-                                    Color.color(Math.random(), Math.random(), Math.random())
-                            )
-                    );
-                }
-
             }
 
+            // we gonna stress test the cpu
             if(DEBUG_HARDCORE){
-                // we gonna stress test this b!atch
                 numPlayers = 20;
-                for (int i = 0; i < numPlayers; i++) {
-
-                    int newY = i % 4 * 3 + 3;
-                    int newX = i / 4 * 5 + 3;
-
-                    snakeList.add (
-                            new Snake (
-                                    new Vector2(newX, newY),
-                                    Color.color(Math.random(), Math.random(), Math.random())
-                            )
-                    );
-                }
-
             }
 
+            // generate the players related to low or hardcore
+            if(DEBUG_LOWCORE || DEBUG_HARDCORE){
+                for (int i = 0; i < numPlayers; i++) {
+                    int newY = i % 4 * 3 + 3;
+                    int newX = i / 4 * 5 + 3;
+                    snakeList.add (
+                            new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
+                    );
+                }
+            }
+
+            // we want to play alone
             if(DEBUG_SINGLEPLAYER){
                 snakeList.add ( new Snake ( new Vector2(5,5), Color.PURPLE));
             }
 
+            // every snake is controlled by random keystrokes or some pattern
             if(DEBUG_EVERYBODY_NPC){
                 for (Snake snake : snakeList) {
                     snake.isNPC = true;
                 }
             }
-
-        }
-
-        if(!AppSnakeFX.inDebugMode){
+        } else {
+            // regular game-play
             // TODO: these values need to get retrieved from the backend
             numPlayers = 1;
             Color[] playerColors = {Color.PURPLE, Color.BLUE, Color.RED, Color.GREEN};
@@ -169,69 +162,15 @@ public class GameController extends BaseController {
         currentStage.centerOnScreen();
         Platform.runLater(() -> currentStage.toFront());
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
 
         // converted object to lambda using intellij's refactor suggestion
         // this lambda provides a players input
-        scene.setOnKeyPressed(event -> {
-
-            KeyCode playerInput = event.getCode();
-
-            // TODO: merge the following code!
-            for (KeyCode firstPlayerInput : firstPlayerControls) {
-                if (firstPlayerInput == playerInput) {
-                    Snake firstPlayer = snakeList.get(0);
-                    firstPlayer.currentDirection = getDirectionForInput(firstPlayer.currentDirection, firstPlayerInput);
-                }
-            }
-
-            // TODO: merge the following code!
-            for (KeyCode secondPlayerInput : secondPlayerControls) {
-                if (secondPlayerInput == playerInput) {
-                    Snake secondPlayer = snakeList.get(1);
-                    secondPlayer.currentDirection = getDirectionForInput(secondPlayer.currentDirection,secondPlayerInput);
-                }
-            }
-
-            if (playerInput == KeyCode.SPACE) {
-                // Pause-Mode - this shoudnt be available in regular multiplayer
-                // toggle the paused state
-                paused = !paused;
-
-                if(paused) { timeline.stop();}
-                else { timeline.play();}
-
-            } else if(playerInput == KeyCode.R){
-                currentStage.close();
-                showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME);
-            }
-
-            if(playerInput == KeyCode.PLUS){
-                // increase the tick amount <=> faster game
-                if(TICK_TIME_AMOUNT > 10){
-                    TICK_TIME_AMOUNT -= TICK_TIME_CHANGE_AMOUNT;
-                }
-                timeline.stop();
-                timeline = null;
-                timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event2 -> update(gc)));
-                timeline.setCycleCount(Animation.INDEFINITE);
-                timeline.play();
-            }
-
-            if(playerInput == KeyCode.MINUS){
-                // increase the tick amount <=> slower game
-                TICK_TIME_AMOUNT += TICK_TIME_CHANGE_AMOUNT;
-                timeline.stop();
-                timeline = null;
-                timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event2 -> update(gc)));
-                timeline.setCycleCount(Animation.INDEFINITE);
-                timeline.play();
-            }
-
-        });
+        scene.setOnKeyPressed(this);
 
         // initialize the food on the map
         generateFood();
+
+        gc = canvas.getGraphicsContext2D();
 
         // The game animation happens because of the timeline
         // every change happens in a new keyFrame (update-loop)
@@ -239,32 +178,6 @@ public class GameController extends BaseController {
         timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event -> update(gc)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-    }
-
-
-
-    private Vector2 getDirectionForInput(Vector2 currentDirection , KeyCode playerInput) {
-
-        if (playerInput == firstPlayerControls[0] || playerInput == secondPlayerControls[0]) {
-            if (currentDirection != Vector2.DOWN) {
-                currentDirection = Vector2.UP;
-            }
-        } else if (playerInput == firstPlayerControls[1] || playerInput == secondPlayerControls[1]) {
-            if (currentDirection != Vector2.RIGHT) {
-                currentDirection = Vector2.LEFT;
-            }
-        } else if (playerInput == firstPlayerControls[2] || playerInput == secondPlayerControls[2]) {
-            if (currentDirection != Vector2.UP) {
-                currentDirection = Vector2.DOWN;
-            }
-        } else if (playerInput == firstPlayerControls[3] || playerInput == secondPlayerControls[3]) {
-            if (currentDirection != Vector2.LEFT) {
-                currentDirection = Vector2.RIGHT;
-            }
-        }
-
-        return currentDirection;
-
     }
 
     /**
@@ -283,6 +196,94 @@ public class GameController extends BaseController {
 
         drawBackground(gc);
 
+        updateAI();
+
+        for (Snake snake : snakeList)
+        {
+            // calculate the current position for each snake
+            for (int i = snake.body.size() - 1; i >= 1; i--) {
+                snake.body.get(i).x = snake.body.get(i - 1).x;
+                snake.body.get(i).y = snake.body.get(i - 1).y;
+            }
+
+            snake.head = snake.head.add(snake.currentDirection);
+        }
+
+
+        // visualize the game with its players (the snakes), the food, the score, etc.
+        drawFood(gc);
+        drawSnake(gc);
+        drawScore(gc);
+
+        // check if something happened
+        checkGameOver();
+        checkEatFood();
+
+        drawDirections(gc);
+    }
+
+
+    /**
+     * Handles the input of the players or NPCs.
+     * @param event - The input event
+     */
+    @Override
+    public void handle(KeyEvent event) {
+        KeyCode playerInput = event.getCode();
+
+        // TODO: merge the following code!
+        for (KeyCode firstPlayerInput : firstPlayerControls) {
+            if (firstPlayerInput == playerInput) {
+                Snake firstPlayer = snakeList.get(0);
+                firstPlayer.currentDirection = getDirectionForInput(firstPlayer.currentDirection, firstPlayerInput);
+            }
+        }
+
+        // TODO: merge the following code!
+        for (KeyCode secondPlayerInput : secondPlayerControls) {
+            if (secondPlayerInput == playerInput) {
+                Snake secondPlayer = snakeList.get(1);
+                secondPlayer.currentDirection = getDirectionForInput(secondPlayer.currentDirection,secondPlayerInput);
+            }
+        }
+
+        if (playerInput == KeyCode.SPACE) {
+            // Pause-Mode - this shoudnt be available in regular multiplayer
+            // toggle the paused state
+            paused = !paused;
+
+            if(paused) { timeline.stop();}
+            else { timeline.play();}
+
+        }
+
+        if(playerInput == KeyCode.R){
+            currentStage.close();
+            showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME);
+        }
+
+        // increase the tick amount <=> faster game
+        if(playerInput == KeyCode.PLUS){
+            if(TICK_TIME_AMOUNT > 10){
+                TICK_TIME_AMOUNT -= TICK_TIME_CHANGE_AMOUNT;
+            }
+        }
+
+        // increase the tick amount <=> slower game
+        if(playerInput == KeyCode.MINUS){
+            TICK_TIME_AMOUNT += TICK_TIME_CHANGE_AMOUNT;
+        }
+
+        if(playerInput == KeyCode.PLUS || playerInput == KeyCode.MINUS){
+            timeline.stop();
+            timeline = null;
+            timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event2 -> update(gc)));
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+        }
+    }
+
+    private void updateAI() {
         // cpu mechanism
         for (Snake snake : snakeList) {
 
@@ -304,40 +305,37 @@ public class GameController extends BaseController {
 
                 if(DEBUG_NPC_MOVEMENT_RANDOM_PATHS){
 
-                    int min = 0;
-                    int max = firstPlayerControls.length ;
-                    Random random = new Random();
-
                     boolean nextDirectionInvalid;
                     Vector2 nextValidDirection = Vector2.ZERO;
 
                     do {
 
                         // We calculate a new direction for the snake to go to, randomly based on a simulated player input between W,A,S and D
-                        Vector2 nextDirection = getDirectionForInput(snake.currentDirection, secondPlayerControls[random.nextInt(max - min) + min]);
+                        Vector2 nextDirection = getDirectionForInput(snake.currentDirection, secondPlayerControls[RNG.getInstance().generate(0, firstPlayerControls.length)]);
 
                         // We get a reference to the current position of the snakes head
                         Vector2 currentPosition = new Vector2(snake.head);
+                        Vector2 nextPosition = new Vector2(snake.head).add(nextDirection);
 
                         // we check if the snakes head + the next direction would result in a crash into the wall
                         boolean hitWallX = currentPosition.x + nextDirection.x < 0 || currentPosition.x + nextDirection.x > config.rows - 1;
                         boolean hitWallY = currentPosition.y + nextDirection.y < 0 || currentPosition.y + nextDirection.y > config.columns - 1;
                         boolean snakeHitItself = false;
+                        boolean snakeHitAnotherSnake = false;
 
                         for (Vector2 bodyPartPosition : snake.body) {
                             if
                             (
-                                currentPosition.x + nextDirection.x == bodyPartPosition.x &&
-                                currentPosition.y + nextDirection.y == bodyPartPosition.y
+                                    currentPosition.x + nextDirection.x == bodyPartPosition.x &&
+                                            currentPosition.y + nextDirection.y == bodyPartPosition.y
                             )
                             {
                                 snakeHitItself = true;
                             }
                         }
 
-
                         // if one of the cases happens, the position is invalid <=> recalculate another position
-                        if (hitWallX || hitWallY || snakeHitItself) {
+                        if (hitWallX || hitWallY || snakeHitItself || snakeHitAnotherSnake) {
                             nextDirectionInvalid = true;
                         } else {
                             nextDirectionInvalid = false;
@@ -352,30 +350,6 @@ public class GameController extends BaseController {
 
             }
         }
-
-        for (Snake snake : snakeList)
-        {
-            // calculate the current position for each snake
-            for (int i = snake.body.size() - 1; i >= 1; i--) {
-                snake.body.get(i).x = snake.body.get(i - 1).x;
-                snake.body.get(i).y = snake.body.get(i - 1).y;
-            }
-
-            snake.head = snake.head.add(snake.currentDirection);
-        }
-
-
-        // visualize the game with its players (the snakes), the food, the score, etc.
-
-        drawFood(gc);
-        drawSnake(gc);
-        drawScore(gc);
-
-        checkGameOver();
-        checkEatFood();
-
-
-        drawDirections(gc);
     }
 
     private void drawDirections(GraphicsContext gc) {
@@ -422,25 +396,42 @@ public class GameController extends BaseController {
     }
 
     /**
-     * Generate the food for the players within the game map.
-     * TODO - maybe we shouldnt generate food below a snake?
+     * Generate food for the players within the map.
+     * - Dont generate a food below a players head
+     * - Dont generate a food below a players body
      */
     private void generateFood() {
 
-        while (true) {
-            foodX = (int) (Math.random() * config.rows);
-            foodY = (int) (Math.random() * config.columns);
+        boolean invalidFoodPosition = true;
+
+        int newX;
+        int newY;
+
+        do {
+
+            // calculate new positions
+            newX = RNG.getInstance().generate(0, config.rows);
+            newY = RNG.getInstance().generate(0,config.columns);
 
             for (Snake snake : snakeList) {
-                Vector2 head = snake.body.get(0);
-                if (head.getX() == foodX && head.getY() == foodY) { // food can appear below snake (snake shown above food)
-                    continue;
+                if(snake.head.x != newX && snake.head.y == newY){
+                    invalidFoodPosition = false;
+                }
+                for (Vector2 bodyPart : snake.body) {
+                    if(bodyPart.x != newX && bodyPart.y != newY){
+                        invalidFoodPosition = false;
+                    }
                 }
             }
 
-            foodImage = new Image(FOOD_IMAGE_PATHS[(int) (Math.random() * FOOD_IMAGE_PATHS.length)]);
-            break;
-        }
+        } while (invalidFoodPosition);
+
+        Food food = new Food(
+                new Image(FOOD_IMAGE_PATHS[RNG.getInstance().generate(0, FOOD_IMAGE_PATHS.length)]),
+                new Vector2(newX, newY)
+        );
+
+        foodList.add(food);
 
     }
 
@@ -449,13 +440,15 @@ public class GameController extends BaseController {
      * @param gc
      */
     private void drawFood(GraphicsContext gc) {
-        gc.drawImage(
-                foodImage,
-                foodX * config.tileSize,
-                foodY * config.tileSize,
-                config.tileSize,
-                config.tileSize
-        );
+        for (Food food : foodList) {
+            gc.drawImage(
+                    food.drawable,
+                    food.getPosition().x * config.tileSize,
+                    food.getPosition().y * config.tileSize,
+                    config.tileSize,
+                    config.tileSize
+            );
+        }
     }
 
     /**
@@ -543,10 +536,13 @@ public class GameController extends BaseController {
 
     private void checkEatFood() {
         for (Snake snake : snakeList) {
-            if (snake.head.getX() == foodX && snake.head.getY() == foodY) {
-                snake.body.add(new Vector2(-1, -1));
-                generateFood();
-                score += 5;
+            for (Food food : foodList) {
+                if (snake.head.getX() == food.getPosition().x && snake.head.getY() == food.getPosition().y) {
+                    foodList.remove(food);
+                    snake.body.add(new Vector2(-1, -1));
+                    generateFood();
+                    score += 5;
+                }
             }
         }
     }
@@ -557,5 +553,28 @@ public class GameController extends BaseController {
         gc.fillText("Score: " + score, 10, 35);
     }
 
+    private Vector2 getDirectionForInput(Vector2 currentDirection , KeyCode playerInput) {
+
+        if (playerInput == firstPlayerControls[0] || playerInput == secondPlayerControls[0]) {
+            if (currentDirection != Vector2.DOWN) {
+                currentDirection = Vector2.UP;
+            }
+        } else if (playerInput == firstPlayerControls[1] || playerInput == secondPlayerControls[1]) {
+            if (currentDirection != Vector2.RIGHT) {
+                currentDirection = Vector2.LEFT;
+            }
+        } else if (playerInput == firstPlayerControls[2] || playerInput == secondPlayerControls[2]) {
+            if (currentDirection != Vector2.UP) {
+                currentDirection = Vector2.DOWN;
+            }
+        } else if (playerInput == firstPlayerControls[3] || playerInput == secondPlayerControls[3]) {
+            if (currentDirection != Vector2.LEFT) {
+                currentDirection = Vector2.RIGHT;
+            }
+        }
+
+        return currentDirection;
+
+    }
 
 }
