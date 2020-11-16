@@ -129,7 +129,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     int newY = i % 4 * 3 + 3;
                     int newX = i / 4 * 5 + 3;
                     snakeList.add (
-                            new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
+                        new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
                     );
                 }
             }
@@ -209,7 +209,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 snake.body.get(i).x = snake.body.get(i - 1).x;
                 snake.body.get(i).y = snake.body.get(i - 1).y;
             }
-
             snake.head = snake.head.add(snake.currentDirection);
         }
 
@@ -276,6 +275,9 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         }
 
+        if(playerInput == KeyCode.ESCAPE){
+            currentStage.close();
+        }
         if(playerInput == KeyCode.R){
             currentStage.close();
             showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME);
@@ -564,13 +566,12 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      * Check if the game is finished.
      */
     public void checkGameOver() {
-
         // check for wall collision
         for (Snake snake : snakeList) {
 
             if (snake.head.x < 0 || snake.head.y < 0 ||
-                    snake.head.x * config.tileSize >= config.width ||
-                    snake.head.y * config.tileSize >= config.width) {
+                    snake.head.x > config.rows -1 ||
+                    snake.head.y > config.columns -1) {
                 gameOver = true;
             }
 
