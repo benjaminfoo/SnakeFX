@@ -48,12 +48,24 @@ public class Snake {
         head.x = spawn.x;
         head.y = spawn.y;
 
-        /*
-        for (Vector2 bodyPartPosition : body) {
-            bodyPartPosition.x = spawn.x;
-            bodyPartPosition.y = spawn.y;
+        this.color = color;
+    }
+
+
+    /**
+     * Initialize the snakes head and its body parts at @param spawn
+     */
+    public Snake(Vector2 spawn, Color color, int newLength){
+        this.initialLength = newLength;
+
+        for (int i = 0; i < initialLength; i++) {
+            Vector2 bodyPart = new Vector2(-1, -1);
+            body.add(bodyPart);
         }
-        */
+        head = body.get(0);
+
+        head.x = spawn.x;
+        head.y = spawn.y;
 
         this.color = color;
     }

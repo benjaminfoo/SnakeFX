@@ -220,6 +220,21 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         checkEatFood();
 
         drawDirections(gc);
+        // drawIndices(gc);
+
+    }
+
+    Font arial10 = (Font.font("Arial", 10));
+
+    private void drawIndices(GraphicsContext gc) {
+        gc.setFont(arial10);
+        int tileSize = config.tileSize;
+        int halfTileSize = config.tileSize / 2;
+        for (int y = 0; y < config.rows; y++) {
+            for (int x = 0; x < config.columns; x++) {
+                gc.fillText("(" + x + "," + y + ")", x * tileSize , y * tileSize + halfTileSize);
+            }
+        }
     }
 
 
@@ -283,6 +298,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         }
     }
 
+
     private void updateAI() {
         // cpu mechanism
         for (Snake snake : snakeList) {
@@ -337,9 +353,28 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                         // if one of the cases happens, the position is invalid <=> recalculate another position
                         if (hitWallX || hitWallY || snakeHitItself || snakeHitAnotherSnake) {
                             nextDirectionInvalid = true;
+
+                            // if this happens to often after a while, we can be sure the snake trapped / put itself in a box
+                            // by the walls and / or its body - this forces the game to hang / get stuck because it tries to
+                            // get a next valid position to go to - but there is none - a possible solution for this would be
+                            // to introduce a https://de.wikipedia.org/wiki/Hamiltonkreisproblem
+                            boxedSuicideCounter++;
+
+                            if(boxedSuicideCounter >= boxedSuicideCounterMax){
+                                snakeTrappedItself = true;
+                                respawnSnake(snake);
+
+                                boxedSuicideCounter = 20;
+                                snakeTrappedItself = false;
+                            }
                         } else {
                             nextDirectionInvalid = false;
                             nextValidDirection = nextDirection;
+
+                            // there was a valid next position so we can reset this counter
+                            boxedSuicideCounter = 0;
+                            snakeTrappedItself = false;
+
                         }
 
                     } while (nextDirectionInvalid);
@@ -351,6 +386,41 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             }
         }
     }
+
+    private void respawnSnake(Snake snake){
+        // despawn the current trapped snake
+        int newLength = snake.body.size();
+        snake.head = null;
+        snake.body.clear();
+        snake.body = null;
+        snakeList.remove(snake);
+
+        // respawn the snake somewhere else
+        int newX = RNG.getInstance().generate(0, config.columns);
+        int newY = RNG.getInstance().generate(0, config.rows);
+
+        boolean positionInvalid = false;
+
+        do {
+            for (Snake snakeOnBoard : snakeList) {
+                for (Vector2 bodyPart : snakeOnBoard.body) {
+                    if (newX == bodyPart.x && newY == bodyPart.y) {
+                        positionInvalid = true;
+                        break;
+                    }
+                }
+            }
+        } while (positionInvalid);
+
+        Snake newSnake = new Snake (new Vector2(newX, newY), snake.color, newLength);
+        newSnake.isNPC = true;
+        snakeList.add (newSnake);
+
+    }
+
+    private boolean snakeTrappedItself;
+    private int boxedSuicideCounter = 0;
+    private int boxedSuicideCounterMax = 20;
 
     private void drawDirections(GraphicsContext gc) {
         if(DEBUG_DRAW_DIRECTIONS){
