@@ -9,6 +9,11 @@ import java.util.Objects;
  * Model class for a food.
  * Contains a image which gets drawn on the screen and a position in order to determine its position.
  */
+
+
+// Warum haben wir nicht das genau selbe konzept wie davor einfach übernommen und jedoch das generate in eine liste laufen lassen? Und dann auf die Listenelemente arbeiten?
+
+
 public class Food {
 
     public Image drawable;

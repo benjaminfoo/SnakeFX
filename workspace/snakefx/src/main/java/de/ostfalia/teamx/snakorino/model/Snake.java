@@ -27,6 +27,7 @@ public class Snake {
     public Color color;
 
     // Flag that determines if this snake is controlled by a human player or by the pc
+    // !Communication from lobby nessacary!
     public boolean isNPC;
 
     // the current input button (W,A,S,D) - for example

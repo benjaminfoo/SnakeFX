@@ -46,6 +46,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     // the configuration in order to setup a game
     // TODO: this needs to get connected with a SpielDefinition, i guess
+    // --> Does not the class has to get connected to SpiefDefinition and here we just call the class and leave it?
     private Config config = new Config();
 
     private static final String[] FOOD_IMAGE_PATHS = new String[]{
@@ -162,9 +163,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         currentStage.centerOnScreen();
         Platform.runLater(() -> currentStage.toFront());
 
-
-        // converted object to lambda using intellij's refactor suggestion
-        // this lambda provides a players input
         scene.setOnKeyPressed(this);
 
         // initialize the food on the map
