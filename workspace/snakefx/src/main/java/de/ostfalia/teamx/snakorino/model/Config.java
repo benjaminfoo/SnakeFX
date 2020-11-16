@@ -1,5 +1,6 @@
 package de.ostfalia.teamx.snakorino.model;
 
+ // TODO: this needs to get connected with a SpielDefinition, i guess
 public class Config {
 
     // Board configuration

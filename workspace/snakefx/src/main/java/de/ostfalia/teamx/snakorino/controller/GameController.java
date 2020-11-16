@@ -45,8 +45,8 @@ import static de.ostfalia.teamx.util.DebugOptions.*;
 public class GameController extends BaseController implements EventHandler<KeyEvent> {
 
     // the configuration in order to setup a game
-    // TODO: this needs to get connected with a SpielDefinition, i guess
-    // --> Does not the class has to get connected to SpiefDefinition and here we just call the class and leave it?
+
+    // CHECK Config.java
     private Config config = new Config();
 
     private static final String[] FOOD_IMAGE_PATHS = new String[]{
@@ -68,6 +68,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     // public double TICK_TIME_AMOUNT = 130;
     public double TICK_TIME_AMOUNT = 130;
     public double TICK_TIME_CHANGE_AMOUNT = 10;
+    // In den GameSetController î
 
     // FOOD STUFF - Extract to class Food.java
     // The image of the current food
@@ -85,6 +86,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     // refactor for multiplayer
     private int numPlayers;
     private List<Snake> snakeList = new LinkedList<>();
+
     KeyCode[] firstPlayerControls = {
             KeyCode.W,
             KeyCode.A,
@@ -103,6 +105,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     private GraphicsContext gc;
 
 
+    // for meanwhile developing the game
     @Override
     public void postInitialize() {
         super.postInitialize();
@@ -142,6 +145,8 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     snake.isNPC = true;
                 }
             }
+
+        // Normal mode
         } else {
             // regular game-play
             // TODO: these values need to get retrieved from the backend
@@ -151,6 +156,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 snakeList.add ( new Snake ( new Vector2(0, 5 * i), playerColors[i]));
             }
         }
+
 
         // add the initial UI to the scene
         Group root = new Group();
@@ -194,7 +200,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         drawBackground(gc);
 
-        updateAI();
+        updateNPC();
 
         for (Snake snake : snakeList)
         {
@@ -296,8 +302,8 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         }
     }
 
-
-    private void updateAI() {
+    // TODO: Aus dem GameController nehmen.
+    private void updateNPC() {
         // cpu mechanism
         for (Snake snake : snakeList) {
 
@@ -385,6 +391,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         }
     }
 
+    //If NPC Snake wraps itself it gets spawned somewhere else
     private void respawnSnake(Snake snake){
         // despawn the current trapped snake
         int newLength = snake.body.size();
@@ -575,6 +582,30 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 }
             }
         }
+
+        // Instead of going game over when hitting a wall you can also use a wallteleport
+        /*
+        public checkWallTeleport();
+        ...
+        public void checkWallTeleport() {
+
+            // check for wall collision
+            for (Snake snake : snakeList) {
+
+                if (snake.head.x < 0){
+                    snake.head.x = config.rows;
+                }
+                else if (snake.head.y < 0){
+                    snake.head.y = config.rows;
+                }
+                else if (snake.head.x > config.rows){
+                    snake.head.x = 0;
+                }
+                else if (snake.head.y > config.columns) {
+                    snake.head.y = 0;
+                }
+        */
+
 
         // check for snake-collision
         for (Snake a : snakeList) {

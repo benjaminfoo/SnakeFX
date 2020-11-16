@@ -43,6 +43,9 @@ public class Food {
         this.position = position;
     }
 
+
+
+    // To distinguish different foods
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
