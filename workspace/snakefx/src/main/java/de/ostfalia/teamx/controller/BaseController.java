@@ -1,5 +1,6 @@
 package de.ostfalia.teamx.controller;
 
+import de.ostfalia.teamx.ApplicationConstants;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -55,6 +56,44 @@ public abstract class BaseController {
             // get a reference to its corresponding controller
             BaseController baseController = fxmlLoader.getController();
 
+            // pass the reference of the current window stage to the newly instantiated controller
+            baseController.currentStage = currentStage;
+            currentStage.setScene(new Scene(root));
+
+            // setup the title and the icon of the application
+            baseController.currentStage.getIcons().add(new Image("icon.png"));
+            baseController.setTitle(newTitle);
+
+            // initialize everything related to the user-interface
+            baseController.postInitialize();
+
+            baseController.currentStage.setMinHeight(600);
+            baseController.currentStage.setMinWidth(800);
+            baseController.currentStage.centerOnScreen();
+
+            // show the setup and referenced window
+            // window.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void showLayoutInNewWindow(String layoutName, String newTitle)  {
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getClassLoader().getResource(layoutName));
+        Parent root = null;
+
+        try {
+
+            // load the fxml by the given layoutName
+            root = fxmlLoader.load();
+
+            // get a reference to its corresponding controller
+            BaseController baseController = fxmlLoader.getController();
+
             // create a new stage, set the newly loaded layout as the root element of it
             Stage window = new Stage();
             Scene scene = new Scene(root);
@@ -78,11 +117,15 @@ public abstract class BaseController {
         }
 
 
+
     }
 
     public void closeStage(){
         currentStage.close();
     }
 
+    public void showHomeScreen(){
+        showLayout(Scenes.VIEW_HOMESCREEN, ApplicationConstants.TITLE_HOMESCREEN);
+    }
 
 }

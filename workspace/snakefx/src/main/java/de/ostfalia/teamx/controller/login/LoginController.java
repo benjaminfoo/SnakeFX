@@ -1,7 +1,10 @@
 package de.ostfalia.teamx.controller.login;
 
+import de.ostfalia.teamx.AppSnakeFX;
+import de.ostfalia.teamx.ApplicationConstants;
 import de.ostfalia.teamx.ProjectEndpoints;
 import de.ostfalia.teamx.controller.BaseController;
+import de.ostfalia.teamx.controller.Scenes;
 import de.ostfalia.teamx.task.LoginTask;
 import de.ostfalia.teamx.task.RegisterTask;
 import javafx.beans.binding.Bindings;
@@ -23,7 +26,7 @@ public class LoginController extends BaseController {
     TextField tfName, tfPassword, tfServerURL;
 
     @FXML
-    Button btnLogin, btnRegister;
+    Button btnLogin, btnRegister, debugButton;
 
     @FXML
     Label lblStatus;
@@ -41,6 +44,8 @@ public class LoginController extends BaseController {
         btnRegister.setOnAction(clickEvent -> {
             executeRegistration();
         });
+
+        debugButton.setOnAction(clickEvent -> showLayoutInNewWindow(Scenes.VIEW_DEBUG, ApplicationConstants.TITLE_DEBUG_CHOOSER));
 
         // this disables the login / register button if no input for name / password has been provided
         btnLogin.disableProperty().bind(
@@ -79,7 +84,8 @@ public class LoginController extends BaseController {
             lblStatus.setText("Login succesful!");
         });
 
-        new Thread(loginTask).start();
+        // new Thread(loginTask).start();
+        showLayout(Scenes.VIEW_HOMESCREEN, ApplicationConstants.TITLE_HOMESCREEN);
     }
 
     public void executeRegistration(){

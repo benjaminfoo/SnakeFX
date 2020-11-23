@@ -57,19 +57,19 @@ public class DebugSceneController extends BaseController {
         super.initialize();
 
         login.setOnAction(click -> {
-            showLayout(Scenes.VIEW_LOGIN, ApplicationConstants.TITLE_LOGIN);
+            showLayoutInNewWindow(Scenes.VIEW_LOGIN, ApplicationConstants.TITLE_LOGIN);
         });
         homescreen.setOnAction(click -> {
-            showLayout(Scenes.VIEW_HOMESCREEN, ApplicationConstants.TITLE_HOMESCREEN);
+            showLayoutInNewWindow(Scenes.VIEW_HOMESCREEN, ApplicationConstants.TITLE_HOMESCREEN);
         });
         gamehistorie.setOnAction(click -> {
-            showLayout(Scenes.VIEW_HISTORY, ApplicationConstants.TITLE_HISTORY);
+            showLayoutInNewWindow(Scenes.VIEW_HISTORY, ApplicationConstants.TITLE_HISTORY);
         });
         newgame.setOnAction(click -> {
-            showLayout(Scenes.VIEW_NEW_GAME, ApplicationConstants.TITLE_NEW_GAME);
+            showLayoutInNewWindow(Scenes.VIEW_NEW_GAME, ApplicationConstants.TITLE_NEW_GAME);
         });
         gamescene.setOnAction(click -> {
-            showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME);
+            showLayoutInNewWindow(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME);
         });
 
         // Manage the debugmode of the application
@@ -96,7 +96,6 @@ public class DebugSceneController extends BaseController {
         DebugOptions.DEBUG_DRAW_DIRECTIONS = debugDrawDirection.isSelected();
         debugDrawDirection.selectedProperty().addListener((o, oldVal, newVal) -> { DebugOptions.DEBUG_DRAW_DIRECTIONS = newVal;});
 
-        gamescene.fire();
 
     }
 

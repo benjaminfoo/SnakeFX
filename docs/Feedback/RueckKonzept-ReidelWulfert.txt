@@ -1,0 +1,10 @@
+Rückmeldung zum Konzept Reidel/Wulfert
+
+Ihr Konzept ist insgesamt sehr durchdacht, gut organisiert und vor allem passend dargestellt!
+Einige Diagramme wären zur Darstellung Ihrer Überlegungen noch hilfreich gewesen; andererseits ist der Link auf das Repository perfekt. Da ich dieses aber nicht bis in jede Datei durchforstet habe, fehlt mir insgesamt noch die Erläuterung der Umsetzung der geforderten Entwurfsmuster.
+
+Bitte ergänzen Sie Ihre Abgabe zur Konzeptüberarbeitung um diese Informatonen zur Verwendung der Entwurfsmuster.
+
+Die Präsentation Ihres Konzeptes wirkte etwas unvorbereitet. Bitte teilen Sie sich für die Prüfung Ihre Inhalte und zeitlichen Anteile besser auf.
+
+Ihr Handout enthält einen guten zusammenfassenden Überblick über Ihr Konzept. Offene Fragen sind hingegen nicht so hilfreich dargestellt.

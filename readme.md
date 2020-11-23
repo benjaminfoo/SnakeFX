@@ -17,7 +17,15 @@ Note: Die UML-Diagramme wurden mit der Software "Dia" erstellt.
 - 18.10.2020 - Überarbeitung der Diagramme
 - 23.10.2020 - Entwurf von UI-Mockups, Ergänzung der Diagramme
 - 24.10.2020 - Ergänzung der Diagramme
-- 25.10. - 05.10. - Partielle Implemntierung der Schnittstelle
+- 25.10.2020 - Partielle Implementierung der Schnittstelle
+- 27.10.2020 - Vollständige Implementierung des Front-Ends (UI, ohne Logik - Szenenwechsel ist möglich)
+- 28.10.2020 - Partielle Verbindung des Front- mit dem Back-Ends
+- xy.11.2020 - Implementierung Snake
+- xy.11.2020 - Implementierung Snake, lokaler Multispieler
+- xy.11.2020 - Implementierung Snake, lokale KI (NPC)
+- 28.11.2020 - Demonstration des aktuellen Standes, Vorschau des Prototypen
+- 29.11.2020 - Überarbeitung und Einarbeitung des Feedbacks, sowohl von Gruppe als auch Dozent
+
 
 ## Offene Tasks
 Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisiert werden müssen
@@ -35,11 +43,11 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
   - Button: Betrete existierendes Spiel
 - Neue UI "Erstelle Spiel" 
   - Impl. des User-Interfaces [DONE]
-  - Definition einer Spielrunde
-  - Senden der Spielrunde an das Backend
+  - Definition einer Spielrunde [DONE]
+  - Senden der Spielrunde an das Backend 
 - Neue UI "Spielhistorie"
   - Impl. des User-Interfaces [DONE]
-  - Bezug bisheriger Spielerunden vom Backend
+  - Bezug bisheriger Spielerunden vom Backend 
 - Neue UI "Spielrunde" o. "Aktives Spiel"
   - Beinhaltet alle Spieler einer Spielrunde
   - Stellt die Spieler, deren Figuren, das Spielfeld und den Punktestand dar 
@@ -63,15 +71,14 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
 - Spieler verlässt Spiel
 - ...
 
-
-### Offene Fragen
+### Beantwortete Fragen
 - wird eine Spielrunde client- oder serverseitig berechnet?
-  - Position der Spieler
-  - Punkte der Spieler
-  - ...
+ - alles wird Clientseitig berechnet, einzig die Eingabedaten (Richtungsvektoren) werden an das Backend übertragen
 - wie werden die Benutzereingaben während des Spiels verarbeitet?
   - Ein Spieler betätigt W,A,S oder D -> Was passiert?
   - Alternative Eingabemöglichkeiten
+  
+### Offene Fragen
 - was passiert, wenn ein Spieler die Lobby verlässt?
 - was passiert, wenn ein Spieler ein aktives Spiel verlässt?
   - oder evtl. die Verbindung unterbrochen wird?

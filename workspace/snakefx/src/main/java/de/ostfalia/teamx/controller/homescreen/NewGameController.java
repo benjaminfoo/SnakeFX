@@ -45,7 +45,7 @@ public class NewGameController extends BaseController {
         ruleSet.setValue(new Spielregel("Highscore: 100Pts", false));
 
         newGame.setOnAction(onclick -> { executeCreateNewGame(); });
-        abort.setOnAction(onclick -> { closeStage();});
+        abort.setOnAction(onclick -> { showHomeScreen();});
     }
 
     private void executeCreateNewGame() {
@@ -81,6 +81,7 @@ public class NewGameController extends BaseController {
             e.printStackTrace();
         }
 
+        showHomeScreen();
     }
 
 }
