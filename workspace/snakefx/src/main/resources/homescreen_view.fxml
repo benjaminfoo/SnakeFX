@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
@@ -18,29 +18,81 @@
       </Label>
    </top>
    <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <VBox HBox.hgrow="ALWAYS">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                <children>
-                  <Label layoutX="10.0" layoutY="162.0" text="Aktive Spieler" />
-                  <ListView fx:id="activePlayers" maxWidth="1.7976931348623157E308" />
-                  <Label text="Aktive Spiele" />
-                  <ListView fx:id="activeGames" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" />
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox>
+                           <children>
+                              <VBox maxWidth="200.0">
+                                 <children>
+                                    <Label text="Spieler">
+                                       <font>
+                                          <Font name="System Bold" size="12.0"/>
+                                       </font>
+                                    </Label>
+                                    <ListView fx:id="activePlayers" maxWidth="1.7976931348623157E308"/>
+                                 </children>
+                                 <padding>
+                                    <Insets right="15.0"/>
+                                 </padding>
+                              </VBox>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Laufende Spiele">
+                                       <font>
+                                          <Font name="System Bold" size="12.0"/>
+                                       </font>
+                                    </Label>
+                                    <ListView fx:id="activeGames" maxWidth="1.7976931348623157E308"/>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox minWidth="75.0" spacing="15.0" HBox.hgrow="NEVER">
+                     <children>
+                        <Button fx:id="gameHistory" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                text="Spielhistorie" VBox.vgrow="ALWAYS"/>
+                        <Button fx:id="joinGame" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                text="Betrete Spiel" VBox.vgrow="ALWAYS"/>
+                        <Button fx:id="newGame" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                text="Neues Spiel" VBox.vgrow="ALWAYS"/>
+                        <Button fx:id="disconnect" layoutX="10.0" layoutY="60.0" maxWidth="1.7976931348623157E308"
+                                mnemonicParsing="false" text="Abmelden" VBox.vgrow="ALWAYS"/>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0">
+               <padding>
+                  <Insets bottom="15.0" top="15.0"/>
+               </padding>
+            </HBox>
+            <VBox VBox.vgrow="ALWAYS">
                <children>
-                  <Button fx:id="gameHistory" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Spielhistorie" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="joinGame"  maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Betrete Spiel" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="newGame" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Neues Spiel" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="disconnect" layoutX="10.0" layoutY="60.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Abmelden" VBox.vgrow="ALWAYS" />
+                  <Label text="Chat">
+                     <font>
+                        <Font name="System Bold" size="12.0"/>
+                     </font>
+                  </Label>
+                  <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Dies ist der Chat."
+                            wrapText="true" VBox.vgrow="ALWAYS"/>
+                  <HBox spacing="5.0">
+                     <children>
+                        <TextField maxWidth="1.7976931348623157E308"
+                                   promptText="Geben Sie etwas ein und drücken Sie auf Senden ..." HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="sendUserContent" mnemonicParsing="false" text="Senden"/>
+                     </children>
+                     <padding>
+                        <Insets top="5.0"/>
+                     </padding>
+                  </HBox>
                </children>
             </VBox>
          </children>
-         <padding>
-            <Insets top="15.0" />
-         </padding>
-      </HBox>
+      </VBox>
    </center>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

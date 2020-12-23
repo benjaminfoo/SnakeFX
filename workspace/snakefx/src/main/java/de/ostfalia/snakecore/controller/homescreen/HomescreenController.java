@@ -40,11 +40,28 @@ public class HomescreenController extends BaseController {
      * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader.
      * This initializes the currently active players and the active games.
      */
-    public void initialize(){
+    public void initialize() {
 
         super.initialize();
 
+        updateUIRemote();
+
+        newGame.setOnAction(onClick -> {
+            showLayout(Scenes.VIEW_NEW_GAME, ApplicationConstants.TITLE_NEW_GAME);
+        });
+        gameHistory.setOnAction(onClick -> {
+            showLayout(Scenes.VIEW_HISTORY, ApplicationConstants.TITLE_HISTORY);
+        });
+        disconnect.setOnAction(onClick -> {
+            closeStage();
+        });
+    }
+
+    private void updateUIRemote() {
         try {
+            activePlayers.getItems().clear();
+            activeGames.getItems().clear();
+
             List<Spieler> spielerList = new GetPlayerTask().getPlayer();
             activePlayers.setItems(FXCollections.observableArrayList(spielerList));
 
@@ -53,10 +70,6 @@ public class HomescreenController extends BaseController {
         } catch (UnirestException e) {
             e.printStackTrace();
         }
-
-        newGame.setOnAction(onClick -> { showLayout(Scenes.VIEW_NEW_GAME, ApplicationConstants.TITLE_NEW_GAME); });
-        gameHistory.setOnAction(onClick -> { showLayout(Scenes.VIEW_HISTORY, ApplicationConstants.TITLE_HISTORY); });
-        disconnect.setOnAction(onClick -> { closeStage(); });
     }
 
 }

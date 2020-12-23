@@ -1,10 +1,10 @@
 package de.ostfalia.snakecore.SnakeServer.controller;
 
+import de.ostfalia.snakecore.SnakeServer.persistance.SpielDefinitionRepository;
 import de.ostfalia.snakecore.SnakeServer.persistance.SpielerRepository;
 import de.ostfalia.snakecore.SnakeServer.persistance.SpielstandRepository;
 import de.ostfalia.snakecore.model.SpielDefinition;
 import de.ostfalia.snakecore.model.Spieler;
-import de.ostfalia.snakecore.model.Spielrunde;
 import de.ostfalia.snakecore.model.Spielstand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 import static de.ostfalia.snakecore.ProjectEndpoints.*;
@@ -23,12 +22,15 @@ import static de.ostfalia.snakecore.ProjectEndpoints.*;
  */
 @RestController
 public class ApiController {
- 
+
     @Autowired
     private SpielerRepository spielerRepository;
 
     @Autowired
     private SpielstandRepository spielstandRepository;
+
+    @Autowired
+    private SpielDefinitionRepository spielDefinitionRepository;
 
     // TODO: Implement password encryption with bCrypt
     // @Autowired
@@ -71,9 +73,7 @@ public class ApiController {
     @GetMapping(path = {API_PATH + API_ENDPOINT_LOBBY})
     public ResponseEntity<List<SpielDefinition>> getLobby() {
         try {
-            // return new ResponseEntity<List<SpielDefinition>>(lobbyController.getSpiele(), HttpStatus.OK);
-            // TODO; this list is empty!!!!
-            return new ResponseEntity<List<SpielDefinition>>(Collections.emptyList(), HttpStatus.OK);
+            return new ResponseEntity<List<SpielDefinition>>(spielDefinitionRepository.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -82,14 +82,9 @@ public class ApiController {
     @PostMapping(path = {API_PATH + API_ENDPOINT_LOBBY})
     public void postNewGame(@RequestBody SpielDefinition neuesSpiel) {
 
-        // erzeuge eine neue Spielrunde anhand der Spieldefinition
-        Spielrunde spielrunde = new Spielrunde();
-        spielrunde.name = neuesSpiel.getNameOfTheGame();
+        // TODO: maybe check if there are inconsistencies or some other potential problems
+        spielDefinitionRepository.save(neuesSpiel);
 
-        // füge die neue Spielrunde der Lobby hinzu
-        //TODO:  lobbyController.lobby.aktiveSpiele.add(spielrunde);
-
-        System.out.println("Got new game: " + spielrunde);
     }
 
 

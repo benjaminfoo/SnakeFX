@@ -50,6 +50,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- We use the websocket api in order to exchange data, and to realize a chat mechanism =) -->
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.1</version>
+        </dependency>
+
 
     </dependencies>
 

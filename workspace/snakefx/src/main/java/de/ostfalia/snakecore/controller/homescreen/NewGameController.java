@@ -42,7 +42,6 @@ public class NewGameController extends BaseController {
 
         numberOfPlayers.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2,10,1));
         numberOfPowerups.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,50,1));
-        ruleSet.setValue(new Spielregel("Highscore: 100Pts", false));
 
         newGame.setOnAction(onclick -> { executeCreateNewGame(); });
         abort.setOnAction(onclick -> { showHomeScreen();});
@@ -77,6 +76,7 @@ public class NewGameController extends BaseController {
                     .header("Content-Type", "application/json")
                     .body(gson.toJson(spielDefinition))
                     .asString();
+
         } catch (UnirestException e) {
             e.printStackTrace();
         }

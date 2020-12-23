@@ -1,11 +1,26 @@
 package de.ostfalia.snakecore.model;
 
+import javax.persistence.*;
+
+/**
+ * Die SpielDefinition ist das Modell welches die Randbedingungen eines Spiels festlegt.
+ * - Es handelt sich dabei um kein aktives Spiel
+ * - Keinerlei Spieler haben Kontakt zu der Spieldefinition
+ * - Eine Spieldefinition dient als Meta-Konstrukt und wird bspw. in der Lobby visualisiert und über die API zur Verfügung gestellt
+ */
+@Entity
 public class SpielDefinition {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nameOfTheGame;
     private int numberOfPlayer;
     private int maxNumberOfPowerUps;
     private int mapWidth, mapHeight;
+
+    @OneToOne
     private Spielregel spielregel;
 
     public SpielDefinition() {
@@ -71,7 +86,15 @@ public class SpielDefinition {
     @Override
     public String toString() {
         return
-            nameOfTheGame + " | Map-size: " + mapWidth + " x " + mapHeight + "\n"
-            + "(x" + "/" + numberOfPlayer + ") " +" | Nr. of Powerups: " + maxNumberOfPowerUps;
+                nameOfTheGame + " | Map-size: " + mapWidth + " x " + mapHeight + "\n"
+                        + "(x" + "/" + numberOfPlayer + ") " + " | Nr. of Powerups: " + maxNumberOfPowerUps;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
