@@ -14,8 +14,8 @@
 	<groupId>de.ostfalia.teamx</groupId>
 	<artifactId>SnakeServer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SnakeServer</name>
 
+	<name>SnakeServer</name>
 	<description>SnakeServer project for using spring boot 2.3.4</description>
 
 	<properties>
@@ -89,14 +89,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-
-		<!-- This dependency allows the usage of the lombok framework -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-
 		<!-- This is used for executing junit-tests -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -140,26 +132,27 @@
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
 			<version>3.7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
+        </dependency>
 
-	</dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-	<!-- we're using java 11 - this needs to get setup with the maven build system -->
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
+    </dependencies>
+
+    <!-- we're using java 8 - this needs to get setup with the maven build system -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
 					<source>8</source>
 					<target>8</target>
 				</configuration>
