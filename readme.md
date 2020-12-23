@@ -20,17 +20,32 @@ Note: Die UML-Diagramme wurden mit der Software "Dia" erstellt.
 - 25.10.2020 - Partielle Implementierung der Schnittstelle
 - 27.10.2020 - Vollständige Implementierung des Front-Ends (UI, ohne Logik - Szenenwechsel ist möglich)
 - 28.10.2020 - Partielle Verbindung des Front- mit dem Back-Ends
-- xy.11.2020 - Implementierung Snake
-- xy.11.2020 - Implementierung Snake, lokaler Multiplayer
-- xy.11.2020 - Implementierung Snake, lokale KI (NPC)
+- xy.11.2020 
+  - Implementierung Snake
+  - Implementierung Snake, lokaler Multiplayer
+  - Implementierung Snake, lokale KI (NPC)
 - 28.11.2020 - Demonstration des aktuellen Standes, Vorschau des Prototypen
 - 29.11.2020 - Überarbeitung und Einarbeitung des Feedbacks, sowohl von Gruppe als auch Dozent
 - 03.12.2020 - Refactoring des Projekts, Impl. d. Relationen, Refactoring des Datenmodels,
 - 17.12.2020 - Refactoring des Projekts, Impl. d. Relationen, Refactoring des Datenmodels,
-- 23.12.2020 - Refactoring des Projekts, Anbindung der UI an Backend, Abschluss d. Spielhistorie-Screens
+- 23.12.2020 
+  - Refactoring des Projekts, Anbindung der UI an Backend, Abschluss d. Spielhistorie-Screens
+  - Integration des STOMP-Servers & STOMP-Clients, Abschluss d. Home-Screens zu 75%
+  - Impl. des Chats mittels STOMP-Service
 
-## Offene Tasks
-Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisiert werden müssen
+
+
+
+
+## API / Misc.
+- http://localhost:8080/h2 (user: sa | pass: <none>)
+- http://localhost:8080/api/spieler/
+- http://localhost:8080/api/spieler/name
+- http://localhost:8080/api/lobby
+- http://localhost:8080/api/historie
+
+## Tasks
+Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisiert wurden oder noch realisiert werden müssen.
 
 ### Frontend
 - Neue UI "LoginScreen"
@@ -47,7 +62,7 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
 - Neue UI "Erstelle Spiel" 
   - Impl. des User-Interfaces [DONE]
   - Definition einer Spielrunde [DONE]
-  - Senden der Spielrunde an das Backend 
+  - Senden der SpielDefinition an das Backend  [DONE]
 - Neue UI "Spielhistorie" [DONE]
   - Impl. des User-Interfaces [DONE]
   - Bezug bisheriger Spielerunden vom Backend [DONE]
@@ -60,20 +75,23 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
     - PowerUps dargestellt werden
     - Die Map, evtl. Hindernisse oder sonstiges
     - Punktestand jedes Spielers
+- Spieler kann Ende eines anderen Spielers abbeißen
+- Erzeugung eines Spiels anhand der Spieldefinition
+- Teilnahme an Spiel in Lobby
 - ...
 
 ### Backend
-- Akzeptanz von Registrierungs-Anforderungen (API)
-  - Erstelle einen neuen Benutzer / Spieler im Backend (DB)
-- Akzeptanz von Login-Anforderungen (API, Session-Handling)
-  - Abgleich mit Usern in der Datenbank, erstelle eine Session falls b vorhanden
+- Akzeptanz von Registrierungs-Anforderungen (API)  [DONE]
+  - Erstelle einen neuen Benutzer / Spieler im Backend (DB)  [DONE]
+- Akzeptanz von Login-Anforderungen (API, Session-Handling)  [DONE]
+  - Abgleich mit Usern in der Datenbank, erstelle eine Session falls b vorhanden  [DONE]
 - Absicherung des Logins (z.B. mit bCrypt & Salts)
-- Senden der Lobbydaten für Lobby auf dem Client
-  - Verwaltung der Lobby
-  - Empfang neuer Spielrunden-Definition vom Backend
+- Senden der Lobbydaten für Lobby auf dem Client  [DONE]
+  - Verwaltung der Lobby  [DONE]
+  - Empfang neuer Spielrunden-Definition vom Backend  [DONE]
 - Bezug der Spielhistorie-Daten (Spielrunden) vom Backend zum Client (Auf Anfrage) (API) [DONE]
 - Spieler tritt einem existierenden Spiel in der Lobby bei (Joining)
-- Spieler verlässt Spiel
+- Spieler verlässt Spiel********
 - ...
 
 ### Beantwortete Fragen

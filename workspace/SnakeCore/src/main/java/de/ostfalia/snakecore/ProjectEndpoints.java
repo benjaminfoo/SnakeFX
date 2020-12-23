@@ -48,4 +48,22 @@ public class ProjectEndpoints {
         URL_API_LOBBY = BASE_URL + API_PATH + API_ENDPOINT_LOBBY;
     }
 
+    // =============================
+    // RELATED TO STOMP
+    // =============================
+
+    // The STOMP server base path
+
+    // ws://localhost:8080/stomp/
+    public static final String STOMP_BROKER_TOPIC = "/topic";
+    public static final String STOMP_TOPIC_MESSAGES = "/topic/messages";
+    public static final String STOMP_APP_PREFIX = "/app";
+    public static final String STOMP_MESSAGE_MAPPING_CHAT = "/chat";
+    public static final String STOMP_DESTINATION_CHAT = STOMP_APP_PREFIX + STOMP_MESSAGE_MAPPING_CHAT;
+
+    public static String URL_STOMP_BASE = BASE_URL.replace("http", "ws") + STOMP_MESSAGE_MAPPING_CHAT;
+
+
+
+
 }

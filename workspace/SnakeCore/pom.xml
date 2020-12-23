@@ -34,6 +34,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- We use the websocket starter of spring to exchange data, and to realize a chat mechanism =) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+        </dependency>
+
     </dependencies>
 
     <!-- we're using java 8 - this needs to get setup with the maven build system -->

@@ -7,6 +7,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import static de.ostfalia.snakecore.ApplicationConstants.BOT_USER_NAME;
+
 /**
  * @author Benjamin Wulfert
  * The DataInitRunner gets called when the application gets started.
@@ -35,10 +37,14 @@ public class DataInitRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        // prepopulateGameHistoryData();
+        // prepopulateGameDefinitions();
+        prepopulateBotUser();
+    }
 
-        prepopulateGameHistoryData();
-        prepopulateGameDefinitions();
-
+    private void prepopulateBotUser() {
+        Spieler botPlayer = new Spieler(4L, BOT_USER_NAME, BOT_USER_NAME + "Pw123!"); // they'll never know
+        spielerRepository.save(botPlayer);
     }
 
     /**

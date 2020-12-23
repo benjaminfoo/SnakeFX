@@ -140,17 +140,15 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- We use the websocket api in order to exchange data, and to realize a chat mechanism =) -->
+		<!-- We use the websocket starter of spring to exchange data, and to realize a chat mechanism =) -->
 		<dependency>
-			<groupId>javax.websocket</groupId>
-			<artifactId>javax.websocket-api</artifactId>
-			<version>1.1</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.0</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
 		</dependency>
 
 	</dependencies>

@@ -1,5 +1,6 @@
 package de.ostfalia.snakecore.controller;
 
+import de.ostfalia.snakecore.AppSnakeFX;
 import de.ostfalia.snakecore.ApplicationConstants;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +19,7 @@ import java.io.IOException;
 public abstract class BaseController {
 
     public Stage currentStage;
+    public AppSnakeFX application;
 
     /**
      * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader
@@ -55,6 +57,7 @@ public abstract class BaseController {
 
             // get a reference to its corresponding controller
             BaseController baseController = fxmlLoader.getController();
+            baseController.application = application;
 
             // pass the reference of the current window stage to the newly instantiated controller
             baseController.currentStage = currentStage;
@@ -67,9 +70,12 @@ public abstract class BaseController {
             // initialize everything related to the user-interface
             baseController.postInitialize();
 
-            baseController.currentStage.setMinHeight(600);
-            baseController.currentStage.setMinWidth(800);
-            baseController.currentStage.centerOnScreen();
+            /*
+            baseController.currentStage.setMinHeight(300);
+            baseController.currentStage.setMinWidth(200);
+            */
+            // baseController.currentStage.centerOnScreen();
+
 
             // show the setup and referenced window
             // window.show();
@@ -93,6 +99,7 @@ public abstract class BaseController {
 
             // get a reference to its corresponding controller
             BaseController baseController = fxmlLoader.getController();
+            baseController.application = application;
 
             // create a new stage, set the newly loaded layout as the root element of it
             Stage window = new Stage();

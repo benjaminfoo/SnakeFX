@@ -16,5 +16,8 @@ public class ApplicationConstants {
 
     public static final String TITLE_CURRENT_GAME = TITLE + " - Aktives Spiel";
 
+    // MIsc
+    public static final String BOT_USER_NAME = "BotUser";
+
 
 }

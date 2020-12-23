@@ -65,9 +65,36 @@ public class ApiController {
 
 
     @PostMapping(path = {API_PATH + API_ENDPOINT_LOGIN})
-    public void login(@RequestBody Spieler spieler) {
+    public ResponseEntity<Spieler> login (@RequestBody Spieler spieler) {
         // spieler.pass(bCryptPasswordEncoder.encode(user.getPasswordHash()));
         // lobbyController.lobby.aktiveSpieler.add(spieler);
+
+        String loginName = spieler.getName().trim();
+        String loginPass = spieler.getPass();
+
+        Spieler resultFromDB = null;
+
+        boolean loginValid = false;
+
+        resultFromDB = spielerRepository.findByName(loginName);
+
+        if(resultFromDB == null){
+            // TODO: return some error
+        } else {
+
+            if(loginPass.equals(resultFromDB.getPass())){
+                loginValid = true;
+            }
+
+        }
+
+        if(loginValid){
+            return new ResponseEntity<Spieler>(resultFromDB, HttpStatus.OK);
+        } else {
+            System.out.println("INVALID LOGIN DETECTED FROM " + loginName + " with Pass: " + loginPass);
+            return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping(path = {API_PATH + API_ENDPOINT_LOBBY})

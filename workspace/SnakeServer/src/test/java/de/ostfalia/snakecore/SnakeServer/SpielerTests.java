@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
-
 @SpringBootTest
 class SpielerTests {
 
@@ -25,14 +23,14 @@ class SpielerTests {
 		spielerRepository.save(testSpieler);
 
 		// retrieve it
-		Optional<Spieler> testSpielerAusDB = spielerRepository.findByName(testSpieler.name);
+		Spieler testSpielerAusDB = spielerRepository.findByName(testSpieler.name);
 
 		// check that its present
-		Assert.assertTrue(testSpielerAusDB.isPresent());
+		Assert.assertTrue(testSpielerAusDB != null);
 
 		// check that the contents are equal
-		Assert.assertEquals(testSpieler.name, testSpielerAusDB.get().name);
-		Assert.assertEquals(testSpieler.pass, testSpielerAusDB.get().pass);
+		Assert.assertEquals(testSpieler.name, testSpielerAusDB.name);
+		Assert.assertEquals(testSpieler.pass, testSpielerAusDB.pass);
 
 	}
 
