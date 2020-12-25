@@ -57,6 +57,7 @@ public class ProjectEndpoints {
     // ws://localhost:8080/stomp/
     public static final String STOMP_BROKER_TOPIC = "/topic";
     public static final String STOMP_TOPIC_MESSAGES = "/topic/messages";
+
     public static final String STOMP_APP_PREFIX = "/app";
     public static final String STOMP_MESSAGE_MAPPING_CHAT = "/chat";
     public static final String STOMP_DESTINATION_CHAT = STOMP_APP_PREFIX + STOMP_MESSAGE_MAPPING_CHAT;

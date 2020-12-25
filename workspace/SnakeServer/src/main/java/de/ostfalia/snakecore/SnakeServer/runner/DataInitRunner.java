@@ -37,8 +37,8 @@ public class DataInitRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        // prepopulateGameHistoryData();
-        // prepopulateGameDefinitions();
+        prepopulateGameHistoryData();
+        prepopulateGameDefinitions();
         prepopulateBotUser();
     }
 
@@ -87,7 +87,7 @@ public class DataInitRunner implements ApplicationRunner {
     private void prepopulateGameHistoryData() {
 
         // Szenario 1 - Zwei Spieler
-        Spieler testSpieler = new Spieler(1L, "p1", "p1");
+        Spieler testSpieler = new Spieler(1L, "a", "");
         Spieler testSpieler2 = new Spieler(2L, "p2", "p2");
 
         spielerRepository.save(testSpieler);

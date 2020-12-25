@@ -6,23 +6,37 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-import static de.ostfalia.snakecore.ProjectEndpoints.*;
-
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker(STOMP_BROKER_TOPIC);
-        config.setApplicationDestinationPrefixes(STOMP_APP_PREFIX);
-    }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-         registry.addEndpoint(STOMP_MESSAGE_MAPPING_CHAT);
-         registry.addEndpoint(STOMP_MESSAGE_MAPPING_CHAT).withSockJS();
+        /*
+            /snakeserver is the HTTP URL for the endpoint to which a WebSocket (or SockJS)
+            client needs to connect for the WebSocket handshake.
+         */
+        registry.addEndpoint("/snakeserver").withSockJS();
+        registry.addEndpoint("/snakeserver");
     }
 
+
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+
+        /*
+         	STOMP messages whose destination header begins with /app are routed to
+            @MessageMapping methods in @Controller classes.
+        */
+        config.setApplicationDestinationPrefixes("/app");
+
+
+        /*
+            Use the built-in message broker for subscriptions and broadcasting and
+            route messages whose destination header begins with /topic `or `/queue to the broker.
+        */
+        config.enableSimpleBroker("/topic");
+    }
 
 }

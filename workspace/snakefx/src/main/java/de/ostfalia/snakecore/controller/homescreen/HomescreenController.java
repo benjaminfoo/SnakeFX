@@ -4,18 +4,15 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.snakecore.ApplicationConstants;
 import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.controller.Scenes;
-import de.ostfalia.snakecore.model.SpielDefinition;
+import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
-import de.ostfalia.snakecore.task.GetGamesTask;
 import de.ostfalia.snakecore.task.GetPlayerTask;
-import de.ostfalia.snakecore.ws.client.StompSessionHandler;
-import de.ostfalia.snakecore.ws.model.Message;
+import de.ostfalia.snakecore.ws.client.MessageRecievedCallback;
+import de.ostfalia.snakecore.ws.model.ChatMessage;
+import de.ostfalia.snakecore.ws.model.LobbyMessage;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 
 import java.util.List;
@@ -67,7 +64,39 @@ public class HomescreenController extends BaseController {
         });
 
         disconnect.setOnAction(onClick -> {
-            closeStage();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Abmelden");
+            alert.setHeaderText("Möchten Sie sich wirklich abmelden?");
+            alert.setContentText("Ihre Sessions sowie alle laufenden Verbindungen werden beendet.");
+
+            alert.showAndWait().ifPresent((btnType) -> {
+                if (btnType == ButtonType.OK) {
+                    // TODO - disconnect via stomp
+                    // TODO - eventually cleanup everything
+                    closeStage();
+                }
+                if (btnType == ButtonType.CANCEL) {
+                    alert.close();
+                }
+            });
+
+        });
+
+        joinGame.setOnAction(onClick -> {
+            String roomId = "1337";
+
+            application.getStompClient().sendLobbyMessage();
+
+            // TODO: get all running games via stomp
+            // TODO: create a reference per list item <-> roomId
+
+            /*
+            application.getStompClient().joinRoom(
+                    application.getUserConfig().getUserName(),
+                    new JoinGameMessage(application.getUserConfig().getUserName(), roomId)
+            );
+            */
         });
 
     }
@@ -80,8 +109,11 @@ public class HomescreenController extends BaseController {
             List<Spieler> spielerList = new GetPlayerTask().getPlayer();
             activePlayers.setItems(FXCollections.observableArrayList(spielerList));
 
+            /*
             List<SpielDefinition> gameList = new GetGamesTask().getSpiele();
             activeGames.setItems(FXCollections.observableArrayList(gameList));
+             */
+
         } catch (UnirestException e) {
             e.printStackTrace();
         }
@@ -93,16 +125,38 @@ public class HomescreenController extends BaseController {
 
         updateUIRemote();
 
-        application.getStompClient().connect();
-        application.getStompClient().setRecievedCallback(new StompSessionHandler.MessageRecievedCallback() {
+        application.getStompClient().connect("ws://localhost:8080/snakeserver");
+        application.getStompClient().setRecievedCallback(new MessageRecievedCallback() {
             @Override
-            public void messageRecieved(Message msg) {
+            public void chatMessageRecieved(ChatMessage msg) {
                 chatContent.appendText(msg.getFrom() + ": " + msg.getText() + "\n");
             }
+
+            @Override
+            public void onRecievedLobbyMessage(LobbyMessage msg) {
+                chatContent.appendText("Currently running games: ");
+                for (RunningGame spielDefinition : msg.runningGames) {
+                    chatContent.appendText("\t" + spielDefinition.toString());
+                }
+
+                activeGames.setItems(FXCollections.observableArrayList(msg.runningGames));
+
+
+            }
+
         });
 
+
+        // subscribe to /topic/games
+        // if there is a new message on this topic, parse the results and update the ui
+
+
+        // TODO - subscribe to /topic/games
+        // TODO - send request with GetAllGames message to ... get all the currently running games
+
+
         sendUserContent.setOnAction(onClick -> {
-            application.getStompClient().sendMessage(
+            application.getStompClient().sendChatMessage(
                     application.getUserConfig().getUserName(),
                     userContent.getText()
             );
@@ -116,5 +170,7 @@ public class HomescreenController extends BaseController {
                 sendUserContent.fire();
             }
         });
+
+
     }
 }

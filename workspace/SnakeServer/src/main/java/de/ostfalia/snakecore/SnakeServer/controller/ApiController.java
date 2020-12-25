@@ -3,6 +3,7 @@ package de.ostfalia.snakecore.SnakeServer.controller;
 import de.ostfalia.snakecore.SnakeServer.persistance.SpielDefinitionRepository;
 import de.ostfalia.snakecore.SnakeServer.persistance.SpielerRepository;
 import de.ostfalia.snakecore.SnakeServer.persistance.SpielstandRepository;
+import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.SpielDefinition;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.Spielstand;
@@ -31,6 +32,9 @@ public class ApiController {
 
     @Autowired
     private SpielDefinitionRepository spielDefinitionRepository;
+
+    @Autowired
+    private LobbyController lobbyController;
 
     // TODO: Implement password encryption with bCrypt
     // @Autowired
@@ -110,7 +114,13 @@ public class ApiController {
     public void postNewGame(@RequestBody SpielDefinition neuesSpiel) {
 
         // TODO: maybe check if there are inconsistencies or some other potential problems
-        spielDefinitionRepository.save(neuesSpiel);
+        // spielDefinitionRepository.save(neuesSpiel);
+
+        RunningGame runningGame = new RunningGame();
+
+        runningGame.spielDefinition = neuesSpiel;
+
+        lobbyController.add(runningGame);
 
     }
 

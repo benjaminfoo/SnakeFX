@@ -1,80 +1,164 @@
 package de.ostfalia.snakecore.ws.client;
 
-import de.ostfalia.snakecore.ws.model.Message;
+import de.ostfalia.snakecore.ws.model.ChatMessage;
+import de.ostfalia.snakecore.ws.model.GameInputMessage;
+import de.ostfalia.snakecore.ws.model.LobbyMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.*;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import java.util.Scanner;
+import java.lang.reflect.Type;
 
-import static de.ostfalia.snakecore.ProjectEndpoints.URL_STOMP_BASE;
+public class StompClient extends StompSessionHandlerAdapter implements MessageRecievedCallback {
 
-public class StompClient implements StompSessionHandler.MessageRecievedCallback {
-
-    // ws://localhost:8080/stomp/chat
-    private static String CONNECTION_URL = URL_STOMP_BASE;
+    // ws://localhost:8080/snakeserver/
+    private String connectionUrl = "ws://localhost:8080/snakeserver";
 
     private StompSessionHandler sessionHandler;
 
-    private StompSessionHandler.MessageRecievedCallback recievedCallback;
+    private Logger logger = LogManager.getLogger(StompSessionHandler.class);
 
-    // This is just for testing the stompClient solely
-    public static void main(String[] args) {
-        StompClient s = new StompClient();
-        s.connect();
+    private StompSession session;
+    private MessageRecievedCallback messageRecievedCallback;
 
-        // eval loop for messaging with the stomp server
-        Scanner scanner = new Scanner(System.in);
-        String userInput = "";
-        do {
-            userInput = scanner.nextLine();
-            s.sendMessage("Benni", userInput);
-        } while (!userInput.equals("!quit") || !userInput.equals("!q"));
-    }
 
-    public void connect(){
-        connect(CONNECTION_URL);
-    }
+    public void connect(String url) {
+        this.connectionUrl = url;
 
-    public void connect(String url){
         // initialize the clients
         WebSocketClient wsClient = new StandardWebSocketClient();
         WebSocketStompClient wsStompClient = new WebSocketStompClient(wsClient);
 
-        // register the message converter
+        // register a jackson 2 message converter
         wsStompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
         // instantiate the session handler in order to communicate over STOMP
-        sessionHandler = new StompSessionHandler();
+        sessionHandler = this;
 
         // CONNECT to the Stomp server using the url and the sessionHandler
-        wsStompClient.connect(CONNECTION_URL, sessionHandler);
+        wsStompClient.connect(connectionUrl, sessionHandler);
 
         // register a listener for incoming messages
-        sessionHandler.setMessageRecievedCallback(this);
+        setMessageRecievedCallback(this);
     }
 
-    public void sendMessage(String userName, String message){
-        ((StompSessionHandler) sessionHandler).sendMessage(userName, message);
+
+    @Override
+    public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
+        this.session = session;
+
+        logger.info("New session established : " + session.getSessionId());
+
+        session.subscribe("/topic/messages", new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return ChatMessage.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+
+                System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
+
+                ChatMessage msg = (ChatMessage) payload;
+                if (msg != null) {
+                    System.out.println("Received ChatMessage: " + msg.getText() + " from : " + msg.getFrom());
+                    messageRecievedCallback.chatMessageRecieved(msg);
+                }
+
+            }
+        });
+        logger.info("Subscribed to " + "/topic/messages");
+
+        session.subscribe("/topic/games", new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return LobbyMessage.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
+
+                LobbyMessage msg = (LobbyMessage) payload;
+                if (msg != null) {
+                    System.out.println("Received LobbyMessage: " + msg.runningGames.toString());
+                    messageRecievedCallback.onRecievedLobbyMessage(msg);
+                }
+            }
+        });
+        logger.info("Subscribed to " + "/topic/games");
+
+
+
+        /*
+        session.send(ProjectEndpoints.STOMP_APP_PREFIX + ProjectEndpoints.STOMP_MESSAGE_MAPPING_CHAT, getSampleMessage());
+        logger.info("Message sent to websocket server");
+        */
     }
 
-    public boolean isConnected(){
-        boolean result = false;
+    public void sendChatMessage(String user, String message) {
+        System.out.println("Sending message to /app/chat ... Message: " + message);
+        session.send("/app/chat", new ChatMessage(user, message));
+    }
 
-        result = sessionHandler == null; // TODO this isnt enough
+    public void sendLobbyMessage() {
+        System.out.println("Sending lobby message");
+        session.send("/app/games", new LobbyMessage());
+    }
 
-        return result;
+    /**
+     * Sends a message to a game topic with gameId - from the player with the userName and its current input
+     *
+     * @param gameId
+     * @param userName
+     * @param input
+     */
+    public void subsribeToGameTopic(String gameId, String userName, String input) {
+        session.send("/app/games/" + gameId, new GameInputMessage(userName, input));
+    }
+
+
+    @Override
+    public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
+        logger.error("Got an exception", exception);
     }
 
     @Override
-    public void messageRecieved(Message msg) {
-        if(recievedCallback != null){
-            recievedCallback.messageRecieved(msg);
+    public Type getPayloadType(StompHeaders headers) {
+        return Message.class;
+    }
+
+    @Override
+    public void handleFrame(StompHeaders headers, Object payload) {
+
+    }
+
+    public void setMessageRecievedCallback(MessageRecievedCallback messageRecievedCallback) {
+        this.messageRecievedCallback = messageRecievedCallback;
+    }
+
+    public void setRecievedCallback(MessageRecievedCallback recievedCallback) {
+        this.messageRecievedCallback = recievedCallback;
+    }
+
+    @Override
+    public void chatMessageRecieved(ChatMessage msg) {
+        if (messageRecievedCallback != null) {
+            messageRecievedCallback.chatMessageRecieved(msg);
         }
     }
 
-    public void setRecievedCallback(StompSessionHandler.MessageRecievedCallback recievedCallback) {
-        this.recievedCallback = recievedCallback;
+    @Override
+    public void onRecievedLobbyMessage(LobbyMessage msg) {
+        if (messageRecievedCallback != null) {
+            messageRecievedCallback.onRecievedLobbyMessage(msg);
+        }
     }
+
 }
