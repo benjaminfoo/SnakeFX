@@ -85,9 +85,15 @@ public class SpielDefinition {
 
     @Override
     public String toString() {
-        return
-                nameOfTheGame + " | Map-size: " + mapWidth + " x " + mapHeight + "\n"
-                        + "(x" + "/" + numberOfPlayer + ") " + " | Nr. of Powerups: " + maxNumberOfPowerUps;
+        return "SpielDefinition{" +
+                "id=" + id +
+                ", nameOfTheGame='" + nameOfTheGame + '\'' +
+                ", numberOfPlayer=" + numberOfPlayer +
+                ", maxNumberOfPowerUps=" + maxNumberOfPowerUps +
+                ", mapWidth=" + mapWidth +
+                ", mapHeight=" + mapHeight +
+                ", spielregel=" + spielregel +
+                '}';
     }
 
     public Long getId() {

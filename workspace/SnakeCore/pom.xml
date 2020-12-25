@@ -35,7 +35,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- We use the websocket starter of spring to exchange data, and to realize a chat mechanism =) -->
+        <!-- We use the websocket starter of spring to exchange spielstandData, and to realize a chat mechanism =) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-websocket</artifactId>

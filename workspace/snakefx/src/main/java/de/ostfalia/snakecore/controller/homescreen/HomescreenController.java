@@ -5,8 +5,12 @@ import de.ostfalia.snakecore.ApplicationConstants;
 import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.controller.Scenes;
 import de.ostfalia.snakecore.model.RunningGame;
+import de.ostfalia.snakecore.model.SpielDefinition;
 import de.ostfalia.snakecore.model.Spieler;
+import de.ostfalia.snakecore.model.Spielregel;
 import de.ostfalia.snakecore.task.GetPlayerTask;
+import de.ostfalia.snakecore.view.RunningGameCell;
+import de.ostfalia.snakecore.view.SpielstandCell;
 import de.ostfalia.snakecore.ws.client.MessageRecievedCallback;
 import de.ostfalia.snakecore.ws.model.ChatMessage;
 import de.ostfalia.snakecore.ws.model.LobbyMessage;
@@ -15,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -86,7 +91,7 @@ public class HomescreenController extends BaseController {
         joinGame.setOnAction(onClick -> {
             String roomId = "1337";
 
-            application.getStompClient().sendLobbyMessage();
+            // application.getStompClient().sendLobbyMessage();
 
             // TODO: get all running games via stomp
             // TODO: create a reference per list item <-> roomId
@@ -97,6 +102,12 @@ public class HomescreenController extends BaseController {
                     new JoinGameMessage(application.getUserConfig().getUserName(), roomId)
             );
             */
+
+            RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
+            System.out.println("Subscribing to: " + selectedGame.getStompPath());
+            System.out.println("Fuck yo");
+
+            application.getStompClient().subsribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
         });
 
     }
@@ -139,9 +150,9 @@ public class HomescreenController extends BaseController {
                     chatContent.appendText("\t" + spielDefinition.toString());
                 }
 
+                activeGames.setCellFactory(listView -> new SpielstandCell());
+
                 activeGames.setItems(FXCollections.observableArrayList(msg.runningGames));
-
-
             }
 
         });
@@ -171,6 +182,19 @@ public class HomescreenController extends BaseController {
             }
         });
 
+        // setup the cellfactory to properly display lobby games
+        activeGames.setCellFactory(listView -> new RunningGameCell());
 
+
+        // DEBUG
+        activeGames.getItems().add(
+                new RunningGame(
+                        "/app/games/1",
+                        new Spieler(1L, "Admin-Spieler", "123"),
+                        Collections.emptyList(),
+                        new SpielDefinition("Test-Game-from-RAM", 8, 20, 32,32,new Spielregel("test", Spielregel.Type.HIGHSCORE_100))
+                )
+        );
     }
+
 }

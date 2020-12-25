@@ -49,14 +49,31 @@
             </HBox>
             <VBox>
                <children>
-                  <Button fx:id="debugButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Debug-SceneViewer" VBox.vgrow="ALWAYS">
+                  <VBox style="-fx-background-color: #33333333;">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" style="-fx-text-fill: black;" text="Connection-Status" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblStatus" alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-text-fill: black;" text="- not connected -" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="4.0" top="4.0" />
+                     </padding>
+                  </VBox>
+                  <Button fx:id="debugButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Debug-SceneViewer" visible="false" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="10.0" />
-                     </VBox.margin></Button>
-                  <Label fx:id="lblStatus" alignment="CENTER" maxWidth="1.7976931348623157E308" text="- not connected -" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Italic" size="12.0" />
-                     </font></Label>
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
          </children>

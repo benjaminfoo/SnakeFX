@@ -50,7 +50,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- We use the websocket api in order to exchange data, and to realize a chat mechanism =) -->
+        <!-- We use the websocket api in order to exchange spielstandData, and to realize a chat mechanism =) -->
         <dependency>
             <groupId>javax.websocket</groupId>
             <artifactId>javax.websocket-api</artifactId>

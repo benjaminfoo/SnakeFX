@@ -4,7 +4,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.model.Spielstand;
 import de.ostfalia.snakecore.task.GetHistorieTask;
-import de.ostfalia.snakecore.view.ListViewCell;
+import de.ostfalia.snakecore.view.SpielstandCell;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -40,7 +40,7 @@ public class GameHistoryController extends BaseController {
             e.printStackTrace();
         }
 
-        gameHistoryList.setCellFactory(listView -> new ListViewCell());
+        gameHistoryList.setCellFactory(listView -> new SpielstandCell());
 
         gameHistoryList.setItems(FXCollections.observableList(spielstaende));
     }

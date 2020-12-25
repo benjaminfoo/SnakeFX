@@ -11,7 +11,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Data {
+public class SpielstandData {
+
     @FXML
     HBox hbox;
 
@@ -21,7 +22,7 @@ public class Data {
     @FXML
     private Label text2;
 
-    public Data() {
+    public SpielstandData() {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setController(this);
         fxmlLoader.setLocation(getClass().getClassLoader().getResource("cell_gamehistorie.fxml"));

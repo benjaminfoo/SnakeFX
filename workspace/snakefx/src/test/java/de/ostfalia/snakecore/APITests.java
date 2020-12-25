@@ -24,6 +24,7 @@ public class APITests {
         List<Spieler> spieler = new GetPlayerTask().getPlayer();
         Assert.assertEquals(2, spieler.size());
     }
+
     @Test
     /**
      * Checks if the front-end can:
@@ -33,7 +34,6 @@ public class APITests {
      */
     public void endpointTest_GetSpiele() throws UnirestException {
         List<SpielDefinition> spiele = new GetGamesTask().getSpiele();
-
     }
 
 }

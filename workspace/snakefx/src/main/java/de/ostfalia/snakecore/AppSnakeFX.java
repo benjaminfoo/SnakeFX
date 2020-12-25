@@ -8,56 +8,51 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
+/**
+ * @author Benjamin Wulfert
+ * The entry point of the javafx-application.
+ */
 public class AppSnakeFX extends Application {
 
-    public static Stage windowStage;
+    // the stage which gets reused through-out the application's lifecycle
+    private Stage windowStage;
 
+    // the STOMP-Client for the communication with the backend over websockets
     private StompClient stompClient;
 
+    // the users details which gets used for identification later on and holds the JSON-Web-Token
     private UserConfig userConfig;
 
+    // plain old psvm - the entry point of the application
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage window) throws Exception{
+    public void start(Stage window) throws Exception {
 
-        // This is an ugly hack - it should get removed in a short time!
+        // safe the reference to the current window - we'll safe it for future uses
         windowStage = window;
 
-        Parent root;
-
         // this loads the login-controller and the corresponding fxml
-        //
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getClassLoader().getResource(Scenes.VIEW_LOGIN));
-        root = fxmlLoader.load();
-
-        // this loads the game-canvas controller and the corresponding fxml
-        // root = FXMLLoader.load(getClass().getClassLoader().getResource("gamecanvas_view.fxml"));
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getClassLoader().getResource(Scenes.VIEW_DEBUG));
-        root = fxmlLoader.load();
-        */
+        Parent root = fxmlLoader.load();
 
         BaseController baseController = fxmlLoader.getController();
         baseController.currentStage = window;
         baseController.application = this;
-        baseController.setTitle(ApplicationConstants.TITLE_DEBUG_CHOOSER);
+        baseController.currentStage.getIcons().add(new Image("icon.png"));
+        baseController.setTitle(ApplicationConstants.TITLE_LOGIN);
 
         // setup the stage of the application
-        /*
-        window.setMinWidth(800);
-        window.setMinHeight(600);
-        */
-
         Scene current = window.getScene();
-        double width = 800;
-        double height = 600;
+        double width = 1024;
+        double height = 768;
         if(current != null){
             width = window.getScene().getWidth();
             height = window.getScene().getHeight();
@@ -69,7 +64,13 @@ public class AppSnakeFX extends Application {
 
         // show the application stage
         window.show();
-        // window.centerOnScreen();
+
+        // if the user presses F12 on his keyboard, the debug scene-viewer gets called and displayed
+        window.getScene().setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.F12){
+                baseController.showLayoutInNewWindow(Scenes.VIEW_DEBUG, ApplicationConstants.TITLE_DEBUG_CHOOSER);
+            }
+        });
     }
 
     // is the application executed in debug-mode?
