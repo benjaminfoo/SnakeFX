@@ -31,18 +31,22 @@ Note: Die UML-Diagramme wurden mit der Software "Dia" erstellt.
 - 23.12.2020 
   - Refactoring des Projekts, Anbindung der UI an Backend, Abschluss d. Spielhistorie-Screens
   - Integration des STOMP-Servers & STOMP-Clients, Abschluss d. Home-Screens zu 75%
+- 24.12.2020
   - Impl. des Chats mittels STOMP-Service
+  - Realisierung der Lobby-Mechaniken, Abschluss zu 85%
 
-
-
-
-
-## API / Misc.
+## API
+Die folgenden URLs werden vom Backend bereitgestellt und können von den Clients konsumiert und verarbeitet werden.
 - http://localhost:8080/h2 (user: sa | pass: <none>)
 - http://localhost:8080/api/spieler/
 - http://localhost:8080/api/spieler/name
 - http://localhost:8080/api/lobby
 - http://localhost:8080/api/historie
+
+- ws://localhost:8080/snakeserver - HTTP-Handshake und WebSocket / STOMP Upgrade
+- ws://localhost:8080/topic/chat
+- ws://localhost:8080/topic/games
+- ws://localhost:8080/topic/games/{gameId}
 
 ## Tasks
 Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisiert wurden oder noch realisiert werden müssen.
@@ -76,8 +80,18 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
     - Die Map, evtl. Hindernisse oder sonstiges
     - Punktestand jedes Spielers
 - Spieler kann Ende eines anderen Spielers abbeißen
-- Erzeugung eines Spiels anhand der Spieldefinition
-- Teilnahme an Spiel in Lobby
+- Erzeugung eines Spiels anhand der Spieldefinition [DONE]
+- Teilnahme an Spiel in Lobby [In Progress]
+- UI zum starten des Spiels (nur für Admin d. Spiels)
+- Generation des STOMP-Path's für Running-Games i.d. Lobby
+- Teilnahme an Spiel anhand von Stomp-Path
+- Freigabe des Admin-Buttons zum starten des Spiels
+- Starten des Spiels
+  - Initialisierung des Spiels auf allen Clients
+  - Sync. des Spiels
+  - Beendigung des Spiels
+  - Persistenz d. Runde in DB
+  - Return to Lobby
 - ...
 
 ### Backend
@@ -90,8 +104,8 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
   - Verwaltung der Lobby  [DONE]
   - Empfang neuer Spielrunden-Definition vom Backend  [DONE]
 - Bezug der Spielhistorie-Daten (Spielrunden) vom Backend zum Client (Auf Anfrage) (API) [DONE]
-- Spieler tritt einem existierenden Spiel in der Lobby bei (Joining)
-- Spieler verlässt Spiel********
+- Spieler tritt einem existierenden Spiel in der Lobby bei (Joining) [In Progress]
+- Spieler verlässt Spiel
 - ...
 
 ### Beantwortete Fragen
@@ -100,8 +114,6 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
 - wie werden die Benutzereingaben während des Spiels verarbeitet?
   - Ein Spieler betätigt W,A,S oder D -> Was passiert?
   - Alternative Eingabemöglichkeiten
-  
-### Offene Fragen
 - was passiert, wenn ein Spieler die Lobby verlässt?
  - Der Spieler wird aus der Lobby entfernt 
 - was passiert, wenn ein Spieler ein aktives Spiel verlässt, oder evtl. die Verbindung unterbrochen wird?

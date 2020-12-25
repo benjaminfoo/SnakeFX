@@ -5,57 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ba483e1-6bed-4f2d-8970-e49a1761d4c1" name="Default Changelist" comment="-">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/ws/client/StompClient$3.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/view/RunningGameCell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/view/RunningGameData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/snakefx/src/main/resources/cell_runningame.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/snakecore.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/snakecore.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/model/RunningGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/model/RunningGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/model/SpielDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/model/SpielDefinition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/client/StompClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/client/StompClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/model/GameInputMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/model/GameInputMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/model/RunningGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/model/RunningGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/model/SpielDefinition.class" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/model/SpielDefinition.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/ws/client/StompClient$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/ws/client/StompClient$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/ws/client/StompClient$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/ws/client/StompClient$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/ws/client/StompClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/ws/client/StompClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/ws/model/GameInputMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/target/classes/de/ostfalia/snakecore/ws/model/GameInputMessage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeServer/HELP.md" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeServer/HELP.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeServer/SnakeServer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeServer/SnakeServer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeServer/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeServer/mvnw.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeServer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeServer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeServer/src/main/java/de/ostfalia/snakecore/SnakeServer/controller/StompLobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeServer/src/main/java/de/ostfalia/snakecore/SnakeServer/controller/StompLobbyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeServer/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeServer/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/.idea/description.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/snakefx.iml" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/snakefx.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/AppSnakeFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/AppSnakeFX.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/GameHistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/GameHistoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/HomescreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/HomescreenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/view/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/view/SpielstandData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/view/ListViewCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/view/SpielstandCell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/main/resources/homescreen_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/resources/homescreen_view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/main/resources/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/resources/icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/main/resources/login_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/resources/login_view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/test/java/de/ostfalia/snakecore/APITests.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/test/java/de/ostfalia/snakecore/APITests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +35,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/SnakeServer/pom.xml" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15689811" />
     <property name="project.structure.side.proportion" value="0.50348026" />
@@ -147,11 +98,23 @@
       <workItem from="1608929318942" duration="336000" />
       <workItem from="1608929756681" duration="38000" />
       <workItem from="1608929806393" duration="281000" />
-      <workItem from="1608930107464" duration="3999000" />
+      <workItem from="1608930107464" duration="4300000" />
     </task>
+    <task id="LOCAL-00001" summary="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI">
+      <created>1608934283443</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1608934283443</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI" />
   </component>
 </project>
