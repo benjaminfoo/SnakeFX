@@ -8,12 +8,16 @@ import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.UserConfig;
 import de.ostfalia.snakecore.task.LoginTask;
 import de.ostfalia.snakecore.task.RegisterTask;
+import de.ostfalia.snakecore.ws.model.PlayerMessage;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+
+import java.util.List;
 
 
 /**
@@ -75,9 +79,27 @@ public class LoginController extends BaseController {
         tfServerURL.setText(ProjectEndpoints.BASE_URL);
         ProjectEndpoints.BASE_URL = tfServerURL.getText().trim();
         ProjectEndpoints.resetURLs();
+
     }
 
-    private void executeLogin() {
+    @Override
+    public void postInitialize() {
+        super.postInitialize();
+
+        List<String> startParams = application.getStartParams();
+        if(startParams != null){
+            application.setUserConfig(new UserConfig(startParams.get(0), startParams.get(1), null));
+        }
+
+        if(application.getUserConfig() != null){
+            tfName.setText(application.getUserConfig().getUserName());
+            tfPassword.setText(application.getUserConfig().getPass());
+        }
+    }
+
+    public void executeLogin() {
+        System.out.println("Logging in ...");
+
         String username = tfName.getText();
         String password = tfPassword.getText();
 
@@ -109,9 +131,28 @@ public class LoginController extends BaseController {
             lblStatus.setText("Login succesful!");
 
             // When everything worked, reference the application with the logged in user
-            application.setUserConfig(new UserConfig(value.name, value.pass));
 
-            showLayout(Scenes.VIEW_HOMESCREEN, ApplicationConstants.TITLE_HOMESCREEN);
+            // TODO: retrieve JWT Token from server when logging in
+            String jwtToken = "NONE";
+            application.setUserConfig(new UserConfig(value.name, value.pass, jwtToken));
+
+            // connect the stomp client to the stomp endpoint
+            application.getStompClient().connect("ws://localhost:8080/snakeserver", () -> {
+
+                // register the player on the lobby
+                application.getStompClient().sendNewPlayerMessage(new PlayerMessage(
+                        new Spieler(-1337L, application.getUserConfig().getUserName(), application.getUserConfig().getPass())
+                ));
+
+                // execute on the ui-thread
+                Platform.runLater(() -> {
+                    // Switch to the homescreen
+                    showHomeScreen();
+                });
+
+            });
+
+
         });
 
         // execute the thread

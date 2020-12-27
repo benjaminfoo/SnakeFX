@@ -1,6 +1,7 @@
 package de.ostfalia.snakecore.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Spieler {
@@ -51,5 +52,18 @@ public class Spieler {
     @Override
     public String toString() {
         return "Spieler: " + getName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Spieler spieler = (Spieler) o;
+        return Objects.equals(name, spieler.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

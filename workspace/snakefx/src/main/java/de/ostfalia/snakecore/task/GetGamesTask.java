@@ -7,7 +7,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.snakecore.ProjectEndpoints;
-import de.ostfalia.snakecore.model.SpielDefinition;
+import de.ostfalia.snakecore.model.RunningGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class GetGamesTask {
 
-    public List<SpielDefinition> getSpiele() throws UnirestException {
+    public List<RunningGame> getSpiele() throws UnirestException {
 
         String url = ProjectEndpoints.URL_API_LOBBY;
         System.out.println(url);
@@ -29,7 +29,7 @@ public class GetGamesTask {
 
         System.out.println(json);
 
-        List<SpielDefinition> spielDefinitions = new Gson().fromJson(json, new TypeToken<ArrayList<SpielDefinition>>() {}.getType());
+        List<RunningGame> spielDefinitions = new Gson().fromJson(json, new TypeToken<ArrayList<RunningGame>>() {}.getType());
 
         spielDefinitions.forEach(e -> System.out.println(e.toString()));
 

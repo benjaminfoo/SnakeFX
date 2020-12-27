@@ -5,21 +5,20 @@ import de.ostfalia.snakecore.ApplicationConstants;
 import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.controller.Scenes;
 import de.ostfalia.snakecore.model.RunningGame;
-import de.ostfalia.snakecore.model.SpielDefinition;
 import de.ostfalia.snakecore.model.Spieler;
-import de.ostfalia.snakecore.model.Spielregel;
+import de.ostfalia.snakecore.task.GetGamesTask;
 import de.ostfalia.snakecore.task.GetPlayerTask;
 import de.ostfalia.snakecore.view.RunningGameCell;
-import de.ostfalia.snakecore.view.SpielstandCell;
-import de.ostfalia.snakecore.ws.client.MessageRecievedCallback;
+import de.ostfalia.snakecore.ws.client.StompMessageListener;
 import de.ostfalia.snakecore.ws.model.ChatMessage;
 import de.ostfalia.snakecore.ws.model.LobbyMessage;
-import javafx.collections.FXCollections;
+import de.ostfalia.snakecore.ws.model.PlayerMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 
-import java.util.Collections;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,13 +31,16 @@ import java.util.List;
 public class HomescreenController extends BaseController {
 
     @FXML
-    ListView activePlayers;
+    ListView<Spieler> activePlayers;
 
     @FXML
-    ListView activeGames;
+    ListView<RunningGame> activeGames;
 
     @FXML
-    Button newGame, disconnect, joinGame, gameHistory;
+    public Button newGame, disconnect, joinGame, gameHistory;
+
+    @FXML
+    public Button adminStartGame;
 
     @FXML
     TextArea chatContent;
@@ -49,8 +51,8 @@ public class HomescreenController extends BaseController {
     @FXML
     Button sendUserContent;
 
-    // TODO: implement debug-Mode
-    // TODO: implement controller inheritence - with shared members (like debug mode)
+    @FXML
+    Label userNameLabel;
 
     /**
      * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader.
@@ -105,67 +107,80 @@ public class HomescreenController extends BaseController {
 
             RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
             System.out.println("Subscribing to: " + selectedGame.getStompPath());
-            System.out.println("Fuck yo");
 
             application.getStompClient().subsribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
         });
 
+        activeGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+
+            RunningGame selectedItem = newValue;
+            boolean currentPlayerIsAdminOfSelection = selectedItem.admin.getName().equalsIgnoreCase(application.getUserConfigAsSpieler().getName());
+
+            // we have to invert the statement because the button gets disabled if set to true
+            adminStartGame.setDisable(!currentPlayerIsAdminOfSelection);
+
+        });
+
+        adminStartGame.setOnAction(onClick -> {
+            System.out.println("Starting game ...");
+
+            showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME);
+
+        });
+
+        simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
     }
 
-    private void updateUIRemote() {
-        try {
-            activePlayers.getItems().clear();
-            activeGames.getItems().clear();
+    private SimpleDateFormat simpleDateFormat;
 
-            List<Spieler> spielerList = new GetPlayerTask().getPlayer();
-            activePlayers.setItems(FXCollections.observableArrayList(spielerList));
-
-            /*
-            List<SpielDefinition> gameList = new GetGamesTask().getSpiele();
-            activeGames.setItems(FXCollections.observableArrayList(gameList));
-             */
-
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void postInitialize() {
         super.postInitialize();
 
-        updateUIRemote();
+        userNameLabel.setText("Hello, " + application.getUserConfig().getUserName() + "!");
 
-        application.getStompClient().connect("ws://localhost:8080/snakeserver");
-        application.getStompClient().setRecievedCallback(new MessageRecievedCallback() {
+        // prepare the ui for displaying listCells
+        activeGames.setCellFactory(listView -> new RunningGameCell());
+
+        // update the list of active players
+        updatePlayerList();
+
+        // update the list of running games
+        updateLobbyList();
+
+        // register callbacks for updating the UI and getting information about currently running games, etc.
+        application.getStompClient().setRecievedCallback(new StompMessageListener() {
+
             @Override
-            public void chatMessageRecieved(ChatMessage msg) {
-                chatContent.appendText(msg.getFrom() + ": " + msg.getText() + "\n");
+            public void onChatMessageReceived(ChatMessage msg) {
+                chatContent.appendText("(" + simpleDateFormat.format( new Date()) + "): " + msg.getFrom() + ": " + msg.getText() + "\n");
             }
 
             @Override
-            public void onRecievedLobbyMessage(LobbyMessage msg) {
-                chatContent.appendText("Currently running games: ");
-                for (RunningGame spielDefinition : msg.runningGames) {
-                    chatContent.appendText("\t" + spielDefinition.toString());
+            public void onLobbyMessageReceived(LobbyMessage msg) {
+
+                activeGames.getItems().clear();
+                for (RunningGame runningGame : msg.runningGames) {
+                    activeGames.getItems().add(runningGame);
                 }
 
-                activeGames.setCellFactory(listView -> new SpielstandCell());
+            }
 
-                activeGames.setItems(FXCollections.observableArrayList(msg.runningGames));
+            @Override
+            public void onPlayerMessageReceived(PlayerMessage msg) {
+
+                activePlayers.getItems().clear();
+                for (Spieler spieler : msg.playersInLobby) {
+                    activePlayers.getItems().add(spieler);
+                }
+
             }
 
         });
 
 
-        // subscribe to /topic/games
-        // if there is a new message on this topic, parse the results and update the ui
-
-
-        // TODO - subscribe to /topic/games
-        // TODO - send request with GetAllGames message to ... get all the currently running games
-
-
+        // if the user presses the "send" button on the lower right, send the chat message to the server
         sendUserContent.setOnAction(onClick -> {
             application.getStompClient().sendChatMessage(
                     application.getUserConfig().getUserName(),
@@ -175,26 +190,57 @@ public class HomescreenController extends BaseController {
         });
 
 
-        // reuse the onKeyReleased listener from the name
+        // if the user hits the "enter"-key, reuese the functionality from the send button
         userContent.setOnKeyReleased(event -> {
             if(event.getCode() == KeyCode.ENTER){
                 sendUserContent.fire();
             }
         });
 
-        // setup the cellfactory to properly display lobby games
-        activeGames.setCellFactory(listView -> new RunningGameCell());
-
-
-        // DEBUG
-        activeGames.getItems().add(
-                new RunningGame(
-                        "/app/games/1",
-                        new Spieler(1L, "Admin-Spieler", "123"),
-                        Collections.emptyList(),
-                        new SpielDefinition("Test-Game-from-RAM", 8, 20, 32,32,new Spielregel("test", Spielregel.Type.HIGHSCORE_100))
-                )
-        );
     }
+
+    // update the player-listView
+    private void updatePlayerList() {
+        try {
+
+            // clear the list of players
+            activePlayers.getItems().clear();
+
+            // retrieve the currently logged in players
+            List<Spieler> spielerList = new GetPlayerTask().getPlayer();
+
+            // update the ui to show every player
+            activePlayers.getItems().addAll(spielerList);
+
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // update the games-listView
+    private void updateLobbyList() {
+        try {
+
+            // clear the list of players
+            activeGames.getItems().clear();
+
+            // retrieve the currently logged in players
+            List<RunningGame> gamesList = new GetGamesTask().getSpiele();
+
+            // update the ui to show every player
+            activeGames.getItems().addAll(gamesList);
+
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // for testing async ui
+    public void simulateChatMessage(String input){
+        userContent.setText(input);
+        sendUserContent.fire();
+    }
+
+
 
 }

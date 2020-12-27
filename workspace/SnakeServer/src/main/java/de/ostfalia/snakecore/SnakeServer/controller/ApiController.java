@@ -44,7 +44,7 @@ public class ApiController {
     @RequestMapping(path = {API_PATH + API_ENDPOINT_SPIELER})
     public ResponseEntity<Iterable<Spieler>> getSpieler() {
         try {
-            return new ResponseEntity<>(spielerRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(lobbyController.getCurrentPlayers(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -95,16 +95,16 @@ public class ApiController {
         if(loginValid){
             return new ResponseEntity<Spieler>(resultFromDB, HttpStatus.OK);
         } else {
-            System.out.println("INVALID LOGIN DETECTED FROM " + loginName + " with Pass: " + loginPass);
+            System.out.println("INVALID LOGIN DETECTED FROM " + loginName + " using Password: " + loginPass);
             return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
         }
 
     }
 
     @GetMapping(path = {API_PATH + API_ENDPOINT_LOBBY})
-    public ResponseEntity<List<SpielDefinition>> getLobby() {
+    public ResponseEntity<List<RunningGame>> getLobby() {
         try {
-            return new ResponseEntity<List<SpielDefinition>>(spielDefinitionRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<List<RunningGame>>(lobbyController.getRunningGames(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

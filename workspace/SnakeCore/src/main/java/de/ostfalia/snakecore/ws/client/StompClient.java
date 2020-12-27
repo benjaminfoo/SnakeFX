@@ -3,18 +3,21 @@ package de.ostfalia.snakecore.ws.client;
 import de.ostfalia.snakecore.ws.model.ChatMessage;
 import de.ostfalia.snakecore.ws.model.GameInputMessage;
 import de.ostfalia.snakecore.ws.model.LobbyMessage;
+import de.ostfalia.snakecore.ws.model.PlayerMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import java.lang.reflect.Type;
 
-public class StompClient extends StompSessionHandlerAdapter implements MessageRecievedCallback {
+public class StompClient extends StompSessionHandlerAdapter implements StompMessageListener {
 
     // ws://localhost:8080/snakeserver/
     private String connectionUrl = "ws://localhost:8080/snakeserver";
@@ -24,10 +27,17 @@ public class StompClient extends StompSessionHandlerAdapter implements MessageRe
     private Logger logger = LogManager.getLogger(StompSessionHandler.class);
 
     private StompSession session;
-    private MessageRecievedCallback messageRecievedCallback;
+    private StompMessageListener stompMessageListener;
 
+    /**
+     * Check wether the connection has already been established or not
+     * @return
+     */
+    public boolean isConnected(){
+        return session != null || ((session != null && session.isConnected()));
+    }
 
-    public void connect(String url) {
+    public void connect(String url, Runnable onSuccessRunnable) {
         this.connectionUrl = url;
 
         // initialize the clients
@@ -41,10 +51,24 @@ public class StompClient extends StompSessionHandlerAdapter implements MessageRe
         sessionHandler = this;
 
         // CONNECT to the Stomp server using the url and the sessionHandler
-        wsStompClient.connect(connectionUrl, sessionHandler);
+        ListenableFuture<StompSession> connect = wsStompClient.connect(connectionUrl, sessionHandler);
+
+        connect.addCallback(new ListenableFutureCallback<StompSession>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                // TODO: indicate error
+            }
+
+            @Override
+            public void onSuccess(StompSession stompSession) {
+                session = stompSession;
+                onSuccessRunnable.run();
+            }
+        });
 
         // register a listener for incoming messages
         setMessageRecievedCallback(this);
+
     }
 
 
@@ -54,6 +78,7 @@ public class StompClient extends StompSessionHandlerAdapter implements MessageRe
 
         logger.info("New session established : " + session.getSessionId());
 
+        // subscribe to incoming chat messages
         session.subscribe("/topic/messages", new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
@@ -68,13 +93,14 @@ public class StompClient extends StompSessionHandlerAdapter implements MessageRe
                 ChatMessage msg = (ChatMessage) payload;
                 if (msg != null) {
                     System.out.println("Received ChatMessage: " + msg.getText() + " from : " + msg.getFrom());
-                    messageRecievedCallback.chatMessageRecieved(msg);
+                    stompMessageListener.onChatMessageReceived(msg);
                 }
 
             }
         });
         logger.info("Subscribed to " + "/topic/messages");
 
+        // subscribe to game changes
         session.subscribe("/topic/games", new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
@@ -87,12 +113,33 @@ public class StompClient extends StompSessionHandlerAdapter implements MessageRe
 
                 LobbyMessage msg = (LobbyMessage) payload;
                 if (msg != null) {
-                    System.out.println("Received LobbyMessage: " + msg.runningGames.toString());
-                    messageRecievedCallback.onRecievedLobbyMessage(msg);
+                    System.out.println("Received LobbyMessage: " + msg.toString());
+                    stompMessageListener.onLobbyMessageReceived(msg);
                 }
             }
         });
         logger.info("Subscribed to " + "/topic/games");
+
+
+        // subscribe to newly joined players
+        session.subscribe("/topic/players", new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return PlayerMessage.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
+
+                PlayerMessage msg = (PlayerMessage) payload;
+                if (msg != null) {
+                    System.out.println("Received PlayerMessage: " + msg.toString());
+                    stompMessageListener.onPlayerMessageReceived(msg);
+                }
+            }
+        });
+        logger.info("Subscribed to " + "/topic/players");
 
 
 
@@ -107,9 +154,14 @@ public class StompClient extends StompSessionHandlerAdapter implements MessageRe
         session.send("/app/chat", new ChatMessage(user, message));
     }
 
-    public void sendLobbyMessage() {
+    public void sendLobbyMessage(LobbyMessage lobbyMessage) {
         System.out.println("Sending lobby message");
-        session.send("/app/games", new LobbyMessage());
+        session.send("/app/games", lobbyMessage);
+    }
+
+    public void sendNewPlayerMessage(PlayerMessage playerMessage){
+        System.out.println("Sending player message");
+        session.send("/app/players", playerMessage);
     }
 
     /**
@@ -164,25 +216,32 @@ public class StompClient extends StompSessionHandlerAdapter implements MessageRe
 
     }
 
-    public void setMessageRecievedCallback(MessageRecievedCallback messageRecievedCallback) {
-        this.messageRecievedCallback = messageRecievedCallback;
+    public void setMessageRecievedCallback(StompMessageListener stompMessageListener) {
+        this.stompMessageListener = stompMessageListener;
     }
 
-    public void setRecievedCallback(MessageRecievedCallback recievedCallback) {
-        this.messageRecievedCallback = recievedCallback;
+    public void setRecievedCallback(StompMessageListener recievedCallback) {
+        this.stompMessageListener = recievedCallback;
     }
 
     @Override
-    public void chatMessageRecieved(ChatMessage msg) {
-        if (messageRecievedCallback != null) {
-            messageRecievedCallback.chatMessageRecieved(msg);
+    public void onChatMessageReceived(ChatMessage msg) {
+        if (stompMessageListener != null) {
+            stompMessageListener.onChatMessageReceived(msg);
         }
     }
 
     @Override
-    public void onRecievedLobbyMessage(LobbyMessage msg) {
-        if (messageRecievedCallback != null) {
-            messageRecievedCallback.onRecievedLobbyMessage(msg);
+    public void onLobbyMessageReceived(LobbyMessage msg) {
+        if (stompMessageListener != null) {
+            stompMessageListener.onLobbyMessageReceived(msg);
+        }
+    }
+
+    @Override
+    public void onPlayerMessageReceived(PlayerMessage msg) {
+        if (stompMessageListener != null) {
+            stompMessageListener.onPlayerMessageReceived(msg);
         }
     }
 

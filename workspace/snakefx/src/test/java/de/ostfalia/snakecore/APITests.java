@@ -1,9 +1,7 @@
 package de.ostfalia.snakecore;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-import de.ostfalia.snakecore.model.SpielDefinition;
 import de.ostfalia.snakecore.model.Spieler;
-import de.ostfalia.snakecore.task.GetGamesTask;
 import de.ostfalia.snakecore.task.GetPlayerTask;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,7 +31,6 @@ public class APITests {
      *  - get all of the test-spieler within the database
      */
     public void endpointTest_GetSpiele() throws UnirestException {
-        List<SpielDefinition> spiele = new GetGamesTask().getSpiele();
     }
 
 }

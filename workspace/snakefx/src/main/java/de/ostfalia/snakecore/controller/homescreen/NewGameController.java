@@ -1,13 +1,10 @@
 package de.ostfalia.snakecore.controller.homescreen;
 
-import com.google.gson.Gson;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import de.ostfalia.snakecore.ProjectEndpoints;
 import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.model.SpielDefinition;
 import de.ostfalia.snakecore.model.Spielregel;
+import de.ostfalia.snakecore.ws.model.LobbyMessage;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -20,7 +17,7 @@ import javafx.scene.control.*;
 public class NewGameController extends BaseController {
 
     @FXML
-    Button newGame;
+    public Button newGame;
 
     @FXML
     Button abort;
@@ -47,6 +44,9 @@ public class NewGameController extends BaseController {
         abort.setOnAction(onclick -> { showHomeScreen();});
     }
 
+    /**
+     * Create a new game based on the inputs from the user interface
+     */
     private void executeCreateNewGame() {
 
         String newName = nameOfTheGame.getText().trim();
@@ -67,20 +67,10 @@ public class NewGameController extends BaseController {
         spielDefinition.setMaxNumberOfPowerUps(numberOfPowerUps);
         spielDefinition.setSpielregel(spielregel);
 
-        Gson gson = new Gson();
+        // we've created a spielDefinition within the ui - now transmit it to the backend
+        Platform.runLater(() -> application.getStompClient().sendLobbyMessage(new LobbyMessage(application.getUserConfigAsSpieler(),spielDefinition)));
 
-        try {
-            System.out.println("Registering new game: " + gson.toJson(spielDefinition));
-            HttpResponse<String> res = Unirest
-                    .post(ProjectEndpoints.URL_API_LOBBY)
-                    .header("Content-Type", "application/json")
-                    .body(gson.toJson(spielDefinition))
-                    .asString();
-
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-
+        // switch to the homescreen again
         showHomeScreen();
     }
 

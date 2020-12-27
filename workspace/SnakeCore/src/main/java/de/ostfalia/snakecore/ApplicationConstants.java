@@ -16,8 +16,15 @@ public class ApplicationConstants {
 
     public static final String TITLE_CURRENT_GAME = TITLE + " - Aktives Spiel";
 
-    // MIsc
+    // Test-User, Bot-User
     public static final String BOT_USER_NAME = "BotUser";
+
+    public static final String TEST_USER_ONE_NAME = "P. Lankton";
+    public static final String TEST_USER_ONE_PASS = "password-a";
+
+    public static final String TEST_USER_TWO_NAME = "Eugene";
+    public static final String TEST_USER_TWO_PASS = "password-b";
+
 
 
 }

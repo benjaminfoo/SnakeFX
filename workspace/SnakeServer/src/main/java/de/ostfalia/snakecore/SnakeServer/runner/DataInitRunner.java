@@ -1,5 +1,7 @@
 package de.ostfalia.snakecore.SnakeServer.runner;
 
+import de.ostfalia.snakecore.ApplicationConstants;
+import de.ostfalia.snakecore.SnakeServer.controller.LobbyController;
 import de.ostfalia.snakecore.SnakeServer.persistance.*;
 import de.ostfalia.snakecore.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,10 @@ public class DataInitRunner implements ApplicationRunner {
     private SpielregelRepository spielregelRepository;
 
 
+    @Autowired
+    private LobbyController lobbyController;
+
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         prepopulateGameHistoryData();
@@ -45,6 +51,8 @@ public class DataInitRunner implements ApplicationRunner {
     private void prepopulateBotUser() {
         Spieler botPlayer = new Spieler(4L, BOT_USER_NAME, BOT_USER_NAME + "Pw123!"); // they'll never know
         spielerRepository.save(botPlayer);
+
+        lobbyController.getCurrentPlayers().add(botPlayer);
     }
 
     /**
@@ -87,8 +95,8 @@ public class DataInitRunner implements ApplicationRunner {
     private void prepopulateGameHistoryData() {
 
         // Szenario 1 - Zwei Spieler
-        Spieler testSpieler = new Spieler(1L, "a", "");
-        Spieler testSpieler2 = new Spieler(2L, "p2", "p2");
+        Spieler testSpieler = new Spieler(1L, ApplicationConstants.TEST_USER_ONE_NAME, ApplicationConstants.TEST_USER_ONE_PASS);
+        Spieler testSpieler2 = new Spieler(2L, ApplicationConstants.TEST_USER_TWO_NAME, ApplicationConstants.TEST_USER_TWO_PASS);
 
         spielerRepository.save(testSpieler);
         spielerRepository.save(testSpieler2);

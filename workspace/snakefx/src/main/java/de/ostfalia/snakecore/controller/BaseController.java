@@ -1,7 +1,7 @@
 package de.ostfalia.snakecore.controller;
 
-import de.ostfalia.snakecore.AppSnakeFX;
 import de.ostfalia.snakecore.ApplicationConstants;
+import de.ostfalia.snakecore.app.BaseApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,7 +19,7 @@ import java.io.IOException;
 public abstract class BaseController {
 
     public Stage currentStage;
-    public AppSnakeFX application;
+    public BaseApplication application;
 
     /**
      * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader
@@ -67,18 +67,11 @@ public abstract class BaseController {
             baseController.currentStage.getIcons().add(new Image("icon.png"));
             baseController.setTitle(newTitle);
 
+            application.initializedController.put(baseController.getClass(), baseController);
+            System.out.println("Putting: " + baseController.getClass() + " with " + baseController.getClass() + " into controller cache");
+
             // initialize everything related to the user-interface
             baseController.postInitialize();
-
-            /*
-            baseController.currentStage.setMinHeight(300);
-            baseController.currentStage.setMinWidth(200);
-            */
-            // baseController.currentStage.centerOnScreen();
-
-
-            // show the setup and referenced window
-            // window.show();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,6 +105,7 @@ public abstract class BaseController {
             // setup the title and the icon of the application
             baseController.currentStage.getIcons().add(new Image("icon.png"));
             baseController.setTitle(newTitle);
+            application.initializedController.put(baseController.getClass(), baseController);
 
             // initialize everything related to the user-interface
             baseController.postInitialize();
