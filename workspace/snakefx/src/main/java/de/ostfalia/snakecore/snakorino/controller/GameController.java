@@ -1,18 +1,22 @@
 package de.ostfalia.snakecore.snakorino.controller;
 
-import de.ostfalia.snakecore.AppSnakeFX;
 import de.ostfalia.snakecore.ApplicationConstants;
 import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.controller.Scenes;
+import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.snakorino.model.Config;
 import de.ostfalia.snakecore.snakorino.model.Food;
 import de.ostfalia.snakecore.snakorino.model.Snake;
 import de.ostfalia.snakecore.snakorino.model.Vector2;
 import de.ostfalia.snakecore.util.RNG;
+import de.ostfalia.snakecore.ws.client.StompMessageListener;
+import de.ostfalia.snakecore.ws.model.ChatMessage;
+import de.ostfalia.snakecore.ws.model.GameInputMessage;
+import de.ostfalia.snakecore.ws.model.LobbyMessage;
+import de.ostfalia.snakecore.ws.model.PlayerMessage;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -104,11 +108,46 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     // the graphicsContext which is used to draw to the screen manually
     private GraphicsContext gc;
 
+    public void launchGame(RunningGame runningGame){
 
-    // for meanwhile developing the game
-    @Override
-    public void postInitialize() {
-        super.postInitialize();
+        // TODO: these values need to get retrieved from the backend
+        // numPlayers = runningGame.getActiveClients().size(); - TODO: use the amount of players
+        numPlayers = 2;
+
+        Color[] playerColors = {Color.PURPLE, Color.BLUE, Color.RED, Color.GREEN};
+        for (int i = 0; i < numPlayers; i++) {
+            snakeList.add ( new Snake ( new Vector2(3, 3 * i), playerColors[i]));
+        }
+
+        for (Snake snake : snakeList) {
+            snake.isNPC = true;
+        }
+
+        DEBUG_NPC_MOVEMENT_CIRCLING = true;
+
+        application.getStompClient().setStompMessageListener(new StompMessageListener() {
+            @Override
+            public void onChatMessageReceived(ChatMessage msg) {
+
+            }
+
+            @Override
+            public void onLobbyMessageReceived(LobbyMessage msg) {
+
+            }
+
+            @Override
+            public void onPlayerMessageReceived(PlayerMessage msg) {
+
+            }
+
+            @Override
+            public void onGameInputMessageReceived(GameInputMessage msg) {
+
+            }
+        });
+
+        /*
 
         // setup everything related to the debug-mode
         if(AppSnakeFX.inDebugMode){
@@ -146,7 +185,53 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 }
             }
 
+            */
+
+        /*
         // Normal mode
+        } else {
+
+        }
+        */
+
+        /*
+        // setup everything related to the debug-mode
+        if(AppSnakeFX.inDebugMode){
+
+            // we gonna be gentle to the cpu
+            if(DEBUG_LOWCORE){
+                numPlayers = 3;
+            }
+
+            // we gonna stress test the cpu
+            if(DEBUG_HARDCORE){
+                numPlayers = 20;
+            }
+
+            // generate the players related to low or hardcore
+            if(DEBUG_LOWCORE || DEBUG_HARDCORE){
+                for (int i = 0; i < numPlayers; i++) {
+                    int newY = i % 4 * 3 + 3;
+                    int newX = i / 4 * 5 + 3;
+                    snakeList.add (
+                            new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
+                    );
+                }
+            }
+
+            // we want to play alone
+            if(DEBUG_SINGLEPLAYER){
+                snakeList.add ( new Snake ( new Vector2(5,5), Color.PURPLE));
+            }
+
+            // every snake is controlled by random keystrokes or some pattern
+            if(DEBUG_EVERYBODY_NPC){
+                for (Snake snake : snakeList) {
+                    snake.isNPC = true;
+                }
+            }
+
+            // Normal mode
         } else {
             // regular game-play
             // TODO: these values need to get retrieved from the backend
@@ -156,6 +241,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 snakeList.add ( new Snake ( new Vector2(0, 5 * i), playerColors[i]));
             }
         }
+        */
 
 
         // add the initial UI to the scene
@@ -166,14 +252,15 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         // display the UI within the scene, center the stage on the users system
         currentStage.setScene(scene);
-        Platform.runLater(() -> currentStage.toFront());
 
-        scene.setOnKeyPressed(this);
+        // display the rendering canvas
+        gc = canvas.getGraphicsContext2D();
 
         // initialize the food on the map
-        generateFood();
+        // TODO: this thing is bugged -> generateFood();
 
-        gc = canvas.getGraphicsContext2D();
+
+        scene.setOnKeyPressed(this);
 
         // The game animation happens because of the timeline
         // every change happens in a new keyFrame (update-loop)
@@ -181,6 +268,16 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event -> update(gc)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
+    }
+
+
+    // for meanwhile developing the game
+    @Override
+    public void postInitialize() {
+        super.postInitialize();
+
+
     }
 
     /**

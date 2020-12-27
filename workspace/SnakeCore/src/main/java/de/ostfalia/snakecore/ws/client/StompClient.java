@@ -67,7 +67,7 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
         });
 
         // register a listener for incoming messages
-        setMessageRecievedCallback(this);
+        setStompMessageListener(this);
 
     }
 
@@ -225,11 +225,7 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
 
     }
 
-    public void setMessageRecievedCallback(StompMessageListener stompMessageListener) {
-        this.stompMessageListener = stompMessageListener;
-    }
-
-    public void setRecievedCallback(StompMessageListener recievedCallback) {
+    public void setStompMessageListener(StompMessageListener recievedCallback) {
         this.stompMessageListener = recievedCallback;
     }
 

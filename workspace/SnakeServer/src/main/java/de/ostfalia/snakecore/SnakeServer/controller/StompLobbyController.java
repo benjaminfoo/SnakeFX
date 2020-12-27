@@ -75,6 +75,7 @@ public class StompLobbyController {
         System.out.println("Recieved player input for " + gameId);
         System.out.println("Player input: " + message);
         System.out.println("Info: " + message.toString());
+
         return message;
     }
 

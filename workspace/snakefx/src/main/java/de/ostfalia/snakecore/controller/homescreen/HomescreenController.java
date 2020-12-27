@@ -6,6 +6,7 @@ import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.controller.Scenes;
 import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
+import de.ostfalia.snakecore.snakorino.controller.GameController;
 import de.ostfalia.snakecore.task.GetGamesTask;
 import de.ostfalia.snakecore.task.GetPlayerTask;
 import de.ostfalia.snakecore.view.RunningGameCell;
@@ -130,7 +131,7 @@ public class HomescreenController extends BaseController {
             application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
 
             application.getStompClient().sendGameInputMessage(selectedGame.stompPath,
-                    new GameInputMessage(application.getUserConfig().getUserName(), selectedGame.stompPath, "start_game", true)
+                    new GameInputMessage(application.getUserConfig().getUserName(), selectedGame.stompPath, "start_game", true, selectedGame)
             );
 
         });
@@ -155,7 +156,7 @@ public class HomescreenController extends BaseController {
         updateLobbyList();
 
         // register callbacks for updating the UI and getting information about currently running games, etc.
-        application.getStompClient().setRecievedCallback(new StompMessageListener() {
+        application.getStompClient().setStompMessageListener(new StompMessageListener() {
 
             @Override
             public void onChatMessageReceived(ChatMessage msg) {
@@ -187,7 +188,10 @@ public class HomescreenController extends BaseController {
                 if(msg.isGameStarted()) {
                     System.out.println("The game has been started!");
 
-                    Platform.runLater(() -> showGameScreen());
+                    Platform.runLater(() -> {
+                        showGameScreen();
+                        ((GameController) application.initializedController.get(GameController.class)).launchGame(msg.getRunningGame());
+                    });
                 }
             }
 

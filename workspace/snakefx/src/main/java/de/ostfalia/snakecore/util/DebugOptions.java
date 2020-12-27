@@ -8,7 +8,7 @@ package de.ostfalia.snakecore.util;
 public class DebugOptions {
 
     // For debugging - Sets up a low stress game profile
-    public static boolean DEBUG_SINGLEPLAYER = true;
+    public static boolean DEBUG_SINGLEPLAYER = false;
 
     // For debugging - Sets up a low stress game profile
     public static boolean DEBUG_LOWCORE = false;
@@ -17,15 +17,15 @@ public class DebugOptions {
     public static boolean DEBUG_HARDCORE = false;
 
     // For debugging - Sets up the npc movement - walking randomly within the map
-    public static boolean DEBUG_NPC_MOVEMENT_RANDOM_PATHS = true;
+    public static boolean DEBUG_NPC_MOVEMENT_RANDOM_PATHS = false;
 
     // For debugging - Sets up the npc movement - every npc just circles around
-    public static boolean DEBUG_NPC_MOVEMENT_CIRCLING = false;
+    public static boolean DEBUG_NPC_MOVEMENT_CIRCLING = true;
 
     // For debugging - Every player is an npc ( = not controlled by a player )
-    public static boolean DEBUG_EVERYBODY_NPC = true;
+    public static boolean DEBUG_EVERYBODY_NPC = false;
 
     // For debugging - Draw the direction of the player <=> the next tile a player moves to
-    public static boolean DEBUG_DRAW_DIRECTIONS = true;
+    public static boolean DEBUG_DRAW_DIRECTIONS = false;
     
 }
