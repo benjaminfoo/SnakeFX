@@ -7,6 +7,7 @@ import de.ostfalia.snakecore.ws.client.StompClient;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,11 @@ import java.util.Map;
  * Its the configuration class for the client and holds references to the stompClient, the UserConfig, etc.
  */
 public abstract class BaseApplication extends Application {
+
+    public BaseApplication() {
+        simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        stompClient = new StompClient();
+    }
 
     // the stage which gets reused through-out the application's lifecycle
     private Stage windowStage;
@@ -30,43 +36,37 @@ public abstract class BaseApplication extends Application {
     // the startup parameters used when the application is called (for example from public static void main -> args[])
     private List<String> startParams;
 
+    // a class <-> controller map which acts as a cache for application controller
     public Map<Class, BaseController> initializedController = new HashMap<>();
 
     // is the application executed in debug-mode?
     public static boolean inDebugMode = false;
 
+    // a simple date formatter in order to display formated dates or time value
+    private SimpleDateFormat simpleDateFormat;
+
     // Local user management
     public UserConfig getUserConfig(){ return userConfig; }
     public void setUserConfig(UserConfig userConfig) { this.userConfig = userConfig; }
 
-    // Communication via STOMP
-    public StompClient getStompClient() {
-
-        if(stompClient == null){
-            stompClient = new StompClient();
-        }
-
-        return stompClient;
+    public Spieler getUserConfigAsSpieler(){
+        return new Spieler(-1337L, userConfig.getUserName(), userConfig.getPass());
     }
 
     public Stage getWindowStage() {
         return windowStage;
     }
 
-    public static boolean isInDebugMode() {
-        return inDebugMode;
-    }
-
     public void setWindowStage(Stage windowStage) {
         this.windowStage = windowStage;
     }
 
-    public void setStompClient(StompClient stompClient) {
-        this.stompClient = stompClient;
+    public StompClient getStompClient() {
+        return stompClient;
     }
 
-    public static void setInDebugMode(boolean inDebugMode) {
-        BaseApplication.inDebugMode = inDebugMode;
+    public void setStompClient(StompClient stompClient) {
+        this.stompClient = stompClient;
     }
 
     public List<String> getStartParams() {
@@ -77,7 +77,28 @@ public abstract class BaseApplication extends Application {
         this.startParams = startParams;
     }
 
-    public Spieler getUserConfigAsSpieler(){
-        return new Spieler(-1337L, userConfig.getUserName(), userConfig.getPass());
+    public Map<Class, BaseController> getInitializedController() {
+        return initializedController;
     }
+
+    public void setInitializedController(Map<Class, BaseController> initializedController) {
+        this.initializedController = initializedController;
+    }
+
+    public static boolean isInDebugMode() {
+        return inDebugMode;
+    }
+
+    public static void setInDebugMode(boolean inDebugMode) {
+        BaseApplication.inDebugMode = inDebugMode;
+    }
+
+    public SimpleDateFormat getSimpleDateFormat() {
+        return simpleDateFormat;
+    }
+
+    public void setSimpleDateFormat(SimpleDateFormat simpleDateFormat) {
+        this.simpleDateFormat = simpleDateFormat;
+    }
+
 }

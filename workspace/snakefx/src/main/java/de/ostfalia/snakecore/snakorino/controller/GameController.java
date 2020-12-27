@@ -166,7 +166,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         // display the UI within the scene, center the stage on the users system
         currentStage.setScene(scene);
-        currentStage.centerOnScreen();
         Platform.runLater(() -> currentStage.toFront());
 
         scene.setOnKeyPressed(this);

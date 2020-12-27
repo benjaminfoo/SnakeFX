@@ -17,7 +17,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -31,10 +30,10 @@ import java.util.List;
 public class HomescreenController extends BaseController {
 
     @FXML
-    ListView<Spieler> activePlayers;
+    public ListView<Spieler> activePlayers;
 
     @FXML
-    ListView<RunningGame> activeGames;
+    public ListView<RunningGame> activeGames;
 
     @FXML
     public Button newGame, disconnect, joinGame, gameHistory;
@@ -107,7 +106,6 @@ public class HomescreenController extends BaseController {
 
             RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
             System.out.println("Subscribing to: " + selectedGame.getStompPath());
-
             application.getStompClient().subsribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
         });
 
@@ -119,19 +117,22 @@ public class HomescreenController extends BaseController {
             // we have to invert the statement because the button gets disabled if set to true
             adminStartGame.setDisable(!currentPlayerIsAdminOfSelection);
 
+            System.out.println("Selected game: " + newValue.spielDefinition.getNameOfTheGame());
         });
 
         adminStartGame.setOnAction(onClick -> {
             System.out.println("Starting game ...");
 
+            RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
+            System.out.println("Subscribing to: " + selectedGame.getStompPath());
+            application.getStompClient().subsribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
+
             showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME);
 
         });
 
-        simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
     }
 
-    private SimpleDateFormat simpleDateFormat;
 
 
     @Override
@@ -154,7 +155,7 @@ public class HomescreenController extends BaseController {
 
             @Override
             public void onChatMessageReceived(ChatMessage msg) {
-                chatContent.appendText("(" + simpleDateFormat.format( new Date()) + "): " + msg.getFrom() + ": " + msg.getText() + "\n");
+                chatContent.appendText("(" + application.getSimpleDateFormat().format( new Date()) + "): " + msg.getFrom() + ": " + msg.getText() + "\n");
             }
 
             @Override
