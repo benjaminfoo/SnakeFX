@@ -11,8 +11,10 @@ import de.ostfalia.snakecore.task.GetPlayerTask;
 import de.ostfalia.snakecore.view.RunningGameCell;
 import de.ostfalia.snakecore.ws.client.StompMessageListener;
 import de.ostfalia.snakecore.ws.model.ChatMessage;
+import de.ostfalia.snakecore.ws.model.GameInputMessage;
 import de.ostfalia.snakecore.ws.model.LobbyMessage;
 import de.ostfalia.snakecore.ws.model.PlayerMessage;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -106,7 +108,7 @@ public class HomescreenController extends BaseController {
 
             RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
             System.out.println("Subscribing to: " + selectedGame.getStompPath());
-            application.getStompClient().subsribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
+            application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
         });
 
         activeGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -125,9 +127,11 @@ public class HomescreenController extends BaseController {
 
             RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
             System.out.println("Subscribing to: " + selectedGame.getStompPath());
-            application.getStompClient().subsribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
+            application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
 
-            showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME);
+            application.getStompClient().sendGameInputMessage(selectedGame.stompPath,
+                    new GameInputMessage(application.getUserConfig().getUserName(), selectedGame.stompPath, "start_game", true)
+            );
 
         });
 
@@ -176,6 +180,15 @@ public class HomescreenController extends BaseController {
                     activePlayers.getItems().add(spieler);
                 }
 
+            }
+
+            @Override
+            public void onGameInputMessageReceived(GameInputMessage msg) {
+                if(msg.isGameStarted()) {
+                    System.out.println("The game has been started!");
+
+                    Platform.runLater(() -> showGameScreen());
+                }
             }
 
         });

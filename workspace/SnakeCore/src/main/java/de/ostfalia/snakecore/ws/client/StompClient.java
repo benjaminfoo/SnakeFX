@@ -164,6 +164,12 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
         session.send("/app/players", playerMessage);
     }
 
+    public void sendGameInputMessage(String stompPath, GameInputMessage gameInputMessage) {
+        System.out.println("Sending player message");
+        session.send(stompPath, gameInputMessage);
+    }
+
+
     /**
      * Sends a message to a game topic with gameDestinationTopic - from the player with the userName and its current input
      *
@@ -171,7 +177,7 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
      * @param userName
      * @param input
      */
-    public void subsribeToGameTopic(String gameDestinationTopic, String userName, String input) {
+    public void subscribeToGameTopic(String gameDestinationTopic, String userName, String input) {
         session.subscribe(gameDestinationTopic, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
@@ -195,9 +201,12 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
                 System.out.println();
                 System.out.println();
 
+                if (stompMessageListener != null) {
+                    stompMessageListener.onGameInputMessageReceived(msg);
+                }
+
             }
         });
-        session.send(gameDestinationTopic, new GameInputMessage("gameId-1",  userName, input));
     }
 
 
@@ -242,6 +251,13 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
     public void onPlayerMessageReceived(PlayerMessage msg) {
         if (stompMessageListener != null) {
             stompMessageListener.onPlayerMessageReceived(msg);
+        }
+    }
+
+    @Override
+    public void onGameInputMessageReceived(GameInputMessage msg) {
+        if (stompMessageListener != null) {
+            stompMessageListener.onGameInputMessageReceived(msg);
         }
     }
 

@@ -129,4 +129,8 @@ public abstract class BaseController {
         showLayout(Scenes.VIEW_HOMESCREEN, ApplicationConstants.TITLE_HOMESCREEN);
     }
 
+    public void showGameScreen(){
+        showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME);
+    }
+
 }

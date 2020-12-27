@@ -1,6 +1,7 @@
 package de.ostfalia.snakecore.ws.client;
 
 import de.ostfalia.snakecore.ws.model.ChatMessage;
+import de.ostfalia.snakecore.ws.model.GameInputMessage;
 import de.ostfalia.snakecore.ws.model.LobbyMessage;
 import de.ostfalia.snakecore.ws.model.PlayerMessage;
 
@@ -19,5 +20,8 @@ public interface StompMessageListener {
 
     // callback for indicating a player has joined the lobby
     public void onPlayerMessageReceived(PlayerMessage msg);
+
+    // callback for indicating recieved player input from the backend
+    public void onGameInputMessageReceived(GameInputMessage msg);
 
 }

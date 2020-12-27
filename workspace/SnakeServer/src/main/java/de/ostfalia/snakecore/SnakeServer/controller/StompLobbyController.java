@@ -39,7 +39,7 @@ public class StompLobbyController {
 
             // create a new runningGame based on the SpielDefinition
             RunningGame newRunningGame = new RunningGame(
-                    "/app/games/1",
+                    "/topic/games/1",
                     lobbyMessage.admin,
                     Collections.emptyList(),
                     lobbyMessage.spielDefinition
@@ -74,6 +74,7 @@ public class StompLobbyController {
     public GameInputMessage broadcastPlayerInputToClients(@DestinationVariable String gameId, GameInputMessage message) {
         System.out.println("Recieved player input for " + gameId);
         System.out.println("Player input: " + message);
+        System.out.println("Info: " + message.toString());
         return message;
     }
 

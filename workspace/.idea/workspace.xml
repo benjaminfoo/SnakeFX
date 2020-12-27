@@ -4,8 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ba483e1-6bed-4f2d-8970-e49a1761d4c1" name="Default Changelist" comment="-">
-      <change beforePath="$PROJECT_DIR$/../readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../readme.md" afterDir="false" />
+    <list default="true" id="4ba483e1-6bed-4f2d-8970-e49a1761d4c1" name="Default Changelist" comment="- extended test-cases">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpasyncclient_4_1_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_12.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_nio_4_4_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpmime_4_5_12.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/client/StompClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/client/StompClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/client/StompMessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/client/StompMessageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/model/GameInputMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/model/GameInputMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SnakeServer/src/main/java/de/ostfalia/snakecore/SnakeServer/controller/StompLobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeServer/src/main/java/de/ostfalia/snakecore/SnakeServer/controller/StompLobbyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SnakeTest/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeTest/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/BaseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/HomescreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/HomescreenController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +32,13 @@
   </component>
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -34,14 +59,29 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/SnakeServer/pom.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/SnakeTest" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15689811" />
     <property name="project.structure.side.proportion" value="0.50348026" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
-  <component name="RunManager" selected="Application.AppSnakeFX">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Codeularity_Laptop_B\Documents\Studium\00_Online_Studium\02_WiSe2020\Pattern und Frameworks\github\Patterns_and_Frameworks\workspace\SnakeTest" />
+      <recent name="C:\Users\Codeularity_Laptop_B\Documents\Studium\00_Online_Studium\02_WiSe2020\Pattern und Frameworks\github\Patterns_and_Frameworks\workspace\SnakeCore" />
+      <recent name="C:\Users\Codeularity_Laptop_B\Documents\Studium\00_Online_Studium\02_WiSe2020\Pattern und Frameworks\github\Patterns_and_Frameworks\workspace\snakefx\src\main\resources" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="de.ostfalia.snakecore" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="de.ostfalia.snakecore.ws.model" />
+      <recent name="de.ostfalia.teamx" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.EnvironmentTest_ServerTwoClients_Playing">
     <configuration name="AppSnakeFX (2)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="de.ostfalia.snakecore.AppSnakeFX" />
       <module name="snakefx" />
@@ -52,6 +92,39 @@
     <configuration name="AppSnakeFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.ostfalia.snakecore.AppSnakeFX" />
       <module name="snakefx" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EnvironmentTest_ServerOneClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="de.ostfalia.teamx.EnvironmentTest_ServerOneClient" />
+      <module name="SnakeTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.ostfalia.teamx.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EnvironmentTest_ServerTwoClients" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="de.ostfalia.teamx.EnvironmentTest_ServerTwoClients" />
+      <module name="SnakeTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EnvironmentTest_ServerTwoClients_Playing" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="de.ostfalia.teamx.EnvironmentTest_ServerTwoClients_Playing" />
+      <module name="SnakeTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.ostfalia.teamx.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -80,10 +153,16 @@
       <item itemvalue="Application.AppSnakeFX (2)" />
       <item itemvalue="Application.AppSnakeFX" />
       <item itemvalue="Spring Boot.SnakeServerApplication" />
+      <item itemvalue="Application.EnvironmentTest_ServerTwoClients" />
+      <item itemvalue="Application.EnvironmentTest_ServerOneClient" />
+      <item itemvalue="Application.EnvironmentTest_ServerTwoClients_Playing" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.EnvironmentTest_ServerTwoClients_Playing" />
+        <item itemvalue="Application.EnvironmentTest_ServerOneClient" />
         <item itemvalue="Application.AppSnakeFX" />
+        <item itemvalue="Application.EnvironmentTest_ServerTwoClients" />
       </list>
     </recent_temporary>
   </component>
@@ -98,7 +177,10 @@
       <workItem from="1608929318942" duration="336000" />
       <workItem from="1608929756681" duration="38000" />
       <workItem from="1608929806393" duration="281000" />
-      <workItem from="1608930107464" duration="4300000" />
+      <workItem from="1608930107464" duration="4432000" />
+      <workItem from="1609001596971" duration="19000" />
+      <workItem from="1609074293632" duration="2887000" />
+      <workItem from="1609087383984" duration="21089000" />
     </task>
     <task id="LOCAL-00001" summary="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI">
       <created>1608934283443</created>
@@ -107,14 +189,54 @@
       <option name="project" value="LOCAL" />
       <updated>1608934283443</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- Refactored project&#10;- Refactored communication via HTTP/REST-Service&#10;- Refactored communication via STOMP-Service&#10;- Added Test-Project for scenario testing">
+      <created>1609105806497</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1609105806497</updated>
+    </task>
+    <task id="LOCAL-00003" summary="- extended test-cases - full server startup, two clients login and game setup now implemented">
+      <created>1609109234415</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1609109234415</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI" />
+    <MESSAGE value="- Refactored project&#10;- Refactored communication via HTTP/REST-Service&#10;- Refactored communication via STOMP-Service&#10;- Added Test-Project for scenario testing" />
+    <MESSAGE value="- extended test-cases - full server startup, two clients login and game setup now implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="- extended test-cases - full server startup, two clients login and game setup now implemented" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="13" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/view/RunningGameData.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="de.ostfalia.snakecore.model.RunningGame" memberName="spielDefinition" />
+        <PinnedItemInfo parentTag="de.ostfalia.snakecore.model.RunningGame" memberName="stompPath" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

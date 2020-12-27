@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="snakefx" />
+        <module name="SnakeTest" />
         <module name="snakecore" />
         <module name="SnakeServer" />
       </profile>
@@ -15,11 +16,13 @@
       <module name="snakecore" target="8" />
       <module name="snakefx" target="8" />
       <module name="SnakeServer" target="8" />
+      <module name="SnakeTest" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="SnakeServer" options="-parameters" />
+      <module name="SnakeTest" options="-parameters" />
       <module name="snakecore" options="-parameters" />
     </option>
   </component>

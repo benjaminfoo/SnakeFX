@@ -6,13 +6,16 @@ public class GameInputMessage {
     private String gameId;
     private String input;
 
+    private boolean gameStarted;
+
     public GameInputMessage() {
     }
 
-    public GameInputMessage(String player, String gameId, String input) {
+    public GameInputMessage(String player, String gameId, String input, boolean gameStarted) {
         this.player = player;
         this.gameId = gameId;
         this.input = input;
+        this.gameStarted = gameStarted;
     }
 
     public String getPlayer() {
@@ -39,12 +42,21 @@ public class GameInputMessage {
         this.input = input;
     }
 
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
+    }
+
     @Override
     public String toString() {
         return "GameInputMessage{" +
                 "player='" + player + '\'' +
                 ", gameId='" + gameId + '\'' +
                 ", input='" + input + '\'' +
+                ", gameStarted=" + gameStarted +
                 '}';
     }
 }
