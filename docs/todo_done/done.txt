@@ -1,0 +1,12 @@
+
+### Beantwortete Fragen
+- wird eine Spielrunde client- oder serverseitig berechnet?
+ - alles wird Clientseitig berechnet, einzig die Eingabedaten (Richtungsvektoren) werden an das Backend übertragen
+- wie werden die Benutzereingaben während des Spiels verarbeitet?
+  - Ein Spieler betätigt W,A,S oder D -> Was passiert?
+  - Alternative Eingabemöglichkeiten
+- was passiert, wenn ein Spieler die Lobby verlässt?
+ - Der Spieler wird aus der Lobby entfernt 
+- was passiert, wenn ein Spieler ein aktives Spiel verlässt, oder evtl. die Verbindung unterbrochen wird?
+ - Der Spieler wird als NOOP markiert, bleibt im Spiel zwar enthalten bewegt sich aber nicht mehr und kann auch nicht mehr gewinnen
+ 
