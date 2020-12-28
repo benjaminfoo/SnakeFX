@@ -1,0 +1,14 @@
+.
+JPA Mapping
+one to one
+one to many
+many to one
+
+Die Entities befinden sich im Core projekt - diese müssen Spring mitgeteilt werden
+@EntityScan(basePackages = "de.ostfalia.snakecore.model")
+
+Damit beim Marshallen keine transitive Abhängigkeiten aufgelöst werden, welche zu einem StackOverflowError führen, werden folgende Annotations bei N-M mappings verwendet
+@JsonManagedReference
+@JsonBackReference
+
+Daten werden initialisiert im DataInitRunner

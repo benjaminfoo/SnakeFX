@@ -1,12 +1,25 @@
 # SnakeFX & SnakeServer
-Dies ist das glorreiche Repository des Moduls Patterns und Frameworks im WiSe 2020.
+Dies ist das Repository des Moduls Patterns und Frameworks im WiSe 2020.
 Dieses Repository beinhaltet die Planungsdokumente, UML-Diagramme und den Quelltext des Projekts.
-Note: Die UML-Diagramme wurden mit der Software "Dia" erstellt.
 
-## Ordner-Struktur
+## Modul-Struktur
+**SnakeCore** \
+Enthält die grundlegenden und gemeinsamen Aspekte des Projekts, wie beispielsweise Modelle welche in allen weiteren Projekten verwendet werden.
+
+**SnakeFX** \
+Das Frontend-Modul des Projekts - enthält das User-Interface der Anwendung
+
+**SnakeServer** \
+Das Backend-Modul des Projekts - enthält den Applikations-Server der Anwendung
+
+**SnakeTest**
+Das Test-Projekt des Projekts - enthält Abhängigkeiten zu allen Sub-Modulen des Projekts
+Enthält Test-Fälle für verschiedene Szenarien, z.B. um den Anwendungsserver und eine Menge von Clients zu initialisieren, miteinander zu verbinden, etc. - dient der Simulation von Echt-Welt-Interaktionen.
+
+## Datei-Struktur
 - docs - Enthält die Dokumentation zur Einrichtung und Nutzung des Projekts
-- Prototype - Enthält prototypische Dokumentationen zu ausgewählten Aspekten
-- UML - Enthält die UML-Diagramme zu verschiedenen Aspekten des Projekts
+- docs/Prototype - Enthält prototypische Dokumentationen zu ausgewählten Aspekten
+- docs/UML - Enthält die UML-Diagramme zu verschiedenen Aspekten des Projekts
 - workspace 
   - Enthält den Quelltext des Clients- als auch des Java-Backends
   - Enthält eine gemeinsame Projektbeschreibung (siehe /workspace/readme.md)
@@ -34,19 +47,30 @@ Note: Die UML-Diagramme wurden mit der Software "Dia" erstellt.
 - 24.12.2020
   - Impl. des Chats mittels STOMP-Service
   - Realisierung der Lobby-Mechaniken, Abschluss zu 85%
+- 26.12.2020 - Refactoring des Projekts, Update des Stomp-Services, Anbindung an das Frontend
+- 27.12.2020 - Implementierung der Lobby-Mechaniken (Spieler-Join, Update der UI, Pulling und Polling)
+- 28.12.2020 - Implementierung der Spieler-Eingaben Synchronisierung
+  - Ein Spiel kann nun definiert und in der Lobby veröffentlicht werden
+  - Solange die definierte max. Anzahl der Spieler nicht überschritten ist können beliebige Spieler dem Spiel beitreten
+  - Sobald der Spiel-Admin / Game-Master / ... das Spiel startet wechseln alle Clients in den Spiel-Modus
 
 ## API
 Die folgenden URLs werden vom Backend bereitgestellt und können von den Clients konsumiert und verarbeitet werden.
+
+### WebSocket / STOMP
+- ws://localhost:8080/snakeserver - HTTP-Handshake und WebSocket / STOMP Upgrade
+- ws://localhost:8080/app/games/{gameId} - Übertragung von Spielerdaten an das Backend - wird gebroadcastet an alle verbundenen Clients
+- ws://localhost:8080/app/games/{gameId}/{playerId} - Bekanntgabe von Spielern aus der Lobby welche einem Spiel beitreten
+- ws://localhost:8080/app/games/ - Veröffentlichung neuer Spiele
+- ws://localhost:8080/app/players/ - Bekanntgabe des Beitritts von Spielern in die Lobby 
+
+### HTTP / REST
 - http://localhost:8080/h2 (user: sa | pass: <none>)
 - http://localhost:8080/api/spieler/
 - http://localhost:8080/api/spieler/name
 - http://localhost:8080/api/lobby
 - http://localhost:8080/api/historie
 
-- ws://localhost:8080/snakeserver - HTTP-Handshake und WebSocket / STOMP Upgrade
-- ws://localhost:8080/topic/chat
-- ws://localhost:8080/topic/games
-- ws://localhost:8080/topic/games/{gameId}
 
 ## Tasks
 Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisiert wurden oder noch realisiert werden müssen.
@@ -73,22 +97,22 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
   - Anbindung von Front- and Backend und vice versa [DONE]
   - Impl. der ListCells [DONE]
 - Neue UI "Spielrunde" o. "Aktives Spiel"
-  - Beinhaltet alle Spieler einer Spielrunde
+  - Beinhaltet alle Spieler einer Spielrunde [DONE]
   - Stellt die Spieler, deren Figuren, das Spielfeld und den Punktestand dar 
-    - Die Spielerfiguren müssen bewegt werden
+    - Die Spielerfiguren müssen bewegt werden [DONE]
     - PowerUps dargestellt werden
     - Die Map, evtl. Hindernisse oder sonstiges
     - Punktestand jedes Spielers
 - Spieler kann Ende eines anderen Spielers abbeißen
 - Erzeugung eines Spiels anhand der Spieldefinition [DONE]
-- Teilnahme an Spiel in Lobby [In Progress]
-- UI zum starten des Spiels (nur für Admin d. Spiels)
+- Teilnahme an Spiel in Lobby [DONE]
+- UI zum starten des Spiels (nur für Admin d. Spiels) [DONE]
 - Generation des STOMP-Path's für Running-Games i.d. Lobby
-- Teilnahme an Spiel anhand von Stomp-Path
-- Freigabe des Admin-Buttons zum starten des Spiels
-- Starten des Spiels
-  - Initialisierung des Spiels auf allen Clients
-  - Sync. des Spiels
+- Teilnahme an Spiel anhand von Stomp-Path [DONE]
+- Freigabe des Admin-Buttons zum starten des Spiels [DONE]
+- Starten des Spiels [DONE]
+  - Initialisierung des Spiels auf allen Clients [DONE]
+  - Sync. des Spiels [DONE]
   - Beendigung des Spiels
   - Persistenz d. Runde in DB
   - Return to Lobby
@@ -108,14 +132,14 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
 - Spieler verlässt Spiel
 - ...
 
-### Beantwortete Fragen
-- wird eine Spielrunde client- oder serverseitig berechnet?
- - alles wird Clientseitig berechnet, einzig die Eingabedaten (Richtungsvektoren) werden an das Backend übertragen
-- wie werden die Benutzereingaben während des Spiels verarbeitet?
-  - Ein Spieler betätigt W,A,S oder D -> Was passiert?
-  - Alternative Eingabemöglichkeiten
-- was passiert, wenn ein Spieler die Lobby verlässt?
- - Der Spieler wird aus der Lobby entfernt 
-- was passiert, wenn ein Spieler ein aktives Spiel verlässt, oder evtl. die Verbindung unterbrochen wird?
- - Der Spieler wird als NOOP markiert, bleibt im Spiel zwar enthalten bewegt sich aber nicht mehr und kann auch nicht mehr gewinnen
- 
+### Weitere Tasks
+- Spieler müssen einander das Ende des jeweils anderen abbeißen und "gut geschrieben" bekommen
+- Das Spielfeld muss mit der Spieldefinition gekoppelt werden:
+ - wenn im Frontend bspw. eine Map-Höhe von 16 und eine Map-Breite von 48 eingestellt wird muss das im Spiel wiedergespiegelt werden
+- ...
+- ...
+- sout statements minimieren
+- Magic Strings in konstanten refactoren
+- Dokumentation schreiben
+- Über TODOs drüber schauen und behandeln
+
