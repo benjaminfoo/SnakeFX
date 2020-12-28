@@ -1,0 +1,96 @@
+
+        /*
+
+        // setup everything related to the debug-mode
+        if(AppSnakeFX.inDebugMode){
+
+            // we gonna be gentle to the cpu
+            if(DEBUG_LOWCORE){
+                numPlayers = 3;
+            }
+
+            // we gonna stress test the cpu
+            if(DEBUG_HARDCORE){
+                numPlayers = 20;
+            }
+
+            // generate the players related to low or hardcore
+            if(DEBUG_LOWCORE || DEBUG_HARDCORE){
+                for (int i = 0; i < numPlayers; i++) {
+                    int newY = i % 4 * 3 + 3;
+                    int newX = i / 4 * 5 + 3;
+                    snakeList.add (
+                        new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
+                    );
+                }
+            }
+
+            // we want to play alone
+            if(DEBUG_SINGLEPLAYER){
+                snakeList.add ( new Snake ( new Vector2(5,5), Color.PURPLE));
+            }
+
+            // every snake is controlled by random keystrokes or some pattern
+            if(DEBUG_EVERYBODY_NPC){
+                for (Snake snake : snakeList) {
+                    snake.isNPC = true;
+                }
+            }
+
+            */
+
+        /*
+        // Normal mode
+        } else {
+
+        }
+        */
+
+        /*
+        // setup everything related to the debug-mode
+        if(AppSnakeFX.inDebugMode){
+
+            // we gonna be gentle to the cpu
+            if(DEBUG_LOWCORE){
+                numPlayers = 3;
+            }
+
+            // we gonna stress test the cpu
+            if(DEBUG_HARDCORE){
+                numPlayers = 20;
+            }
+
+            // generate the players related to low or hardcore
+            if(DEBUG_LOWCORE || DEBUG_HARDCORE){
+                for (int i = 0; i < numPlayers; i++) {
+                    int newY = i % 4 * 3 + 3;
+                    int newX = i / 4 * 5 + 3;
+                    snakeList.add (
+                            new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
+                    );
+                }
+            }
+
+            // we want to play alone
+            if(DEBUG_SINGLEPLAYER){
+                snakeList.add ( new Snake ( new Vector2(5,5), Color.PURPLE));
+            }
+
+            // every snake is controlled by random keystrokes or some pattern
+            if(DEBUG_EVERYBODY_NPC){
+                for (Snake snake : snakeList) {
+                    snake.isNPC = true;
+                }
+            }
+
+            // Normal mode
+        } else {
+            // regular game-play
+            // TODO: these values need to get retrieved from the backend
+            numPlayers = 1;
+            Color[] playerColors = {Color.PURPLE, Color.BLUE, Color.RED, Color.GREEN};
+            for (int i = 0; i < numPlayers; i++) {
+                snakeList.add ( new Snake ( new Vector2(0, 5 * i), playerColors[i]));
+            }
+        }
+        */

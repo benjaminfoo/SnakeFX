@@ -138,7 +138,7 @@ public class HomescreenController extends BaseController {
             application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
 
             application.getStompClient().sendGameInputMessage(selectedGame.stompPath,
-                    new GameInputMessage(application.getUserConfig().getUserName(), selectedGame.stompPath, "start_game", true, selectedGame)
+                    new GameInputMessage(application.getUserConfig().getUserName(), selectedGame.stompPath, null, true, selectedGame)
             );
 
         });

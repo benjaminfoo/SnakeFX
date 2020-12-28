@@ -1,6 +1,7 @@
 package de.ostfalia.snakecore.ws.model;
 
 import de.ostfalia.snakecore.model.RunningGame;
+import javafx.scene.input.KeyCode;
 
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ public class GameInputMessage {
 
     private String player;
     private String gameId;
-    private String input;
+    private KeyCode input;
 
     private boolean gameStarted;
 
@@ -19,7 +20,7 @@ public class GameInputMessage {
 
 
 
-    public GameInputMessage(String player, String gameId, String input, boolean gameStarted, RunningGame runningGame) {
+    public GameInputMessage(String player, String gameId, KeyCode input, boolean gameStarted, RunningGame runningGame) {
         this.player = player;
         this.gameId = gameId;
         this.input = input;
@@ -56,11 +57,11 @@ public class GameInputMessage {
         this.gameId = gameId;
     }
 
-    public String getInput() {
+    public KeyCode getInput() {
         return input;
     }
 
-    public void setInput(String input) {
+    public void setInput(KeyCode input) {
         this.input = input;
     }
 
@@ -78,5 +79,16 @@ public class GameInputMessage {
 
     public void setRunningGame(RunningGame runningGame) {
         this.runningGame = runningGame;
+    }
+
+    @Override
+    public String toString() {
+        return "GameInputMessage{" +
+                "player='" + player + '\'' +
+                ", gameId='" + gameId + '\'' +
+                ", input=" + input +
+                ", gameStarted=" + gameStarted +
+                ", runningGame=" + runningGame +
+                '}';
     }
 }

@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ba483e1-6bed-4f2d-8970-e49a1761d4c1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/model/PlayerJoinsGameMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/debug_code.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/client/StompClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/client/StompClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/client/StompMessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/client/StompMessageListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SnakeServer/src/main/java/de/ostfalia/snakecore/SnakeServer/controller/StompLobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeServer/src/main/java/de/ostfalia/snakecore/SnakeServer/controller/StompLobbyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/app/BaseApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/app/BaseApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/model/GameInputMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/model/GameInputMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/HomescreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/HomescreenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/NewGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/NewGameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/model/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/model/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/snakefx/src/main/resources/gamecanvas_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/resources/gamecanvas_view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/snakefx/src/main/resources/new_game_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/resources/new_game_view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +176,7 @@
       <workItem from="1609074293632" duration="2887000" />
       <workItem from="1609087383984" duration="23172000" />
       <workItem from="1609112822296" duration="306000" />
-      <workItem from="1609161147809" duration="3918000" />
+      <workItem from="1609161147809" duration="8541000" />
     </task>
     <task id="LOCAL-00001" summary="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI">
       <created>1608934283443</created>
@@ -214,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609112860637</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="- clients now can create games which are broadcasted to the lobby and their connect clients&#10;- clients can now actively join a broadcasted game&#10;- the game creator / master / admin can now launch the game">
+      <created>1609165198016</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1609165198016</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,7 +234,8 @@
     <MESSAGE value="- extended test-cases - full server startup, two clients login and game setup now implemented" />
     <MESSAGE value="- games are now startable via the lobby for n players, they have to be synchronized now" />
     <MESSAGE value="- multiplayer game launcher complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="- multiplayer game launcher complete" />
+    <MESSAGE value="- clients now can create games which are broadcasted to the lobby and their connect clients&#10;- clients can now actively join a broadcasted game&#10;- the game creator / master / admin can now launch the game" />
+    <option name="LAST_COMMIT_MESSAGE" value="- clients now can create games which are broadcasted to the lobby and their connect clients&#10;- clients can now actively join a broadcasted game&#10;- the game creator / master / admin can now launch the game" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -240,12 +247,12 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java</url>
-          <line>578</line>
+          <line>590</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java</url>
-          <line>108</line>
+          <line>130</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -262,6 +269,11 @@
           <url>file://$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/NewGameController.java</url>
           <line>71</line>
           <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java</url>
+          <line>662</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

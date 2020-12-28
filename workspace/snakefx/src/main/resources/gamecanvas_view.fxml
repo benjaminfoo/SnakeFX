@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-
-            fx:controller="de.ostfalia.snakecore.snakorino.controller.GameController"
-
->
-    <center>
-        <Label fx:id="statusLabel" text="Hallo Leo" BorderPane.alignment="CENTER" />
-    </center>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.ostfalia.snakecore.snakorino.controller.GameController">
+   <center>
+      <Pane>
+         <children>
+            <Canvas fx:id="gameCanvas" height="200.0" width="200.0" />
+         </children>
+      </Pane>
+   </center>
+   <right>
+      <VBox disable="true" fillWidth="false" maxWidth="125.0" spacing="5.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER_RIGHT">
+         <children>
+            <Label fx:id="gameDetailsHeadline" focusTraversable="false" layoutX="10.0" layoutY="10.0" text="Game Details">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="gameDetails" focusTraversable="false" prefHeight="250.0" prefWidth="125.0" text="Game Details" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="playerList" disable="true" focusTraversable="false" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ListView>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </right>
 
 </BorderPane>

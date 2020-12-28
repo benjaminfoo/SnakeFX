@@ -4,6 +4,7 @@ import de.ostfalia.snakecore.ApplicationConstants;
 import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.controller.Scenes;
 import de.ostfalia.snakecore.model.RunningGame;
+import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.snakorino.model.Config;
 import de.ostfalia.snakecore.snakorino.model.Food;
 import de.ostfalia.snakecore.snakorino.model.Snake;
@@ -15,19 +16,23 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static de.ostfalia.snakecore.util.DebugOptions.*;
 
@@ -85,7 +90,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     // PLAYER STUFF
 
     // refactor for multiplayer
-    private int numPlayers;
+    private Map<Spieler, Snake> playerSnakeMap = new HashMap<>();
     private List<Snake> snakeList = new LinkedList<>();
 
     KeyCode[] firstPlayerControls = {
@@ -105,15 +110,79 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     // the graphicsContext which is used to draw to the screen manually
     private GraphicsContext gc;
 
+    @FXML
+    Canvas gameCanvas;
+
+    @FXML
+    ListView<Spieler> playerList;
+
+    @FXML
+    Label gameDetails;
+
+    // the current instance of the game
+    private RunningGame runningGame;
+
+    /**
+     * Setup the game based on the runningame instance from the lobby
+     * @param runningGame
+     */
     public void launchGame(RunningGame runningGame){
+        this.runningGame = runningGame;
 
-        numPlayers = runningGame.getActiveClients().size();
+        // setup n players
+        int numPlayers = runningGame.getActiveClients().size();
 
+        // iterate over the n players - create an instance of a snake and add it to the player <-> snake map
         Color[] playerColors = {Color.PURPLE, Color.BLUE, Color.RED, Color.GREEN};
         for (int i = 0; i < numPlayers; i++) {
-            snakeList.add ( new Snake ( new Vector2(3, 3 * i), playerColors[i]));
+
+            // get a reference to a player
+            Spieler spieler = runningGame.getActiveClients().get(i);
+
+            // create a corresponding snake
+            Snake playerSnake = new Snake(new Vector2(3, 3 * i), playerColors[i]);
+
+            // put it into the hashmap for later use (player related, via communication)
+            playerSnakeMap.put(spieler,playerSnake);
+
+            // put it into the list for local only usage (like drawing, etc.)
+            snakeList.add(playerSnake);
         }
 
+        // setup the player view
+        playerList.getItems().addAll(runningGame.getActiveClients());
+
+        // setup the game details
+        gameDetails.setText(
+                "Admin: " + runningGame.admin + "\n" +
+                "Anzahl der Spieler: " + runningGame.activeClients.size() + "\n" +
+                "Anzahl der max. Powerups: " + runningGame.getSpielDefinition().getMaxNumberOfPowerUps() + "\n" +
+                "Map-Größe: " + runningGame.getSpielDefinition().getMapWidth() + "x" +  runningGame.getSpielDefinition().getMapHeight()
+        );
+
+        // setup the dimension of the canvas, but it shouldn't get resized actually....................
+        /*
+        gameCanvas.setHeight(config.height);
+        gameCanvas.setWidth(config.width);
+        */
+
+        Pane parentPane = (Pane) gameCanvas.getParent();
+        gameCanvas.widthProperty().bind(parentPane.widthProperty());
+        gameCanvas.heightProperty().bind(parentPane.heightProperty());
+
+        gameCanvas.widthProperty().addListener((observable, oldValue, newValue) -> {
+            config.width = newValue.intValue();
+        });
+        gameCanvas.heightProperty().addListener((observable, oldValue, newValue) -> {
+            config.height = newValue.intValue();
+        });
+
+        config.height = (int) gameCanvas.getHeight();
+        config.width = (int) gameCanvas.getWidth();
+        config.columns = runningGame.spielDefinition.getMapWidth();
+        config.rows = runningGame.spielDefinition.getMapHeight();
+
+        // TODO: DEBUG - UNTIL INPUT IS SYNCHRONIZED
         for (Snake snake : snakeList) {
             snake.isNPC = true;
         }
@@ -139,6 +208,19 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             @Override
             public void onGameInputMessageReceived(GameInputMessage msg) {
 
+                System.out.println("Recieved input " + msg.getInput() + " for player " + msg.getPlayer());
+
+                String nameOfPlayer = msg.getPlayer();
+
+                Spieler destination = null;
+                for (Spieler spieler : playerSnakeMap.keySet()) {
+                    if(nameOfPlayer.equalsIgnoreCase(spieler.getName())){
+                        destination = spieler;
+                    }
+                }
+
+                Snake snake = playerSnakeMap.get(destination);
+                snake.currentDirection = getDirectionForInput(snake.currentDirection, msg.getInput());
             }
 
             @Override
@@ -147,120 +229,14 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             }
         });
 
-        /*
-
-        // setup everything related to the debug-mode
-        if(AppSnakeFX.inDebugMode){
-
-            // we gonna be gentle to the cpu
-            if(DEBUG_LOWCORE){
-                numPlayers = 3;
-            }
-
-            // we gonna stress test the cpu
-            if(DEBUG_HARDCORE){
-                numPlayers = 20;
-            }
-
-            // generate the players related to low or hardcore
-            if(DEBUG_LOWCORE || DEBUG_HARDCORE){
-                for (int i = 0; i < numPlayers; i++) {
-                    int newY = i % 4 * 3 + 3;
-                    int newX = i / 4 * 5 + 3;
-                    snakeList.add (
-                        new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
-                    );
-                }
-            }
-
-            // we want to play alone
-            if(DEBUG_SINGLEPLAYER){
-                snakeList.add ( new Snake ( new Vector2(5,5), Color.PURPLE));
-            }
-
-            // every snake is controlled by random keystrokes or some pattern
-            if(DEBUG_EVERYBODY_NPC){
-                for (Snake snake : snakeList) {
-                    snake.isNPC = true;
-                }
-            }
-
-            */
-
-        /*
-        // Normal mode
-        } else {
-
-        }
-        */
-
-        /*
-        // setup everything related to the debug-mode
-        if(AppSnakeFX.inDebugMode){
-
-            // we gonna be gentle to the cpu
-            if(DEBUG_LOWCORE){
-                numPlayers = 3;
-            }
-
-            // we gonna stress test the cpu
-            if(DEBUG_HARDCORE){
-                numPlayers = 20;
-            }
-
-            // generate the players related to low or hardcore
-            if(DEBUG_LOWCORE || DEBUG_HARDCORE){
-                for (int i = 0; i < numPlayers; i++) {
-                    int newY = i % 4 * 3 + 3;
-                    int newX = i / 4 * 5 + 3;
-                    snakeList.add (
-                            new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
-                    );
-                }
-            }
-
-            // we want to play alone
-            if(DEBUG_SINGLEPLAYER){
-                snakeList.add ( new Snake ( new Vector2(5,5), Color.PURPLE));
-            }
-
-            // every snake is controlled by random keystrokes or some pattern
-            if(DEBUG_EVERYBODY_NPC){
-                for (Snake snake : snakeList) {
-                    snake.isNPC = true;
-                }
-            }
-
-            // Normal mode
-        } else {
-            // regular game-play
-            // TODO: these values need to get retrieved from the backend
-            numPlayers = 1;
-            Color[] playerColors = {Color.PURPLE, Color.BLUE, Color.RED, Color.GREEN};
-            for (int i = 0; i < numPlayers; i++) {
-                snakeList.add ( new Snake ( new Vector2(0, 5 * i), playerColors[i]));
-            }
-        }
-        */
-
-
-        // add the initial UI to the scene
-        Group root = new Group();
-        Canvas canvas = new Canvas(config.width, config.height);
-        root.getChildren().add(canvas);
-        Scene scene = new Scene(root);
-
-        // display the UI within the scene, center the stage on the users system
-        currentStage.setScene(scene);
-
         // display the rendering canvas
-        gc = canvas.getGraphicsContext2D();
+        gc = gameCanvas.getGraphicsContext2D();
 
         // initialize the food on the map
         // TODO: this thing is bugged -> generateFood();
 
-
-        scene.setOnKeyPressed(this);
+        // setup the input listener
+        currentStage.getScene().setOnKeyPressed(this);
 
         // The game animation happens because of the timeline
         // every change happens in a new keyFrame (update-loop)
@@ -321,6 +297,18 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         drawDirections(gc);
         // drawIndices(gc);
 
+
+        for (Snake snake : snakeList)
+        {
+            // draw the name of the player
+            for (Map.Entry<Spieler, Snake> spielerSnakeEntry : playerSnakeMap.entrySet()) {
+                if(spielerSnakeEntry.getValue().equals(snake)){
+                    Vector2 pos = new Vector2(snake.head.x * config.tileSize, snake.head.y * config.tileSize);
+                    drawPlayerName(gc, spielerSnakeEntry.getKey().getName(), pos);
+                }
+            }
+        }
+
     }
 
     Font arial10 = (Font.font("Arial", 10));
@@ -337,6 +325,12 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     }
 
 
+    private void drawPlayerName(GraphicsContext gc, String playerName, Vector2 pos) {
+        gc.setFont(arial10);
+        gc.fillText(playerName, pos.x, pos.y);
+    }
+
+
     /**
      * Handles the input of the players or NPCs.
      * @param event - The input event
@@ -346,6 +340,9 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         KeyCode playerInput = event.getCode();
 
         // TODO: merge the following code!
+
+        /*
+
         for (KeyCode firstPlayerInput : firstPlayerControls) {
             if (firstPlayerInput == playerInput) {
                 Snake firstPlayer = snakeList.get(0);
@@ -353,6 +350,21 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             }
         }
 
+        */
+
+        application.getStompClient().sendGameInputMessage(
+                runningGame.stompPath,
+                new GameInputMessage(
+                        application.getSpieler().getName(),
+                        runningGame.getSpielDefinition().getNameOfTheGame(),
+                        event.getCode(),
+                        false,
+                        runningGame
+                )
+        );
+
+
+        /*
         // TODO: merge the following code!
         for (KeyCode secondPlayerInput : secondPlayerControls) {
             if (secondPlayerInput == playerInput) {
@@ -360,6 +372,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 secondPlayer.currentDirection = getDirectionForInput(secondPlayer.currentDirection,secondPlayerInput);
             }
         }
+        */
 
         if (playerInput == KeyCode.SPACE) {
             // Pause-Mode - this shoudnt be available in regular multiplayer
