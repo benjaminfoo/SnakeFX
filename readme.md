@@ -7,12 +7,12 @@ Dieses Repository beinhaltet die Planungsdokumente, UML-Diagramme und den Quellt
 Enthält die grundlegenden und gemeinsamen Aspekte des Projekts, wie beispielsweise Modelle welche in allen weiteren Projekten verwendet werden.
 
 **SnakeFX** \
-Das Frontend-Modul des Projekts - enthält das User-Interface der Anwendung
+Das Frontend-Modul des Projekts - enthält das User-Interface der Anwendung.
 
 **SnakeServer** \
-Das Backend-Modul des Projekts - enthält den Applikations-Server der Anwendung
+Das Backend-Modul des Projekts - enthält den Applikations-Server der Anwendung.
 
-**SnakeTest**
+**SnakeTest** \
 Das Test-Projekt des Projekts - enthält Abhängigkeiten zu allen Sub-Modulen des Projekts
 Enthält Test-Fälle für verschiedene Szenarien, z.B. um den Anwendungsserver und eine Menge von Clients zu initialisieren, miteinander zu verbinden, etc. - dient der Simulation von Echt-Welt-Interaktionen.
 

@@ -170,7 +170,7 @@
       <workItem from="1609074293632" duration="2887000" />
       <workItem from="1609087383984" duration="23172000" />
       <workItem from="1609112822296" duration="306000" />
-      <workItem from="1609161147809" duration="9613000" />
+      <workItem from="1609161147809" duration="9773000" />
     </task>
     <task id="LOCAL-00001" summary="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI">
       <created>1608934283443</created>
@@ -221,7 +221,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609170316414</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="- updated docs, readme, etc.">
+      <created>1609171302230</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1609171302230</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,7 +244,8 @@
     <MESSAGE value="- multiplayer game launcher complete" />
     <MESSAGE value="- clients now can create games which are broadcasted to the lobby and their connect clients&#10;- clients can now actively join a broadcasted game&#10;- the game creator / master / admin can now launch the game" />
     <MESSAGE value="- player input is now synchronized = multiplayer is done" />
-    <option name="LAST_COMMIT_MESSAGE" value="- player input is now synchronized = multiplayer is done" />
+    <MESSAGE value="- updated docs, readme, etc." />
+    <option name="LAST_COMMIT_MESSAGE" value="- updated docs, readme, etc." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
