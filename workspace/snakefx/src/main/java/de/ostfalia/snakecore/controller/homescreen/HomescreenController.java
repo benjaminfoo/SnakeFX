@@ -11,10 +11,7 @@ import de.ostfalia.snakecore.task.GetGamesTask;
 import de.ostfalia.snakecore.task.GetPlayerTask;
 import de.ostfalia.snakecore.view.RunningGameCell;
 import de.ostfalia.snakecore.ws.client.StompMessageListener;
-import de.ostfalia.snakecore.ws.model.ChatMessage;
-import de.ostfalia.snakecore.ws.model.GameInputMessage;
-import de.ostfalia.snakecore.ws.model.LobbyMessage;
-import de.ostfalia.snakecore.ws.model.PlayerMessage;
+import de.ostfalia.snakecore.ws.model.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -109,18 +106,26 @@ public class HomescreenController extends BaseController {
 
             RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
             System.out.println("Subscribing to: " + selectedGame.getStompPath());
+            application.getStompClient().sendJoinGameMessage(selectedGame.getStompPath(), application.getSpieler(), selectedGame);
             application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
         });
 
         activeGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
             RunningGame selectedItem = newValue;
-            boolean currentPlayerIsAdminOfSelection = selectedItem.admin.getName().equalsIgnoreCase(application.getUserConfigAsSpieler().getName());
+            boolean currentPlayerIsAdminOfSelection = selectedItem.admin.getName().equalsIgnoreCase(application.getSpieler().getName());
 
             // we have to invert the statement because the button gets disabled if set to true
             adminStartGame.setDisable(!currentPlayerIsAdminOfSelection);
 
             System.out.println("Selected game: " + newValue.spielDefinition.getNameOfTheGame());
+
+            // disable the join-game button when the player limit is reached - enable it if not
+            boolean playerLimitReached = selectedItem.activeClients.size() == selectedItem.getSpielDefinition().getNumberOfPlayer();
+            // disable the join game button then the player already joined the game
+            boolean playerAlreadyInLobby = selectedItem.activeClients.contains(application.getSpieler());
+            joinGame.setDisable(playerLimitReached || playerAlreadyInLobby);
+
         });
 
         adminStartGame.setOnAction(onClick -> {
@@ -128,6 +133,8 @@ public class HomescreenController extends BaseController {
 
             RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
             System.out.println("Subscribing to: " + selectedGame.getStompPath());
+
+            // application.getStompClient().sendJoinGameMessage(selectedGame.getStompPath(), application.getUserConfigAsSpieler(), selectedGame);
             application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
 
             application.getStompClient().sendGameInputMessage(selectedGame.stompPath,
@@ -193,6 +200,16 @@ public class HomescreenController extends BaseController {
                         ((GameController) application.initializedController.get(GameController.class)).launchGame(msg.getRunningGame());
                     });
                 }
+            }
+
+            @Override
+            public void onPlayerJoinedGameMessageReceived(PlayerJoinsGameMessage msg) {
+
+                activeGames.getItems().clear();
+                for (RunningGame runningGame : msg.allGames) {
+                    activeGames.getItems().add(runningGame);
+                }
+
             }
 
         });

@@ -33,6 +33,9 @@ public abstract class BaseApplication extends Application {
     // the users details which gets used for identification later on and holds the JSON-Web-Token
     private UserConfig userConfig;
 
+    // the spieler object instance, used for communicating marshalled object instances
+    private Spieler spieler;
+
     // the startup parameters used when the application is called (for example from public static void main -> args[])
     private List<String> startParams;
 
@@ -49,8 +52,8 @@ public abstract class BaseApplication extends Application {
     public UserConfig getUserConfig(){ return userConfig; }
     public void setUserConfig(UserConfig userConfig) { this.userConfig = userConfig; }
 
-    public Spieler getUserConfigAsSpieler(){
-        return new Spieler(-1337L, userConfig.getUserName(), userConfig.getPass());
+    public BaseApplication(Spieler spieler) {
+        this.spieler = spieler;
     }
 
     public Stage getWindowStage() {
@@ -101,4 +104,14 @@ public abstract class BaseApplication extends Application {
         this.simpleDateFormat = simpleDateFormat;
     }
 
+    public Spieler getSpieler() {
+        if(spieler == null){
+            this.spieler = new Spieler(-1337L, userConfig.getUserName(), userConfig.getPass());
+        }
+        return spieler;
+    }
+
+    public void setSpieler(Spieler spieler) {
+        this.spieler = spieler;
+    }
 }

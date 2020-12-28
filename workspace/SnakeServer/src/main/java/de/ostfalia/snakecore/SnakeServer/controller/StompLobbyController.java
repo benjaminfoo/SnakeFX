@@ -1,8 +1,10 @@
 package de.ostfalia.snakecore.SnakeServer.controller;
 
 import de.ostfalia.snakecore.model.RunningGame;
+import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.ws.model.GameInputMessage;
 import de.ostfalia.snakecore.ws.model.LobbyMessage;
+import de.ostfalia.snakecore.ws.model.PlayerJoinsGameMessage;
 import de.ostfalia.snakecore.ws.model.PlayerMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -11,7 +13,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 public class StompLobbyController {
@@ -41,7 +45,7 @@ public class StompLobbyController {
             RunningGame newRunningGame = new RunningGame(
                     "/topic/games/1",
                     lobbyMessage.admin,
-                    Collections.emptyList(),
+                    new LinkedList<>(Arrays.asList(lobbyMessage.admin)),
                     lobbyMessage.spielDefinition
             );
 
@@ -75,6 +79,38 @@ public class StompLobbyController {
         System.out.println("Recieved player input for " + gameId);
         System.out.println("Player input: " + message);
         System.out.println("Info: " + message.toString());
+
+        return message;
+    }
+
+
+    @MessageMapping("/games/{gameId}/{playerId}")
+    @SendTo("/topic/games/{gameId}/{playerId}")
+    public PlayerJoinsGameMessage broadcastPlayerJoinedGameToClients(@DestinationVariable String gameId, @DestinationVariable String playerId, PlayerJoinsGameMessage message) {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Player " + playerId + " wants to join the game " + gameId);
+        System.out.println("");
+        System.out.println("WOOP WOOOOOOOOOOOOOOOOOP");
+        System.out.println("WOOP WOOOOOOOOOOOOOOOOOP");
+        System.out.println("WOOP WOOOOOOOOOOOOOOOOOP");
+        System.out.println("");
+
+        // make the player join the lobby
+        RunningGame destination = null;
+
+        for (RunningGame runningGame : lobbyController.getRunningGames()) {
+            if(runningGame.getStompPath().equals(message.gameToJoin.stompPath)){
+                destination = runningGame;
+            }
+        }
+
+        List<Spieler> newActivePlayers = new LinkedList<>(destination.activeClients);
+        newActivePlayers.add(message.spieler);
+
+        destination.activeClients = newActivePlayers;
+
+        message.allGames = lobbyController.getRunningGames();
 
         return message;
     }

@@ -1,9 +1,8 @@
 package de.ostfalia.snakecore.ws.client;
 
-import de.ostfalia.snakecore.ws.model.ChatMessage;
-import de.ostfalia.snakecore.ws.model.GameInputMessage;
-import de.ostfalia.snakecore.ws.model.LobbyMessage;
-import de.ostfalia.snakecore.ws.model.PlayerMessage;
+import de.ostfalia.snakecore.model.RunningGame;
+import de.ostfalia.snakecore.model.Spieler;
+import de.ostfalia.snakecore.ws.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.messaging.Message;
@@ -16,6 +15,7 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import java.lang.reflect.Type;
+import java.util.LinkedList;
 
 public class StompClient extends StompSessionHandlerAdapter implements StompMessageListener {
 
@@ -142,6 +142,27 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
         logger.info("Subscribed to " + "/topic/players");
 
 
+        // subscribe to newly joined players
+        session.subscribe("/topic/games/{gameId}/{playerId}", new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return PlayerJoinsGameMessage.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
+
+                PlayerJoinsGameMessage msg = (PlayerJoinsGameMessage) payload;
+                if (msg != null) {
+                    System.out.println("Received onPlayerJoinedGameMessageReceived: " + msg.toString());
+                    stompMessageListener.onPlayerJoinedGameMessageReceived(msg);
+                }
+            }
+        });
+        logger.info("Subscribed to " + "/topic/players");
+
+
 
         /*
         session.send(ProjectEndpoints.STOMP_APP_PREFIX + ProjectEndpoints.STOMP_MESSAGE_MAPPING_CHAT, getSampleMessage());
@@ -169,6 +190,13 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
         session.send(stompPath, gameInputMessage);
     }
 
+    public void sendJoinGameMessage(String stompPath, Spieler spieler, RunningGame runningGame) {
+        System.out.println("Sending joinGame message ");
+        String playerStompPath = "/app/games/1" + "/" + spieler.getName();
+        System.out.println("\t to path: " + playerStompPath);
+
+        session.send(playerStompPath, new PlayerJoinsGameMessage(spieler, runningGame, new LinkedList<>()));
+    }
 
     /**
      * Sends a message to a game topic with gameDestinationTopic - from the player with the userName and its current input
@@ -254,6 +282,13 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
     public void onGameInputMessageReceived(GameInputMessage msg) {
         if (stompMessageListener != null) {
             stompMessageListener.onGameInputMessageReceived(msg);
+        }
+    }
+
+    @Override
+    public void onPlayerJoinedGameMessageReceived(PlayerJoinsGameMessage msg) {
+        if (stompMessageListener != null) {
+            stompMessageListener.onPlayerJoinedGameMessageReceived(msg);
         }
     }
 

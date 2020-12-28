@@ -10,10 +10,7 @@ import de.ostfalia.snakecore.snakorino.model.Snake;
 import de.ostfalia.snakecore.snakorino.model.Vector2;
 import de.ostfalia.snakecore.util.RNG;
 import de.ostfalia.snakecore.ws.client.StompMessageListener;
-import de.ostfalia.snakecore.ws.model.ChatMessage;
-import de.ostfalia.snakecore.ws.model.GameInputMessage;
-import de.ostfalia.snakecore.ws.model.LobbyMessage;
-import de.ostfalia.snakecore.ws.model.PlayerMessage;
+import de.ostfalia.snakecore.ws.model.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -110,9 +107,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     public void launchGame(RunningGame runningGame){
 
-        // TODO: these values need to get retrieved from the backend
-        // numPlayers = runningGame.getActiveClients().size(); - TODO: use the amount of players
-        numPlayers = 2;
+        numPlayers = runningGame.getActiveClients().size();
 
         Color[] playerColors = {Color.PURPLE, Color.BLUE, Color.RED, Color.GREEN};
         for (int i = 0; i < numPlayers; i++) {
@@ -124,7 +119,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         }
 
         DEBUG_NPC_MOVEMENT_CIRCLING = true;
-
+        
         application.getStompClient().setStompMessageListener(new StompMessageListener() {
             @Override
             public void onChatMessageReceived(ChatMessage msg) {
@@ -143,6 +138,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
             @Override
             public void onGameInputMessageReceived(GameInputMessage msg) {
+
+            }
+
+            @Override
+            public void onPlayerJoinedGameMessageReceived(PlayerJoinsGameMessage msg) {
 
             }
         });
