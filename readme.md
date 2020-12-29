@@ -133,26 +133,26 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
 - ...
 
 ### Weitere Tasks
-- Frontend
- - Spieler müssen einander das Ende des jeweils anderen abbeißen und "gut geschrieben" bekommen
- - Food / PowerUps generieren - Design Patterns anwenden
- - Konsum an Backend übertragen -> respawn
+**Frontend**
+- Spieler müssen einander das Ende des jeweils anderen abbeißen und "gut geschrieben" bekommen
+- Food / PowerUps generieren - Design Patterns anwenden
+- Konsum an Backend übertragen -> respawn
 
-- Backend
- - Valide Endpoints für Spiele in der Lobby generieren und an RunningGames anhängen 
+**Backend**
+- Valide Endpoints für Spiele in der Lobby generieren und an RunningGames anhängen 
 
-- Backend und Frontend
- - Regeln des Spiels einhalten
- - Das Spielfeld muss mit der Spieldefinition gekoppelt werden:
-  - wenn im Frontend bspw. eine Map-Höhe von 16 und eine Map-Breite von 48 eingestellt wird muss das im Spiel wiedergespiegelt werden
+**Frontend und Backend**
+- Regeln des Spiels einhalten
+- Das Spielfeld muss mit der Spieldefinition gekoppelt werden:
+  - wenn im Frontend bspw. eine Map-Höhe von 16 und eine Map-Breite von 48 eingestellt wird muss das im Spiel wiedergespiegelt werde
   - Über TODOs drüber schauen und behandeln
- - Auf SpielEnde / GameOver eines Clients reagieren
+- Auf SpielEnde / GameOver eines Clients reagieren
   - Sieger definieren
   - switch zur Lobby zurück
   - unsubscribe des letzten game topics
  - WebSecurity impl.
   
-- Allgemein
+**Allgemein**
  - sout statements minimieren
  - Magic Strings in konstanten refactoren
  - Präsentation ausarbeiten
