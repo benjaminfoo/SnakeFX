@@ -133,15 +133,30 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
 - ...
 
 ### Weitere Tasks
-- Spieler müssen einander das Ende des jeweils anderen abbeißen und "gut geschrieben" bekommen
-- Das Spielfeld muss mit der Spieldefinition gekoppelt werden:
- - wenn im Frontend bspw. eine Map-Höhe von 16 und eine Map-Breite von 48 eingestellt wird muss das im Spiel wiedergespiegelt werden
-- ...
-- ...
-- sout statements minimieren
-- Magic Strings in konstanten refactoren
-- Dokumentation schreiben
-- Über TODOs drüber schauen und behandeln
-- Auf GameOver eines Clients reagieren
-- Auf GameOver aller Clients reagieren = Sieger?
+- Frontend
+ - Spieler müssen einander das Ende des jeweils anderen abbeißen und "gut geschrieben" bekommen
+ - Food / PowerUps generieren - Design Patterns anwenden
+ - Konsum an Backend übertragen -> respawn
 
+- Backend
+ - Valide Endpoints für Spiele in der Lobby generieren und an RunningGames anhängen 
+
+- Backend und Frontend
+ - Regeln des Spiels einhalten
+ - Das Spielfeld muss mit der Spieldefinition gekoppelt werden:
+  - wenn im Frontend bspw. eine Map-Höhe von 16 und eine Map-Breite von 48 eingestellt wird muss das im Spiel wiedergespiegelt werden
+  - Über TODOs drüber schauen und behandeln
+ - Auf SpielEnde / GameOver eines Clients reagieren
+  - Sieger definieren
+  - switch zur Lobby zurück
+  - unsubscribe des letzten game topics
+ - WebSecurity impl.
+  
+- Allgemein
+ - sout statements minimieren
+ - Magic Strings in konstanten refactoren
+ - Präsentation ausarbeiten
+ - Dokumentation ausarbeiten
+ - Test-Szenario: Ein Server -> drei Clients realisieren
+ - Test-Szenario: Mehrere Spiele hintereinander durchführen
+ - Code refactoren und vereinfachen

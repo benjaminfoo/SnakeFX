@@ -117,19 +117,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SnakeServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="SnakeServer" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="de.ostfalia.snakecore.SnakeServer.SnakeServerApplication" />
@@ -171,6 +158,7 @@
       <workItem from="1609087383984" duration="23172000" />
       <workItem from="1609112822296" duration="306000" />
       <workItem from="1609161147809" duration="10000000" />
+      <workItem from="1609247150122" duration="937000" />
     </task>
     <task id="LOCAL-00001" summary="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI">
       <created>1608934283443</created>
