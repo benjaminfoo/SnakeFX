@@ -142,4 +142,6 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
 - Magic Strings in konstanten refactoren
 - Dokumentation schreiben
 - Über TODOs drüber schauen und behandeln
+- Auf GameOver eines Clients reagieren
+- Auf GameOver aller Clients reagieren = Sieger?
 

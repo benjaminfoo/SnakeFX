@@ -170,7 +170,7 @@
       <workItem from="1609074293632" duration="2887000" />
       <workItem from="1609087383984" duration="23172000" />
       <workItem from="1609112822296" duration="306000" />
-      <workItem from="1609161147809" duration="9773000" />
+      <workItem from="1609161147809" duration="10000000" />
     </task>
     <task id="LOCAL-00001" summary="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI">
       <created>1608934283443</created>
