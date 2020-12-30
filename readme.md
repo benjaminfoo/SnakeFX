@@ -133,24 +133,31 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
 - ...
 
 ### Weitere Tasks
-**Frontend**
-- Spieler müssen einander das Ende des jeweils anderen abbeißen und "gut geschrieben" bekommen
-- Food / PowerUps generieren - Design Patterns anwenden
-- Konsum an Backend übertragen -> respawn
-
-**Backend**
-- Valide Endpoints für Spiele in der Lobby generieren und an RunningGames anhängen 
-
 **Frontend und Backend**
+- Auf SpielEnde / GameOver eines Clients reagieren
+  - Sieger definieren
+  - Persistenz des aktuellen Spiels für die SpielHistorie
+  - switch zur Lobby zurück
+  - unsubscribe des letzten game topics
 - Regeln des Spiels einhalten
 - Das Spielfeld muss mit der Spieldefinition gekoppelt werden:
   - wenn im Frontend bspw. eine Map-Höhe von 16 und eine Map-Breite von 48 eingestellt wird muss das im Spiel wiedergespiegelt werde
   - Über TODOs drüber schauen und behandeln
-- Auf SpielEnde / GameOver eines Clients reagieren
-  - Sieger definieren
-  - switch zur Lobby zurück
-  - unsubscribe des letzten game topics
- - WebSecurity impl.
+- WebSecurity impl.
+  
+**Frontend / SnakeGame**
+- Spieler müssen einander das Ende des jeweils anderen abbeißen und "gut geschrieben" bekommen
+- Spieler müssen sich durch Wände teleportieren können
+- Food / PowerUps generieren - Design Patterns anwenden [in progress]
+  - Event für Konsum wird versendet und empfangen [done]
+  - Position der Elemente muss valide sein [done]
+  - Es darf nur eine initiale Position generiert werden <-> unabhängig vom Client [done]
+  - Wie werden bestehende Foods/PowerUps synchronisiert?
+   - Bspw. wenn Snake A Food B einsammelt -> wie bekommen alle Clients das mit?
+- Konsum an Backend übertragen -> respawn
+
+**Backend**
+- Valide Endpoints für Spiele in der Lobby generieren und an RunningGames anhängen 
   
 **Allgemein**
  - sout statements minimieren

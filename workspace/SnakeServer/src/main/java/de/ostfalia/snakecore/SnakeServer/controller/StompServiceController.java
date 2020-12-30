@@ -179,8 +179,6 @@ public class StompServiceController {
     /**
      * Generates a valid food position.
      * Valid means the food isnt spawned on the same position like a snakes bodypart, another food or a powerup
-     *
-     * @param config
      * @param snakeList
      * @return
      */
