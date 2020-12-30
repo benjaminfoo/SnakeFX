@@ -35,9 +35,9 @@
                   <Label text="Größe des Spielfelds" />
                   <HBox spacing="15.0">
                      <children>
-                        <TextField fx:id="mapWidth" promptText="Breite d. Karte" text="32" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="mapWidth" promptText="Breite d. Karte" text="12" HBox.hgrow="ALWAYS" />
                         <Label text="x" />
-                        <TextField fx:id="mapHeight" promptText="Höhe der Karte" text="32" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="mapHeight" promptText="Höhe der Karte" text="12" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>

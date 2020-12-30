@@ -6,6 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="4ba483e1-6bed-4f2d-8970-e49a1761d4c1" name="Default Changelist" comment="- player input is now synchronized = multiplayer is done">
       <change beforePath="$PROJECT_DIR$/../readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/model/GameInputMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ws/model/LobbyMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SnakeServer/src/main/java/de/ostfalia/snakecore/SnakeServer/controller/StompLobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SnakeServer/src/main/java/de/ostfalia/snakecore/SnakeServer/controller/StompLobbyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/snakefx/src/main/resources/new_game_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/snakefx/src/main/resources/new_game_view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,6 +122,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SnakeServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="SnakeServer" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="de.ostfalia.snakecore.SnakeServer.SnakeServerApplication" />
@@ -157,7 +174,8 @@
       <workItem from="1609087383984" duration="23172000" />
       <workItem from="1609112822296" duration="306000" />
       <workItem from="1609161147809" duration="10000000" />
-      <workItem from="1609247150122" duration="1095000" />
+      <workItem from="1609247150122" duration="2761000" />
+      <workItem from="1609329785696" duration="2595000" />
     </task>
     <task id="LOCAL-00001" summary="- implemented STOMP-Service and Client for the Lobby&#10;- Refactored data model&#10;- updated front-end and back-end communication&#10;- updated front-end UI">
       <created>1608934283443</created>
@@ -244,17 +262,17 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java</url>
-          <line>590</line>
+          <line>607</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java</url>
-          <line>130</line>
+          <line>128</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/SnakeServer/src/main/java/de/ostfalia/snakecore/SnakeServer/controller/StompLobbyController.java</url>
-          <line>110</line>
+          <line>115</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -269,7 +287,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java</url>
-          <line>662</line>
+          <line>679</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>

@@ -80,6 +80,11 @@ public class StompLobbyController {
         System.out.println("Player input: " + message);
         System.out.println("Info: " + message.toString());
 
+        if(message.foodConsumed){
+            // we have to regenerate a new food / powerup position
+
+        }
+
         return message;
     }
 

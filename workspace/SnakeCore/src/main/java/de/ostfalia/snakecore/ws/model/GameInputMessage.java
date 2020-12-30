@@ -15,6 +15,8 @@ public class GameInputMessage {
 
     private RunningGame runningGame;
 
+    public boolean foodConsumed;
+
     public GameInputMessage() {
     }
 
@@ -26,6 +28,12 @@ public class GameInputMessage {
         this.input = input;
         this.gameStarted = gameStarted;
         this.runningGame = runningGame;
+    }
+
+    public GameInputMessage(String player, String gameId, boolean foodConsumed){
+        this.player = player;
+        this.gameId = gameId;
+        this.foodConsumed = foodConsumed;
     }
 
     @Override

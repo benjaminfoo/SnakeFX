@@ -72,7 +72,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     // the amount of milliseconds each game-tick needs in order to update the games state
     // public double TICK_TIME_AMOUNT = 130;
-    public double TICK_TIME_AMOUNT = 130;
+    public double TICK_TIME_AMOUNT = 200;
     public double TICK_TIME_CHANGE_AMOUNT = 10;
     // In den GameSetController î
 
@@ -182,10 +182,9 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         config.columns = runningGame.spielDefinition.getMapWidth();
         config.rows = runningGame.spielDefinition.getMapHeight();
 
-        // TODO: DEBUG - UNTIL INPUT IS SYNCHRONIZED
-        for (Snake snake : snakeList) {
-            snake.isNPC = true;
-        }
+        // TODO: second player is npc = circling around
+        snakeList.get(1).isNPC = true;
+
 
         DEBUG_NPC_MOVEMENT_CIRCLING = true;
         
@@ -211,7 +210,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 System.out.println("Recieved input " + msg.getInput() + " for player " + msg.getPlayer());
 
                 String nameOfPlayer = msg.getPlayer();
-
                 Spieler destination = null;
                 for (Spieler spieler : playerSnakeMap.keySet()) {
                     if(nameOfPlayer.equalsIgnoreCase(spieler.getName())){
@@ -220,7 +218,19 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 }
 
                 Snake snake = playerSnakeMap.get(destination);
-                snake.currentDirection = getDirectionForInput(snake.currentDirection, msg.getInput());
+
+                // its a message about informing player input
+                if(msg.getInput() != null){
+                    snake.currentDirection = getDirectionForInput(snake.currentDirection, msg.getInput());
+                }
+
+                if(msg.getInput() == null && msg.foodConsumed){
+                    generateFood();
+                }
+
+
+
+
             }
 
             @Override
@@ -236,7 +246,10 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // TODO: this thing is bugged -> generateFood();
 
         // setup the input listener
-        currentStage.getScene().setOnKeyPressed(this);
+        // currentStage.getScene().setOnKeyPressed(this);
+        currentStage.getScene().setOnKeyReleased(this);
+
+        generateFood();
 
         // The game animation happens because of the timeline
         // every change happens in a new keyFrame (update-loop)
@@ -597,7 +610,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
             // calculate new positions
             newX = RNG.getInstance().generate(0, config.rows);
-            newY = RNG.getInstance().generate(0,config.columns);
+            newY = RNG.getInstance().generate(0, config.columns);
 
             for (Snake snake : snakeList) {
                 if(snake.head.x != newX && snake.head.y == newY){
@@ -749,7 +762,17 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 if (snake.head.getX() == food.getPosition().x && snake.head.getY() == food.getPosition().y) {
                     foodList.remove(food);
                     snake.body.add(new Vector2(-1, -1));
-                    generateFood();
+                    // generateFood();
+
+                    application.getStompClient().sendGameInputMessage(
+                            runningGame.stompPath,
+                            new GameInputMessage(
+                                    application.getSpieler().getName(),
+                                    runningGame.getSpielDefinition().getNameOfTheGame(),
+                                    true
+                            )
+                    );
+
                     score += 5;
                 }
             }
