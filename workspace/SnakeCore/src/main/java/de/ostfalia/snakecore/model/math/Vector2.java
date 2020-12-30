@@ -1,4 +1,4 @@
-package de.ostfalia.snakecore.snakorino.model;
+package de.ostfalia.snakecore.model.math;
 
 import java.util.Objects;
 

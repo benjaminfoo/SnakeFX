@@ -19,7 +19,7 @@ public interface StompMessageListener {
     public void onPlayerMessageReceived(PlayerMessage msg);
 
     // callback for indicating recieved player input from the backend
-    public void onGameInputMessageReceived(GameInputMessage msg);
+    public void onGameSessionMessageRecieved(GameSessionMessage msg);
 
     // callback for indicating a player has joined a game in the lobby
     public void onPlayerJoinedGameMessageReceived(PlayerJoinsGameMessage msg);

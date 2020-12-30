@@ -1,5 +1,6 @@
 package de.ostfalia.snakecore.snakorino.model;
 
+import de.ostfalia.snakecore.model.math.Vector2;
 import javafx.scene.image.Image;
 
 import java.util.Objects;

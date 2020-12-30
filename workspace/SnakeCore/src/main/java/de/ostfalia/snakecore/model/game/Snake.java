@@ -1,6 +1,6 @@
-package de.ostfalia.snakecore.snakorino.model;
+package de.ostfalia.snakecore.model.game;
 
-import javafx.scene.paint.Color;
+import de.ostfalia.snakecore.model.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class Snake {
     public Vector2 currentDirection = Vector2.RIGHT; // Snake property
 
     // the color of the snake
-    public Color color;
+    public SnakeColor color;
 
     // Flag that determines if this snake is controlled by a human player or by the pc
     // !Communication from lobby nessacary!
@@ -36,10 +36,13 @@ public class Snake {
     // the initial length of the snake
     public int initialLength = 3;
 
+    public Snake() {
+    }
+
     /**
      * Initialize the snakes head and its body parts at @param spawn
      */
-    public Snake(Vector2 spawn, Color color){
+    public Snake(Vector2 spawn, SnakeColor color){
         for (int i = 0; i < initialLength; i++) {
             Vector2 bodyPart = new Vector2(-1, -1);
             body.add(bodyPart);
@@ -56,7 +59,7 @@ public class Snake {
     /**
      * Initialize the snakes head and its body parts at @param spawn
      */
-    public Snake(Vector2 spawn, Color color, int newLength){
+    public Snake(Vector2 spawn, SnakeColor color, int newLength){
         this.initialLength = newLength;
 
         for (int i = 0; i < initialLength; i++) {

@@ -38,7 +38,7 @@ public class NewGameController extends BaseController {
         super.initialize();
 
         numberOfPlayers.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2,10,1));
-        numberOfPowerups.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,50,1));
+        numberOfPowerups.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,50,3));
 
         newGame.setOnAction(onclick -> { executeCreateNewGame(); });
         abort.setOnAction(onclick -> { showHomeScreen();});

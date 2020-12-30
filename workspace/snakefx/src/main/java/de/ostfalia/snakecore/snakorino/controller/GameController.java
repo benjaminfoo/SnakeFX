@@ -5,10 +5,11 @@ import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.controller.Scenes;
 import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
-import de.ostfalia.snakecore.snakorino.model.Config;
+import de.ostfalia.snakecore.model.game.Config;
+import de.ostfalia.snakecore.model.game.Snake;
+import de.ostfalia.snakecore.model.game.SnakeColor;
+import de.ostfalia.snakecore.model.math.Vector2;
 import de.ostfalia.snakecore.snakorino.model.Food;
-import de.ostfalia.snakecore.snakorino.model.Snake;
-import de.ostfalia.snakecore.snakorino.model.Vector2;
 import de.ostfalia.snakecore.util.RNG;
 import de.ostfalia.snakecore.ws.client.StompMessageListener;
 import de.ostfalia.snakecore.ws.model.*;
@@ -33,8 +34,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import static de.ostfalia.snakecore.util.DebugOptions.*;
+import static de.ostfalia.snakecore.util.DebugOptions.DEBUG_NPC_MOVEMENT_CIRCLING;
+import static de.ostfalia.snakecore.util.DebugOptions.DEBUG_NPC_MOVEMENT_RANDOM_PATHS;
 
 /**
  * @author Benjamin Wulfert
@@ -122,12 +125,14 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     // the current instance of the game
     private RunningGame runningGame;
 
+
+    Font arial10 = (Font.font("Arial", 10));
+
     /**
-     * Setup the game based on the runningame instance from the lobby
-     * @param runningGame
+     * Setup the game based on the GameSessionMessage instance from the lobby
      */
-    public void launchGame(RunningGame runningGame){
-        this.runningGame = runningGame;
+    public void launchGame(GameSessionMessage gameSessionMessage){
+        this.runningGame = gameSessionMessage.getRunningGame();
 
         // setup n players
         int numPlayers = runningGame.getActiveClients().size();
@@ -140,7 +145,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             Spieler spieler = runningGame.getActiveClients().get(i);
 
             // create a corresponding snake
-            Snake playerSnake = new Snake(new Vector2(3, 3 * i), playerColors[i]);
+            Snake playerSnake = new Snake(new Vector2(3, 3 * i), new SnakeColor(playerColors[i]));
 
             // put it into the hashmap for later use (player related, via communication)
             playerSnakeMap.put(spieler,playerSnake);
@@ -205,30 +210,38 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             }
 
             @Override
-            public void onGameInputMessageReceived(GameInputMessage msg) {
+            public void onGameSessionMessageRecieved(GameSessionMessage msg) {
 
-                System.out.println("Recieved input " + msg.getInput() + " for player " + msg.getPlayer());
 
-                String nameOfPlayer = msg.getPlayer();
-                Spieler destination = null;
-                for (Spieler spieler : playerSnakeMap.keySet()) {
-                    if(nameOfPlayer.equalsIgnoreCase(spieler.getName())){
-                        destination = spieler;
+                // handle events while the game is actively running
+                if(msg.getGameState() == GameSessionMessage.GameState.RUNNING){
+
+                    // spawn a food instance with a valid position calculated by the server
+                    if(msg.getFoodPositions() != null){
+                        spawnFood(gameSessionMessage.getFoodPositions());
                     }
+
+                    // if the player is not null
+                    if(msg.getPlayer() != null && msg.getInput() != null){
+
+                        // find the player which belongs to a given snake
+                        String nameOfPlayer = msg.getPlayer();
+                        Spieler destination = null;
+                        for (Spieler spieler : playerSnakeMap.keySet()) {
+                            if(nameOfPlayer.equalsIgnoreCase(spieler.getName())){
+                                destination = spieler;
+                            }
+                        }
+                        Snake snake = playerSnakeMap.get(destination);
+
+                        // sync. the movement of the player
+                        if(msg.getInput() != null){
+                            snake.currentDirection = getDirectionForInput(snake.currentDirection, msg.getInput());
+                        }
+
+                    }
+
                 }
-
-                Snake snake = playerSnakeMap.get(destination);
-
-                // its a message about informing player input
-                if(msg.getInput() != null){
-                    snake.currentDirection = getDirectionForInput(snake.currentDirection, msg.getInput());
-                }
-
-                if(msg.getInput() == null && msg.foodConsumed){
-                    generateFood();
-                }
-
-
 
 
             }
@@ -249,7 +262,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // currentStage.getScene().setOnKeyPressed(this);
         currentStage.getScene().setOnKeyReleased(this);
 
-        generateFood();
+        // generate the initial food position
+        if(gameSessionMessage.getFoodPositions() != null){
+            spawnFood(gameSessionMessage.getFoodPositions());
+        }
+
 
         // The game animation happens because of the timeline
         // every change happens in a new keyFrame (update-loop)
@@ -260,13 +277,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     }
 
-
-    // for meanwhile developing the game
     @Override
     public void postInitialize() {
         super.postInitialize();
-
-
+        // before the introduction of the multiplayer mechanism the init. happened here
+        // now it takes place in GameController.launchGame()
     }
 
     /**
@@ -307,37 +322,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         checkGameOver();
         checkEatFood();
 
-        drawDirections(gc);
-        // drawIndices(gc);
-
-
-        for (Snake snake : snakeList)
-        {
-            // draw the name of the player
-            for (Map.Entry<Spieler, Snake> spielerSnakeEntry : playerSnakeMap.entrySet()) {
-                if(spielerSnakeEntry.getValue().equals(snake)){
-                    Vector2 pos = new Vector2(snake.head.x * config.tileSize, snake.head.y * config.tileSize);
-                    drawPlayerName(gc, spielerSnakeEntry.getKey().getName(), pos);
-                }
-            }
-        }
-
     }
 
-    Font arial10 = (Font.font("Arial", 10));
-
-    private void drawIndices(GraphicsContext gc) {
-        gc.setFont(arial10);
-        int tileSize = config.tileSize;
-        int halfTileSize = config.tileSize / 2;
-        for (int y = 0; y < config.rows; y++) {
-            for (int x = 0; x < config.columns; x++) {
-                gc.fillText("(" + x + "," + y + ")", x * tileSize , y * tileSize + halfTileSize);
-            }
-        }
-    }
-
-
+    /**
+     * Draw a players name to the given position
+     */
     private void drawPlayerName(GraphicsContext gc, String playerName, Vector2 pos) {
         gc.setFont(arial10);
         gc.fillText(playerName, pos.x, pos.y);
@@ -365,14 +354,14 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         */
 
+        // send the current input of the client to the backend
         application.getStompClient().sendGameInputMessage(
                 runningGame.stompPath,
-                new GameInputMessage(
+                new GameSessionMessage(
+                        GameSessionMessage.GameState.RUNNING,
                         application.getSpieler().getName(),
                         runningGame.getSpielDefinition().getNameOfTheGame(),
-                        event.getCode(),
-                        false,
-                        runningGame
+                        event.getCode()
                 )
         );
 
@@ -551,25 +540,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     private int boxedSuicideCounter = 0;
     private int boxedSuicideCounterMax = 20;
 
-    private void drawDirections(GraphicsContext gc) {
-        if(DEBUG_DRAW_DIRECTIONS){
-            int tileSize = config.tileSize;
-            int halfTileSize = tileSize / 2;
-            for (Snake snake : snakeList) {
-                Vector2 current = snake.head;
-                Vector2 next = new Vector2(current).add(snake.currentDirection);
-
-                gc.setLineWidth(10);
-                gc.setStroke(Color.GREEN);
-                gc.strokeLine(
-                        current.x * tileSize + halfTileSize,
-                        current.y * tileSize + halfTileSize,
-                        next.x    * tileSize + halfTileSize,
-                        next.y    * tileSize + halfTileSize
-                );
-            }
-        }
-    }
 
     /**
      * Draw the checker-board pattern to / as the background of the game.
@@ -599,38 +569,14 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      * - Dont generate a food below a players head
      * - Dont generate a food below a players body
      */
-    private void generateFood() {
+    private void spawnFood(List<Vector2> foodPosition) {
 
-        boolean invalidFoodPosition = true;
+        foodList.clear();
 
-        int newX;
-        int newY;
-
-        do {
-
-            // calculate new positions
-            newX = RNG.getInstance().generate(0, config.rows);
-            newY = RNG.getInstance().generate(0, config.columns);
-
-            for (Snake snake : snakeList) {
-                if(snake.head.x != newX && snake.head.y == newY){
-                    invalidFoodPosition = false;
-                }
-                for (Vector2 bodyPart : snake.body) {
-                    if(bodyPart.x != newX && bodyPart.y != newY){
-                        invalidFoodPosition = false;
-                    }
-                }
-            }
-
-        } while (invalidFoodPosition);
-
-        Food food = new Food(
-                new Image(FOOD_IMAGE_PATHS[RNG.getInstance().generate(0, FOOD_IMAGE_PATHS.length)]),
-                new Vector2(newX, newY)
-        );
-
-        foodList.add(food);
+        for (Vector2 pos : foodPosition) {
+            Food food = new Food(new Image(FOOD_IMAGE_PATHS[RNG.getInstance().generate(0, FOOD_IMAGE_PATHS.length)]), pos);
+            foodList.add(food);
+        }
 
     }
 
@@ -659,7 +605,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         for (Snake snake : snakeList) {
 
             // draw the head of the snake
-            gc.setFill(snake.color.brighter());
+            gc.setFill(snake.color.toJavaFxColor().brighter());
             gc.fillRoundRect(
                     snake.head.getX() * config.tileSize,
                     snake.head.getY() * config.tileSize,
@@ -670,7 +616,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             );
 
             // draw the body of the snake
-            gc.setFill(snake.color);
+            gc.setFill(snake.color.toJavaFxColor());
             for (int i = 1; i < snake.body.size(); i++) {
                 gc.fillRoundRect(
                         snake.body.get(i).getX() * config.tileSize,
@@ -681,6 +627,15 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                         20
                 );
             }
+
+            // draw the name of the player centered on their heads
+            gc.setFill(Color.WHITE);
+            for (Map.Entry<Spieler, Snake> spielerSnakeEntry : playerSnakeMap.entrySet()) {
+                if(spielerSnakeEntry.getValue().equals(snake)){
+                    Vector2 pos = new Vector2(snake.head.x * config.tileSize + (config.tileSize / 2), snake.head.y * config.tileSize + (config.tileSize / 2));
+                    drawPlayerName(gc, spielerSnakeEntry.getKey().getName(), pos);
+                }
+            }
         }
     }
 
@@ -688,6 +643,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      * Check if the game is finished.
      */
     public void checkGameOver() {
+
         // check for wall collision
         for (Snake snake : snakeList) {
 
@@ -705,30 +661,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 }
             }
         }
-
-        // Instead of going game over when hitting a wall you can also use a wallteleport
-        /*
-        public checkWallTeleport();
-        ...
-        public void checkWallTeleport() {
-
-            // check for wall collision
-            for (Snake snake : snakeList) {
-
-                if (snake.head.x < 0){
-                    snake.head.x = config.rows;
-                }
-                else if (snake.head.y < 0){
-                    snake.head.y = config.rows;
-                }
-                else if (snake.head.x > config.rows){
-                    snake.head.x = 0;
-                }
-                else if (snake.head.y > config.columns) {
-                    snake.head.y = 0;
-                }
-        */
-
 
         // check for snake-collision
         for (Snake a : snakeList) {
@@ -753,38 +685,80 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             }
         }
 
-
     }
 
+    /**
+     * Check if a snake has eat some food.
+     */
     private void checkEatFood() {
-        for (Snake snake : snakeList) {
-            for (Food food : foodList) {
-                if (snake.head.getX() == food.getPosition().x && snake.head.getY() == food.getPosition().y) {
-                    foodList.remove(food);
-                    snake.body.add(new Vector2(-1, -1));
-                    // generateFood();
 
+        // we'll have to collect the food which gotta be removed after looping or else well get a concurrentModificationExcpetion
+        List<Food> foodToRemove = new LinkedList<>();
+
+        for (Snake snake : snakeList) {
+
+            for (Food food : foodList) {
+
+                // if the head matches the position of a food
+                if (snake.head.getX() == food.getPosition().x && snake.head.getY() == food.getPosition().y) {
+
+                    // remove the current food
+                    foodToRemove.remove(food);
+
+                    // add an un-initialized body-part to the snake
+                    snake.body.add(new Vector2(-1, -1));
+
+                    // send a gameSessionMessage which indicates that a food has been removed
+                    GameSessionMessage gameInputMessage = new GameSessionMessage(
+                            GameSessionMessage.GameState.RUNNING,
+                            runningGame.getSpielDefinition().getNameOfTheGame(),
+                            snakeList,
+                            config,
+                            true
+                    );
+                    gameInputMessage.setRunningGame(runningGame);
+                    gameInputMessage.setInput(null);
+
+                    // send all food positions to the backend
+                    gameInputMessage.setFoodPosition(foodList.stream().map(f -> f.position).collect(Collectors.toList()));
+
+                    // send the message
                     application.getStompClient().sendGameInputMessage(
                             runningGame.stompPath,
-                            new GameInputMessage(
-                                    application.getSpieler().getName(),
-                                    runningGame.getSpielDefinition().getNameOfTheGame(),
-                                    true
-                            )
+                            gameInputMessage
                     );
 
+                    // TODO: correctly calculate the players score
+                    // increase the players score
                     score += 5;
                 }
+
             }
+
         }
+
+        if(!foodToRemove.isEmpty()){
+            foodList.removeAll(foodToRemove);
+        }
+
     }
 
+    /**
+     * Draw the score of a player
+     * @param gc
+     */
     private void drawScore(GraphicsContext gc) {
         gc.setFill(Color.WHITE);
         gc.setFont(new Font("", 35)); // Find funny font
         gc.fillText("Score: " + score, 10, 35);
     }
 
+    /**
+     * Get a direction vector based on the current playerInput.
+     * @param currentDirection
+     * @param playerInput
+     * @return
+     */
     private Vector2 getDirectionForInput(Vector2 currentDirection , KeyCode playerInput) {
 
         if (playerInput == firstPlayerControls[0] || playerInput == secondPlayerControls[0]) {

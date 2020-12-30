@@ -51,7 +51,7 @@ public class Spieler {
 
     @Override
     public String toString() {
-        return "Spieler: " + getName();
+        return getName();
     }
 
     @Override

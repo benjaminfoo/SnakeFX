@@ -94,3 +94,62 @@
             }
         }
         */
+
+
+
+
+    private void drawIndices(GraphicsContext gc) {
+        gc.setFont(arial10);
+        int tileSize = config.tileSize;
+        int halfTileSize = config.tileSize / 2;
+        for (int y = 0; y < config.rows; y++) {
+            for (int x = 0; x < config.columns; x++) {
+                gc.fillText("(" + x + "," + y + ")", x * tileSize , y * tileSize + halfTileSize);
+            }
+        }
+    }
+
+
+    private void drawDirections(GraphicsContext gc) {
+        if(DEBUG_DRAW_DIRECTIONS){
+            int tileSize = config.tileSize;
+            int halfTileSize = tileSize / 2;
+            for (Snake snake : snakeList) {
+                Vector2 current = snake.head;
+                Vector2 next = new Vector2(current).add(snake.currentDirection);
+
+                gc.setLineWidth(10);
+                gc.setStroke(Color.GREEN);
+                gc.strokeLine(
+                        current.x * tileSize + halfTileSize,
+                        current.y * tileSize + halfTileSize,
+                        next.x    * tileSize + halfTileSize,
+                        next.y    * tileSize + halfTileSize
+                );
+            }
+        }
+    }
+
+
+        // Instead of going game over when hitting a wall you can also use a wallteleport
+        /*
+        public checkWallTeleport();
+        ...
+        public void checkWallTeleport() {
+
+            // check for wall collision
+            for (Snake snake : snakeList) {
+
+                if (snake.head.x < 0){
+                    snake.head.x = config.rows;
+                }
+                else if (snake.head.y < 0){
+                    snake.head.y = config.rows;
+                }
+                else if (snake.head.x > config.rows){
+                    snake.head.x = 0;
+                }
+                else if (snake.head.y > config.columns) {
+                    snake.head.y = 0;
+                }
+        */

@@ -90,29 +90,38 @@ public class HomescreenController extends BaseController {
         });
 
         joinGame.setOnAction(onClick -> {
-            String roomId = "1337";
+            RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
+            System.out.println("Subscribing to: " + selectedGame.getStompPath());
 
-            // application.getStompClient().sendLobbyMessage();
+            application.getStompClient().sendJoinGameMessage(selectedGame.getStompPath(), application.getSpieler(), selectedGame);
+            application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath());
+        });
 
-            // TODO: get all running games via stomp
-            // TODO: create a reference per list item <-> roomId
-
-            /*
-            application.getStompClient().joinRoom(
-                    application.getUserConfig().getUserName(),
-                    new JoinGameMessage(application.getUserConfig().getUserName(), roomId)
-            );
-            */
+        // manage clicks on the admin-menu -> start game button
+        adminStartGame.setOnAction(onClick -> {
+            System.out.println("Starting game ...");
 
             RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
             System.out.println("Subscribing to: " + selectedGame.getStompPath());
-            application.getStompClient().sendJoinGameMessage(selectedGame.getStompPath(), application.getSpieler(), selectedGame);
-            application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
+
+            // subscribe to the newly created game
+            application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath());
+
+            // send an initial game session message
+            application.getStompClient().sendGameInputMessage(
+                    selectedGame.stompPath,
+                    new GameSessionMessage(GameSessionMessage.GameState.STARTING, application.getUserConfig().getUserName(), selectedGame)
+            );
+
+
         });
 
+
+        // modifies the state of the ui to certain situations
         activeGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
             RunningGame selectedItem = newValue;
+
             boolean currentPlayerIsAdminOfSelection = selectedItem.admin.getName().equalsIgnoreCase(application.getSpieler().getName());
 
             // we have to invert the statement because the button gets disabled if set to true
@@ -124,22 +133,8 @@ public class HomescreenController extends BaseController {
             boolean playerLimitReached = selectedItem.activeClients.size() == selectedItem.getSpielDefinition().getNumberOfPlayer();
             // disable the join game button then the player already joined the game
             boolean playerAlreadyInLobby = selectedItem.activeClients.contains(application.getSpieler());
+
             joinGame.setDisable(playerLimitReached || playerAlreadyInLobby);
-
-        });
-
-        adminStartGame.setOnAction(onClick -> {
-            System.out.println("Starting game ...");
-
-            RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
-            System.out.println("Subscribing to: " + selectedGame.getStompPath());
-
-            // application.getStompClient().sendJoinGameMessage(selectedGame.getStompPath(), application.getUserConfigAsSpieler(), selectedGame);
-            application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath(), application.getUserConfig().getUserName(), "Key: W");
-
-            application.getStompClient().sendGameInputMessage(selectedGame.stompPath,
-                    new GameInputMessage(application.getUserConfig().getUserName(), selectedGame.stompPath, null, true, selectedGame)
-            );
 
         });
 
@@ -166,6 +161,16 @@ public class HomescreenController extends BaseController {
         application.getStompClient().setStompMessageListener(new StompMessageListener() {
 
             @Override
+            public void onGameSessionMessageRecieved(GameSessionMessage msg) {
+                if(msg.getGameState() == GameSessionMessage.GameState.STARTING) {
+                    Platform.runLater(() -> {
+                        showGameScreen();
+                        ((GameController) application.initializedController.get(GameController.class)).launchGame(msg);
+                    });
+                }
+            }
+
+            @Override
             public void onChatMessageReceived(ChatMessage msg) {
                 chatContent.appendText("(" + application.getSimpleDateFormat().format( new Date()) + "): " + msg.getFrom() + ": " + msg.getText() + "\n");
             }
@@ -188,18 +193,6 @@ public class HomescreenController extends BaseController {
                     activePlayers.getItems().add(spieler);
                 }
 
-            }
-
-            @Override
-            public void onGameInputMessageReceived(GameInputMessage msg) {
-                if(msg.isGameStarted()) {
-                    System.out.println("The game has been started!");
-
-                    Platform.runLater(() -> {
-                        showGameScreen();
-                        ((GameController) application.initializedController.get(GameController.class)).launchGame(msg.getRunningGame());
-                    });
-                }
             }
 
             @Override

@@ -5,7 +5,6 @@ import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.ws.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
 import org.springframework.util.concurrent.ListenableFuture;
@@ -185,9 +184,9 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
         session.send("/app/players", playerMessage);
     }
 
-    public void sendGameInputMessage(String stompPath, GameInputMessage gameInputMessage) {
-        System.out.println("Sending player message");
-        session.send(stompPath, gameInputMessage);
+    public void sendGameInputMessage(String stompPath, GameSessionMessage gameInputMessage) {
+        System.out.println("Sending player message to " + stompPath);
+        session.send("/app/games/1", gameInputMessage);
     }
 
     public void sendJoinGameMessage(String stompPath, Spieler spieler, RunningGame runningGame) {
@@ -199,17 +198,17 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
     }
 
     /**
-     * Sends a message to a game topic with gameDestinationTopic - from the player with the userName and its current input
+     * Sends a message to a game topic with gameDestinationTopic
      *
      * @param gameDestinationTopic
-     * @param userName
-     * @param input
      */
-    public void subscribeToGameTopic(String gameDestinationTopic, String userName, String input) {
+    public void subscribeToGameTopic(String gameDestinationTopic) {
+
         session.subscribe(gameDestinationTopic, new StompFrameHandler() {
+
             @Override
             public Type getPayloadType(StompHeaders headers) {
-                return GameInputMessage.class;
+                return GameSessionMessage.class;
             }
 
             @Override
@@ -219,7 +218,7 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
                 System.out.println();
                 System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
 
-                GameInputMessage msg = (GameInputMessage) payload;
+                GameSessionMessage msg = (GameSessionMessage) payload;
                 if (msg != null) {
                     System.out.println("Received player input: " + msg.toString());
 
@@ -230,27 +229,11 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
                 System.out.println();
 
                 if (stompMessageListener != null) {
-                    stompMessageListener.onGameInputMessageReceived(msg);
+                    stompMessageListener.onGameSessionMessageRecieved(msg);
                 }
 
             }
         });
-    }
-
-
-    @Override
-    public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
-        logger.error("Got an exception", exception);
-    }
-
-    @Override
-    public Type getPayloadType(StompHeaders headers) {
-        return Message.class;
-    }
-
-    @Override
-    public void handleFrame(StompHeaders headers, Object payload) {
-
     }
 
     public void setStompMessageListener(StompMessageListener recievedCallback) {
@@ -279,9 +262,9 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
     }
 
     @Override
-    public void onGameInputMessageReceived(GameInputMessage msg) {
+    public void onGameSessionMessageRecieved(GameSessionMessage msg) {
         if (stompMessageListener != null) {
-            stompMessageListener.onGameInputMessageReceived(msg);
+            stompMessageListener.onGameSessionMessageRecieved(msg);
         }
     }
 

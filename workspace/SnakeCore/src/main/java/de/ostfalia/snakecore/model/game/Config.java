@@ -1,4 +1,4 @@
-package de.ostfalia.snakecore.snakorino.model;
+package de.ostfalia.snakecore.model.game;
 
  // TODO: this needs to get connected with a SpielDefinition, i guess
 public class Config {
@@ -12,4 +12,11 @@ public class Config {
     public int columns = 20;
     public int tileSize = width / rows;
 
-}
+     public Config(int rows, int columns) {
+         this.rows = rows;
+         this.columns = columns;
+     }
+
+     public Config() {
+     }
+ }

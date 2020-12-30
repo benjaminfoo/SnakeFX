@@ -18,6 +18,9 @@ public class RNG {
     }
 
     public static RNG getInstance(){
+        if(instance == null){
+            instance = new RNG();
+        }
         return instance;
     }
 
