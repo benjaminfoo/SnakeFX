@@ -2,6 +2,9 @@
 Dies ist das Repository des Moduls Patterns und Frameworks im WiSe 2020.
 Dieses Repository beinhaltet die Planungsdokumente, UML-Diagramme und den Quelltext des Projekts.
 
+Das gesamte Projekt ist in der Programmiersprache Java entwickelt wurden.
+Alle Module des Projekts werden mit Java 8 - mittels Oracle's Java Development Kit kompiliert, getestet und ausgeführt.
+
 ## Modul-Struktur
 **SnakeCore** \
 Enthält die grundlegenden und gemeinsamen Aspekte des Projekts, wie beispielsweise Modelle welche in allen weiteren Projekten verwendet werden.
@@ -116,6 +119,9 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
   - Beendigung des Spiels
   - Persistenz d. Runde in DB
   - Return to Lobby
+  - Cleanup
+    - Unsubscribe von Lobby-Topics
+    - Re-Subscribe nach erneuten beitreten eines Spiels
 - ...
 
 ### Backend
@@ -152,18 +158,23 @@ Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisier
   - Event für Konsum wird versendet und empfangen [done]
   - Position der Elemente muss valide sein [done]
   - Es darf nur eine initiale Position generiert werden <-> unabhängig vom Client [done]
-  - Wie werden bestehende Foods/PowerUps synchronisiert?
-   - Bspw. wenn Snake A Food B einsammelt -> wie bekommen alle Clients das mit?
-- Konsum an Backend übertragen -> respawn
+  - Food / PowerUps werden generiert und synchronisiert [done]
+  - Konsum an Backend übertragen -> initial [done]
+  - Konsum an Backend übertragen -> continouos [in progress]
 
 **Backend**
 - Valide Endpoints für Spiele in der Lobby generieren und an RunningGames anhängen 
   
 **Allgemein**
- - sout statements minimieren
- - Magic Strings in konstanten refactoren
- - Präsentation ausarbeiten
- - Dokumentation ausarbeiten
- - Test-Szenario: Ein Server -> drei Clients realisieren
- - Test-Szenario: Mehrere Spiele hintereinander durchführen
- - Code refactoren und vereinfachen
+- Abschließende Integration der Design-Pattern
+- sout statements minimieren
+- Magic Strings in konstanten refactoren
+- Präsentation ausarbeiten
+- Dokumentation ausarbeiten
+- Test-Szenario: Ein Server -> drei Clients realisieren
+- Test-Szenario: Mehrere Spiele hintereinander durchführen
+- Code refactoren und vereinfachen
+
+
+**Bugs**
+- Positionen in nicht-admin Spielen sind um eine Zeile versetzt.
