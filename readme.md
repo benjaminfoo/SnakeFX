@@ -79,7 +79,7 @@ Darunter fallen Beispielsweise:
 Mithilfe dieser Vererbungshierarchie ist es auf einfache Art und Weise möglich mittels Betätigung einer Schaltfläche (bspw. der Betätigung eines Buttons) einen HTTP- oder eine WebSocket-Message an das Backend zu initiieren, 
 Operationen im selben Fenster auszuführen, etc. - und da jeder Controller von BaseController erbt und dieser eine Referenz auf die BaseApplication besitzt können auch verschiedene Aspekte des Frontends gesteuert und kontrolliert werden. 
 
-<img src="docs/UML/Benni/AppSnakeFX.png">  
+<img src="docs/UML/Benni/AppSnakeFX2.png">  
 
 ## Architektur: Backend
 
