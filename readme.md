@@ -38,6 +38,7 @@ Die folgenden Befehle werden für den Datenaustausch verwendet:
 - **send** - Sendet eine Nachricht in einem bestimmten Format an das Backend / den Server - die Nachrichten-Inhalte werden mittels Jackson im JSON-Format serialisiert und erzeugt, und auf der jeweiligen Endseite deserialisiert (Un/marshalling).
 
 #### STOMP-Endpoints
+Die folgenden URLs dienen als Adresse / Endpoints für die Kommunikation mittels WebSockets
 - ws://localhost:8080/snakeserver - HTTP-Handshake und WebSocket / STOMP Upgrade
 - ws://localhost:8080/app/games/{gameId} - Übertragung von Spielerdaten an das Backend - wird gebroadcastet an alle verbundenen Clients
 - ws://localhost:8080/app/games/{gameId}/{playerId} - Bekanntgabe von Spielern aus der Lobby welche einem Spiel beitreten
@@ -45,12 +46,37 @@ Die folgenden Befehle werden für den Datenaustausch verwendet:
 - ws://localhost:8080/app/players/ - Bekanntgabe des Beitritts von Spielern in die Lobby 
 
 #### HTTP / REST
+Die folgenden URLs dienen als Adresse für die Kommunikation mittels HTTP-Protokoll
 - http://localhost:8080/h2 (user: sa | pass: <none>)
 - http://localhost:8080/api/spieler/
 - http://localhost:8080/api/spieler/name
 - http://localhost:8080/api/lobby
 - http://localhost:8080/api/historie
 
+## Architektur: Frontend
+**BaseController** \
+Das FrontEnd besitzt eine auf Vererbung basierende Controller-Hierarchie.
+Jeder im Front-End verwendete Controller erbt von **BaseController** - einer abstrakten Oberklasse welche verschiedene Methoden besitzt und mittels Vererbung jedem ableitenden Controller zur Verfügung stellt.
+Dazu zählen Beispielsweise:
+- das Laden von Szenen (Scenes) mittels FXML-Datei (JavaFX Markup Language) in der selben Stage / Window. 
+- verschiedene UI-bezogene Mechanismen wie das Dekorieren der Stage mittels Icon oder dem Aktualisieren des Stage-Titles, etc. 
+- Eine Referenz auf die (JavaFX-)Application selbst welche im folgenden beschrieben wird.
+
+**BaseApplication** \
+JavaFX-Anwendung besitzen als kleinsten gemeinsamen Nenner eine Vererbung zur Application-Klasse - diese Klasse selbst kann jedoch auch eine 
+abgeleitete Klasse von Application sein. Dieser Sachverhalt kann genutzt um einen einzelnen Bezugspunkt von logisch zusammenhängender Mechanismen zu bilden.
+
+Aus diesem Grund wird im SnakeFX-Projekt die Ausgangsklasse von BaseApplication abgeleitet.
+Diese Klasse besitzt, ähnlich wie die BaseController, verschiedene Mechanismen welche jedoch unabhängig vom User-Interface verwendet werden können.
+Darunter fallen Beispielsweise:
+- Eine Referenz auf den StompClient welcher genutzt werden kann um mittels WebSockets mit dem Backend zu kommunizieren.
+- Der UserConfig welche die Anmelde- und Sessiondaten des aktuellen Users besitzt.
+- uvw.
+
+Mithilfe dieser Vererbungshierarchie ist es auf einfache Art und Weise möglich mittels Betätigung einer Schaltfläche (bspw. der Betätigung eines Buttons) einen HTTP- oder eine WebSocket-Message an das Backend zu initiieren, 
+Operationen im selben Fenster auszuführen, etc.
+
+## Architektur: Backend
 
 ## Tasks
 Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisiert wurden oder noch realisiert werden müssen.
