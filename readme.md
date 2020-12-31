@@ -62,7 +62,7 @@ Dazu zählen Beispielsweise:
 - verschiedene UI-bezogene Mechanismen wie das Dekorieren der Stage mittels Icon oder dem Aktualisieren des Stage-Titles, etc. 
 - Eine Referenz auf die (JavaFX-)Application selbst welche im folgenden beschrieben wird.
 
-<img src="docs/UML/Benni/BaseController.png">  
+<img src="docs/UML/Benni/BaseController.png">   
 
 
 **BaseApplication** \
