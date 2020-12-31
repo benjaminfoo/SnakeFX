@@ -2,8 +2,10 @@
 Dies ist das Repository des Moduls Patterns und Frameworks im WiSe 2020.
 Dieses Repository beinhaltet die Planungsdokumente, UML-Diagramme und den Quelltext des Projekts.
 
-Das gesamte Projekt ist in der Programmiersprache Java entwickelt wurden.
+Das gesamte Projekt ist in der Programmiersprache Java entwickelt worden.
 Alle Module des Projekts werden mit Java 8 - mittels Oracle's Java Development Kit kompiliert, getestet und ausgeführt.
+
+Als Build-Management-System des Projekts kommt Apache Maven 3 zum Einsatz. Jedes Modul enthält eine pom.xml welche das jeweilige Project-Object-Model beschreibt.
 
 ## Modul-Struktur
 **SnakeCore** \
