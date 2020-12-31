@@ -3,24 +3,27 @@
   <ID>JAVA</ID>
   <OriginalElement>de.ostfalia.snakecore.AppSnakeFX</OriginalElement>
   <nodes>
-    <node x="20.0" y="160.0">de.ostfalia.snakecore.AppSnakeFX</node>
-    <node x="0.0" y="80.0">de.ostfalia.snakecore.app.BaseApplication</node>
-    <node x="4.0" y="0.0">de.ostfalia.snakecore.controller.BaseController</node>
+    <node x="0.0" y="242.5">de.ostfalia.snakecore.AppSnakeFX</node>
+    <node x="363.7537689855188" y="0.0">de.ostfalia.snakecore.app.BaseApplication</node>
+    <node x="969.6095134670709" y="153.99999999999986">de.ostfalia.snakecore.controller.BaseController</node>
   </nodes>
   <notes />
   <edges>
     <edge source="de.ostfalia.snakecore.app.BaseApplication" target="de.ostfalia.snakecore.controller.BaseController">
-      <point x="0.0" y="-15.0" />
-      <point x="0.0" y="15.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
     <edge source="de.ostfalia.snakecore.AppSnakeFX" target="de.ostfalia.snakecore.app.BaseApplication">
-      <point x="0.0" y="-15.0" />
-      <point x="0.0" y="15.0" />
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="84.0" y="95.0" />
+  <settings layout="Balloon" zoom="0.7000000000000001" x="728.1428571428571" y="458.5714285714285" />
   <SelectedNodes />
-  <Categories />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
   <SCOPE>All</SCOPE>
   <VISIBILITY>private</VISIBILITY>
 </Diagram>
