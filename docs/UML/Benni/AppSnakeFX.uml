@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>de.ostfalia.snakecore.AppSnakeFX</OriginalElement>
+  <nodes>
+    <node x="20.0" y="160.0">de.ostfalia.snakecore.AppSnakeFX</node>
+    <node x="0.0" y="80.0">de.ostfalia.snakecore.app.BaseApplication</node>
+    <node x="4.0" y="0.0">de.ostfalia.snakecore.controller.BaseController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="de.ostfalia.snakecore.app.BaseApplication" target="de.ostfalia.snakecore.controller.BaseController">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="de.ostfalia.snakecore.AppSnakeFX" target="de.ostfalia.snakecore.app.BaseApplication">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="84.0" y="95.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

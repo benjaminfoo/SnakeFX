@@ -62,6 +62,9 @@ Dazu zählen Beispielsweise:
 - verschiedene UI-bezogene Mechanismen wie das Dekorieren der Stage mittels Icon oder dem Aktualisieren des Stage-Titles, etc. 
 - Eine Referenz auf die (JavaFX-)Application selbst welche im folgenden beschrieben wird.
 
+<img src="docs/UML/Benni/BaseController.png">  
+
+
 **BaseApplication** \
 JavaFX-Anwendung besitzen als kleinsten gemeinsamen Nenner eine Vererbung zur Application-Klasse - diese Klasse selbst kann jedoch auch eine 
 abgeleitete Klasse von Application sein. Dieser Sachverhalt kann genutzt um einen einzelnen Bezugspunkt von logisch zusammenhängender Mechanismen zu bilden.
@@ -74,9 +77,9 @@ Darunter fallen Beispielsweise:
 - uvw.
 
 Mithilfe dieser Vererbungshierarchie ist es auf einfache Art und Weise möglich mittels Betätigung einer Schaltfläche (bspw. der Betätigung eines Buttons) einen HTTP- oder eine WebSocket-Message an das Backend zu initiieren, 
-Operationen im selben Fenster auszuführen, etc.
+Operationen im selben Fenster auszuführen, etc. - und da jeder Controller von BaseController erbt und dieser eine Referenz auf die BaseApplication besitzt können auch verschiedene Aspekte des Frontends gesteuert und kontrolliert werden. 
 
-<img src="docs/UML/Benni/BaseController.png">  
+<img src="docs/UML/Benni/AppSnakeFX.png">  
 
 ## Architektur: Backend
 
