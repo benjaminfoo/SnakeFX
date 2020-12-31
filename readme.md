@@ -76,6 +76,8 @@ Darunter fallen Beispielsweise:
 Mithilfe dieser Vererbungshierarchie ist es auf einfache Art und Weise möglich mittels Betätigung einer Schaltfläche (bspw. der Betätigung eines Buttons) einen HTTP- oder eine WebSocket-Message an das Backend zu initiieren, 
 Operationen im selben Fenster auszuführen, etc.
 
+<img src="docs/UML/Benni/BaseController.png">  
+
 ## Architektur: Backend
 
 ## Tasks

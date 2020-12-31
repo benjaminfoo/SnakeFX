@@ -17,7 +17,7 @@ import java.util.Map;
  * The baseApplication is the parent class for the snakefx-client.
  * Its the configuration class for the client and holds references to the stompClient, the UserConfig, etc.
  */
-public abstract class BaseApplication extends Application {
+public abstract class BaseApplication extends BaseController {
 
     public BaseApplication() {
         simpleDateFormat = new SimpleDateFormat("HH:mm:ss");

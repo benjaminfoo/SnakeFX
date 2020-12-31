@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>de.ostfalia.snakecore.controller.BaseController</OriginalElement>
+  <nodes>
+    <node x="0.0" y="336.0">de.ostfalia.snakecore.controller.debug.DebugSceneController</node>
+    <node x="749.0" y="303.0">de.ostfalia.snakecore.controller.homescreen.HomescreenController</node>
+    <node x="1023.0000000000001" y="369.0">de.ostfalia.snakecore.controller.homescreen.NewGameController</node>
+    <node x="267.0" y="446.0">de.ostfalia.snakecore.controller.homescreen.GameHistoryController</node>
+    <node x="540.0" y="358.0">de.ostfalia.snakecore.controller.login.LoginController</node>
+    <node x="488.5" y="0.0">de.ostfalia.snakecore.controller.BaseController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="de.ostfalia.snakecore.controller.debug.DebugSceneController" target="de.ostfalia.snakecore.controller.BaseController">
+      <point x="0.0" y="-159.5" />
+      <point x="123.5" y="273.0" />
+      <point x="517.7" y="273.0" />
+      <point x="-116.80000000000001" y="126.5" />
+    </edge>
+    <edge source="de.ostfalia.snakecore.controller.homescreen.GameHistoryController" target="de.ostfalia.snakecore.controller.BaseController">
+      <point x="0.0" y="-49.5" />
+      <point x="393.5" y="283.0" />
+      <point x="576.1" y="283.0" />
+      <point x="-58.39999999999998" y="126.5" />
+    </edge>
+    <edge source="de.ostfalia.snakecore.controller.login.LoginController" target="de.ostfalia.snakecore.controller.BaseController">
+      <point x="0.0" y="-137.5" />
+      <point x="0.0" y="126.5" />
+    </edge>
+    <edge source="de.ostfalia.snakecore.controller.homescreen.HomescreenController" target="de.ostfalia.snakecore.controller.BaseController">
+      <point x="0.0" y="-192.5" />
+      <point x="876.0" y="283.0" />
+      <point x="692.9" y="283.0" />
+      <point x="58.39999999999998" y="126.5" />
+    </edge>
+    <edge source="de.ostfalia.snakecore.controller.homescreen.NewGameController" target="de.ostfalia.snakecore.controller.BaseController">
+      <point x="0.0" y="-126.5" />
+      <point x="1148.5" y="273.0" />
+      <point x="751.3" y="273.0" />
+      <point x="116.79999999999995" y="126.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7000000000000001" x="737.7142857142857" y="244.4285714285714" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
