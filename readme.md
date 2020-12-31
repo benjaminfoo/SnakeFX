@@ -82,6 +82,21 @@ Operationen im selben Fenster auszuführen, etc. - und da jeder Controller von B
 <img src="docs/UML/Benni/AppSnakeFX2.png">  
 
 ## Architektur: Backend
+Das Backend setzt auf verschiedene Module des Spring-Ökosystems:
+- Spring Data JPA - zum Aufbau und Management des Persitence-Layers
+- Spring Web - zur Bereitstellung von Web-Inhalten und REST-Services 
+- Spring Security - zur Bereitstellung und Verwendung von Sicherheits-Mechanismen
+- Spring Messaging - zur Bereitstellung und Kommunikation mittels WebSockets / STOMP
+
+In Kombination mit Spring Data JPA wird die H2-Datenbank verwendet welche eine in der Programmiersprache Java entwickelte RDBMS darstellt - der Vorteil vom Einsatz von H2 ist unter anderem, dass keine Einrichtung (Installation, Konfiguration, Startup) für einen dedizierten Datenbank-Server durchgeführt werden muss - da der RDBMS beim Applikations automatisch gestartet wird - gerade bei kleineren Datenmengen trägt H2 nur wenige zusätzliche Millisekunden Bootup-Time zur Anwendung bei.  
+
+Im Package **controller** existieren verschiedene Spring-Controller welche Endpunkte für RESTful Webservices/STOMP-Endpoints darstellen.
+
+Im Package **persistance** existieren verschiedene Definitionen von Repository-Interfaces, welche, wie der Name vermuten lässt, für konkrete Implementierungen des Repository-Patterns genutzt werden - Spring Data generiert diese anhand von Interface-Definitionen selbstständig wodurch der Implementierungsaufwand für ORM-bezogene Tätigkeiten stark reduziert werden kann.
+
+Im Package **runner** befinden sich verschiedene Ausprägungen von Spring-ApplicationRunnern welche bspw. genutzt werden um Initialisierungsaufgaben durchzuführen (z.B. Test-Daten in der Datenbank zu initialisieren).
+
+Im Package **ws.server** befinden sich verschiedene Spring-Konfigurationsklassen welche zur Initialisierung von WebSockets und Security-Aspekten genutzt werden.
 
 ## Tasks
 Die folgende Liste enthält Aufgaben (Tasks) welche im Zuge des Moduls realisiert wurden oder noch realisiert werden müssen.
