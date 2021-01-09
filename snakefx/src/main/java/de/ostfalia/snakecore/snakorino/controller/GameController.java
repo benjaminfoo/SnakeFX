@@ -183,10 +183,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         config.columns = runningGame.spielDefinition.getMapWidth();
         config.rows = runningGame.spielDefinition.getMapHeight();
 
+        /*
         // TODO: second player is npc = circling around
         snakeList.get(1).isNPC = true;
 
-        DEBUG_NPC_MOVEMENT_CIRCLING = true;
+        DEBUG_NPC_MOVEMENT_CIRCLING = true;*/
 
 
         // generate the initial food position
@@ -733,7 +734,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     Random ran = new Random();
                     int x = 1 + ran.nextInt(10);
 
-                    if (x > 3) {
+                    if (x > 10) {
                         // add an un-initialized body-part to the snake
                         snake.body.add(new Vector2(-1, -1));
                         snake.isPredator = false;
@@ -745,9 +746,10 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
 
             for (Snake otherSnake : snakeList) {
+                if (otherSnake != snake){
                 for (Vector2 part : otherSnake.body) {
-                    if (snake.head == part) {
-                        if (snake.isPredator == false) {
+                    if (snake.head.equals(part)) {
+                        if (!snake.isPredator) {
                             checkGameOver();
                         } else {
                             int totalLenght = otherSnake.body.size();
@@ -762,6 +764,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                                 Vector2 newPart = new Vector2(-1, -1);
                                 snake.body.add(newPart);
                             }
+                        }
                         }
                     }
                 }
