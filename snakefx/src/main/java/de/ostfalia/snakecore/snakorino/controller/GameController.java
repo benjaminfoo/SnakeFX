@@ -743,6 +743,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                         //EVTL FARBE VON SCHLANGE ÄNDERN UND SOUNDEFFEKT EINBAUEN. Geschmackssache. Oder man erkennt nur anhand der nicht geänderten länge, wenn man predator ist, dass es schwieriger wird
                     }
 
+                    // play pickup sound when player collects some food.
                     application.getSoundManager().playPickup();
 
                 }
