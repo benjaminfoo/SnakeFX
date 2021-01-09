@@ -14,9 +14,13 @@ import javafx.stage.Stage;
 
 import java.util.Arrays;
 
+import static javafx.application.Application.launch;
+
 /**
  * @author Benjamin Wulfert
  * The entry point of the javafx-application.
+ *
+ * Diese Klasse ausführen um den Client zu starten - die Zugangsdaten sind:
  */
 public class AppSnakeFX extends BaseApplication {
 

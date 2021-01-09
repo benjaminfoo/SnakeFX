@@ -14,6 +14,9 @@ import java.util.Objects;
  */
 public class Snake {
 
+    // for letting a snake bite of another snakes tail
+    public boolean isPredator;
+
     // The head of the snake <=> the leading position
     public Vector2 head;
 
@@ -53,6 +56,8 @@ public class Snake {
         head.y = spawn.y;
 
         this.color = color;
+
+        isPredator = false;
     }
 
 
@@ -72,6 +77,8 @@ public class Snake {
         head.y = spawn.y;
 
         this.color = color;
+
+        isPredator = false;
     }
 
     @Override

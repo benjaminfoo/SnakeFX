@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Patterns_and_Frameworks.iml" filepath="$PROJECT_DIR$/.idea/Patterns_and_Frameworks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Patterns_and_Frameworks-master.iml" filepath="$PROJECT_DIR$/.idea/Patterns_and_Frameworks-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/SnakeServer/SnakeServer.iml" filepath="$PROJECT_DIR$/SnakeServer/SnakeServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/SnakeTest/SnakeTest.iml" filepath="$PROJECT_DIR$/SnakeTest/SnakeTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/SnakeCore/snakecore.iml" filepath="$PROJECT_DIR$/SnakeCore/snakecore.iml" />

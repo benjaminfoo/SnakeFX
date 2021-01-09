@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="issues">
+    <option name="index">
+      <map>
+        <entry key="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/ApplicationConstants.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SnakeCore/src/main/java/de/ostfalia/snakecore/model/game/Snake.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SnakeServer/src/main/java/de/ostfalia/snakecore/SnakeServer/SnakeServerApplication.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SnakeTest/src/main/java/de/ostfalia/teamx/EnvironmentTest_ServerTwoClients_Playing.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/AppSnakeFX.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/app/BaseApplication.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/snakorino/controller/GameController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/view/RunningGameCell.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

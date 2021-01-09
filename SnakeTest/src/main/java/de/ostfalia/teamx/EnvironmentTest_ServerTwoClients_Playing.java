@@ -22,6 +22,8 @@ import org.springframework.context.ConfigurableApplicationContext;
  * This class initializes a server-instance and two client instances.
  * The first client automatically creates a new game, while the other one connects to it via the lobby ui.
  *
+ * // Wenn du dich nicht jedes mal mit einem Client am Server anmelden (und die Logindaten eingeben willst) kannst du einfach das hier starten, der macht alles automatisch bis zum Spielstart:
+ *
  */
 public class EnvironmentTest_ServerTwoClients_Playing extends Application {
 
@@ -29,7 +31,7 @@ public class EnvironmentTest_ServerTwoClients_Playing extends Application {
         launch(args);
     }
 
-    @Override
+    @Override // <3
     public void start(Stage primaryStage) throws Exception {
 
         // Start the application-server
