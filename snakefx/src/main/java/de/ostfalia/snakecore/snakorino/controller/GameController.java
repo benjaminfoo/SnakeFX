@@ -736,6 +736,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     if (x > 3) {
                         // add an un-initialized body-part to the snake
                         snake.body.add(new Vector2(-1, -1));
+                        snake.isPredator = false;
                     } else {
                         snake.isPredator = true;
                     }
