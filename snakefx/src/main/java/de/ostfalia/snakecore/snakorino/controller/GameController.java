@@ -740,6 +740,9 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     } else {
                         snake.isPredator = true;
                     }
+
+                    application.getSoundManager().playPickup();
+
                 }
             }
 

@@ -76,8 +76,8 @@ public class LoginController extends BaseController {
 
         btnRegister.disableProperty().bind(btnLogin.disableProperty());
 
-        tfServerURL.setText(ProjectEndpoints.BASE_URL);
-        ProjectEndpoints.BASE_URL = tfServerURL.getText().trim();
+        tfServerURL.setText(ProjectEndpoints.URL_BASE);
+        ProjectEndpoints.URL_BASE = tfServerURL.getText().trim();
         ProjectEndpoints.resetURLs();
 
     }

@@ -7,7 +7,7 @@ package de.ostfalia.snakecore;
 public class ProjectEndpoints {
 
     // The base url of the backend
-    public static String BASE_URL = "http://localhost:8080/";
+    public static String URL_BASE = "http://localhost:8080/";
 
     // The path to the api
     public static final String API_PATH = "api/";
@@ -20,32 +20,32 @@ public class ProjectEndpoints {
     public static final String API_ENDPOINT_HISTORIE = "historie/";
 
     // http://localhost:8080/api/login/
-    public static String URL_API_LOGIN = BASE_URL + API_PATH + API_ENDPOINT_LOGIN;
+    public static String URL_API_LOGIN = URL_BASE + API_PATH + API_ENDPOINT_LOGIN;
 
     // http://localhost:8080/api/register/
-    public static String URL_API_REGISTER = BASE_URL + API_PATH + API_ENDPOINT_REGISTER;
+    public static String URL_API_REGISTER = URL_BASE + API_PATH + API_ENDPOINT_REGISTER;
 
     // http://localhost:8080/api/spieler/
-    public static String URL_API_SPIELER = BASE_URL + API_PATH + API_ENDPOINT_SPIELER;
+    public static String URL_API_SPIELER = URL_BASE + API_PATH + API_ENDPOINT_SPIELER;
 
     // http://localhost:8080/api/lobby/
-    public static String URL_API_LOBBY = BASE_URL + API_PATH + API_ENDPOINT_LOBBY;
+    public static String URL_API_LOBBY = URL_BASE + API_PATH + API_ENDPOINT_LOBBY;
 
     // http://localhost:8080/api/historie/
-    public static String URL_API_HISTORIE = BASE_URL + API_PATH + API_ENDPOINT_HISTORIE;
+    public static String URL_API_HISTORIE = URL_BASE + API_PATH + API_ENDPOINT_HISTORIE;
 
     public static void resetURLs() {
         // http://localhost:8080/api/login/
-        URL_API_LOGIN = BASE_URL + API_PATH + API_ENDPOINT_LOGIN;
+        URL_API_LOGIN = URL_BASE + API_PATH + API_ENDPOINT_LOGIN;
 
         // http://localhost:8080/api/register/
-        URL_API_REGISTER = BASE_URL + API_PATH + API_ENDPOINT_REGISTER;
+        URL_API_REGISTER = URL_BASE + API_PATH + API_ENDPOINT_REGISTER;
 
         // http://localhost:8080/api/spieler/
-        URL_API_SPIELER = BASE_URL + API_PATH + API_ENDPOINT_SPIELER;
+        URL_API_SPIELER = URL_BASE + API_PATH + API_ENDPOINT_SPIELER;
 
         // http://localhost:8080/api/lobby/
-        URL_API_LOBBY = BASE_URL + API_PATH + API_ENDPOINT_LOBBY;
+        URL_API_LOBBY = URL_BASE + API_PATH + API_ENDPOINT_LOBBY;
     }
 
     // =============================
@@ -62,7 +62,7 @@ public class ProjectEndpoints {
     public static final String STOMP_MESSAGE_MAPPING_CHAT = "/chat";
     public static final String STOMP_DESTINATION_CHAT = STOMP_APP_PREFIX + STOMP_MESSAGE_MAPPING_CHAT;
 
-    public static String URL_STOMP_BASE = BASE_URL.replace("http", "ws") + STOMP_MESSAGE_MAPPING_CHAT;
+    public static String URL_STOMP_BASE = URL_BASE.replace("http", "ws") + STOMP_MESSAGE_MAPPING_CHAT;
 
 
 
