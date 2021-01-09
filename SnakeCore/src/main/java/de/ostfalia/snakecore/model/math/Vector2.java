@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * @author Benjamin Wulfert
+ *
  * A two-component vector used to realize position calculation and movement of the snakes, food and powerups.
  */
 public class Vector2 {

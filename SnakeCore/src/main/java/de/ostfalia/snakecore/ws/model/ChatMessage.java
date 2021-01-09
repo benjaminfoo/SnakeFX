@@ -2,6 +2,13 @@ package de.ostfalia.snakecore.ws.model;
 
 import java.util.Date;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * Die Klasse ChatMessage ist eine Modell-Klasse welche Chat-Nachrichten repräsentiert,
+ * dabei werden die Attribute eines Absenders,
+ * den zu versendenen Text sowie dem Zeitpunkt beim Versand einer Nachricht transportiert.
+ */
 public class ChatMessage {
 
     private String from;

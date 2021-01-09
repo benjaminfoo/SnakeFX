@@ -16,6 +16,11 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * Der StompClient ist eine Software-Komponente welche die Kommunikation mittels Backend via WebSockets / STOMP-Protokoll ermöglicht.
+ */
 public class StompClient extends StompSessionHandlerAdapter implements StompMessageListener {
 
     // ws://localhost:8080/snakeserver/

@@ -3,6 +3,8 @@ package de.ostfalia.snakecore.model;
 import javax.persistence.*;
 
 /**
+ * @author Benjamin Wulfert
+ *
  * Die SpielDefinition ist das Modell welches die Randbedingungen eines Spiels festlegt.
  * - Es handelt sich dabei um kein aktives Spiel
  * - Keinerlei Spieler haben Kontakt zu der Spieldefinition

@@ -1,6 +1,10 @@
 package de.ostfalia.snakecore.model.game;
 
  // TODO: this needs to get connected with a SpielDefinition, i guess
+/**
+ * @author Benjamin Wulfert
+ * The Config class is a model which contains information for running games on the client side. (like resolution, etc.)
+ */
 public class Config {
 
     // Board configuration

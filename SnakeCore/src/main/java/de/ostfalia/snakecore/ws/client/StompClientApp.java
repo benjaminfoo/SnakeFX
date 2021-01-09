@@ -6,6 +6,7 @@ import java.util.Scanner;
  * @author Benjamin Wulfert
  *
  * A simple text based stomp-client to exchange stomp messages.
+ * This class is used for testing / debugging the communication between clients and the backend.
  */
 public class StompClientApp {
 

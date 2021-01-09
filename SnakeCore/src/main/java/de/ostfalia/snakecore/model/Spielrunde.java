@@ -2,6 +2,11 @@ package de.ostfalia.snakecore.model;
 
 import java.util.List;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * Eine Spielrunde
+ */
 public class Spielrunde {
 
     public String name;

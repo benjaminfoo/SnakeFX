@@ -7,6 +7,7 @@ import java.util.Objects;
 
 /**
  * @author Benjamin Wulfert
+ *
  * Model class for a food.
  * Contains a image which gets drawn on the screen and a position in order to determine its position.
  */

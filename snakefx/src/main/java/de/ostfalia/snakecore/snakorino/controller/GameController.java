@@ -6,10 +6,10 @@ import de.ostfalia.snakecore.controller.Scenes;
 import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.game.Config;
+import de.ostfalia.snakecore.model.game.Food;
 import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.game.SnakeColor;
 import de.ostfalia.snakecore.model.math.Vector2;
-import de.ostfalia.snakecore.model.game.Food;
 import de.ostfalia.snakecore.util.RNG;
 import de.ostfalia.snakecore.ws.client.StompMessageListener;
 import de.ostfalia.snakecore.ws.model.*;
@@ -766,7 +766,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 }
             }
         }
-    }
+
 
         if (isFrameRemoval){
 
@@ -816,7 +816,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      */
     private void drawScore(GraphicsContext gc) {
         gc.setFill(Color.WHITE);
-        gc.setFont(new Font("", 35)); // Find funny font
+        gc.setFont(new Font("", 35));
         gc.fillText("Score: " + score, 10, 35);
     }
 

@@ -3,6 +3,12 @@ package de.ostfalia.snakecore.model;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * @author Benjami Wulfert
+ *
+ * Modell-Klasse für einen Spieler - ein Spieler wird über seinen Namen und sein Passwort definiert.
+ *
+ */
 @Entity
 public class Spieler {
 

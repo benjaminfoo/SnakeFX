@@ -8,8 +8,9 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * @author Benjami Wulfert
- * Ein Spielstand enthält eine Map von Spielern inklusive ihrer Highscores
+ * @author Benjamin Wulfert
+ * Ein Spielstand enthält eine Map von Spielern inklusive ihrer Highscores.
+ * Ein Spielstand wird bei einem Spielende (Erfüllung einer Spielregel) erzeugt und in der Datenbank persistiert.
  */
 @Entity
 public class Spielstand {

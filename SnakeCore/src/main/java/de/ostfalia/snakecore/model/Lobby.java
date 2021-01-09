@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author Benjami Wulfert
+ * @author Benjamin Wulfert
+ *
  * Die Lobby enthält eine Liste von Spielrunden.
  */
 public class Lobby {

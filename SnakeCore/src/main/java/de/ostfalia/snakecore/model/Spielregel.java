@@ -5,6 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * Eine Spielregel stellt eine Aussage dar welche erfüllt werden muss um ein Spiel zu beenden (z.B. Erreichung einer bestimmten Punktzahl).
+ */
 @Entity
 public class Spielregel {
 

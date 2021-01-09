@@ -10,6 +10,7 @@ import java.util.Objects;
  * @author Benjamin Wulfert
  * <p>
  * Ein SpielstandErgebnis enthält einen Spieler und dessen erreichten Score beim Ende einer Spielrunde.
+ * Ein SpielstandErgebnis ist Teil eines Spielstands.
  */
 @Entity
 public class SpielstandErgebnis {

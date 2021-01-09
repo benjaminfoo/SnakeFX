@@ -3,6 +3,13 @@ package de.ostfalia.snakecore.model;
 import java.util.List;
 import java.util.Objects;
 
+
+/**
+ * @author Benjamin Wulfert
+ *
+ * RunningGame ist eine Modell-Klasse welche eine Spiel-Instanz innerhalb der Lobby darstellt.
+ * Dieses Modell dient der Spielerverwaltung und der Spiel-Instanz-Erzeugung - nicht aber dem ausgeführten Spiel auf den Clients.
+ */
 public class RunningGame {
 
     public String stompPath;
