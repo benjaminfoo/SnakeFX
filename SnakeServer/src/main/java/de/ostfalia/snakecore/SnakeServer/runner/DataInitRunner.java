@@ -13,6 +13,7 @@ import static de.ostfalia.snakecore.ApplicationConstants.BOT_USER_NAME;
 
 /**
  * @author Benjamin Wulfert
+ *
  * The DataInitRunner gets called when the application gets started.
  * The run() method gets called when the DataInitRunner has been started
  *

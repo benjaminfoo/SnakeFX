@@ -12,6 +12,11 @@ import java.util.Date;
 
 import static de.ostfalia.snakecore.ApplicationConstants.BOT_USER_NAME;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * The ChatController handles the interaction between the connected client-frontends and this backend.
+ */
 @Controller
 public class ChatController {
 

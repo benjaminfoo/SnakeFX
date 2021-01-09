@@ -11,6 +11,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * The SpielstandData is a pojo class which contains references to the inflated layout for a listCell (SpielstandData).
+ * This allows the data setting for a cell based on listItem entries.
+ */
 public class SpielstandData {
 
     @FXML

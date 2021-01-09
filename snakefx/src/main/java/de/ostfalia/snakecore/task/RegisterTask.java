@@ -7,6 +7,14 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import de.ostfalia.snakecore.ProjectEndpoints;
 import de.ostfalia.snakecore.model.Spieler;
 
+
+/**
+ * @author Benjamin Wulfert
+ *
+ * The RegisterTask is used in order to realize a mechanism for the registration of the player credentials.
+ * The task sends a HTTP-POST request to the backend which contains JSON-formatted information like the username and the userpassword.
+ * If the information are valid, the backend responds with a valid message.
+ */
 public class RegisterTask {
 
     public void register(String username, String password){

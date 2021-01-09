@@ -8,6 +8,12 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * The RunningGameData is a pojo class which contains references to the inflated layout for a listCell (RunningGameCell).
+ * This allows the data setting for a cell based on listItem entries.
+ */
 public class RunningGameData {
 
     @FXML

@@ -19,6 +19,11 @@ import org.springframework.stereotype.Controller;
 
 import java.util.*;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * The StompServiceController handles all communication between connected clients and this backend via WebSockets / STOMP-Protocoll.
+ */
 @Controller
 public class StompServiceController {
 

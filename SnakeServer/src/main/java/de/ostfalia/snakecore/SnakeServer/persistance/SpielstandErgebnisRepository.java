@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author Benjamin Wulfert
+ *
+ * CRUD-Repository for ORM / RDBMS related operations for the type: {@link SpielstandErgebnis}
  */
 @Repository
 public interface SpielstandErgebnisRepository extends JpaRepository<SpielstandErgebnis, Long> {

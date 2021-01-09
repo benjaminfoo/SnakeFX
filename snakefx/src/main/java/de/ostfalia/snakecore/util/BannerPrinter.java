@@ -2,7 +2,8 @@ package de.ostfalia.snakecore.util;
 
 /**
  * @author Benjamin Wulfert
- * Reads the file at filepath and prints its content to stdout
+ * Prints a similiar banner to the console like spring boot in order to notify of an application start.
+ * Useful when multiple clients are started within the same environment with lots of logging noise.
  */
 public class BannerPrinter {
 
