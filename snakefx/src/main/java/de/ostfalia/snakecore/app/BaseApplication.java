@@ -1,5 +1,6 @@
 package de.ostfalia.snakecore.app;
 
+import de.ostfalia.snakecore.assets.SoundManager;
 import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.UserConfig;
@@ -22,6 +23,7 @@ public abstract class BaseApplication extends Application {
     public BaseApplication() {
         simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
         stompClient = new StompClient();
+        soundManager.getInstance(); // initialize the soundmanagers assets by making a first call to the instance
     }
 
     // the stage which gets reused through-out the application's lifecycle
@@ -48,9 +50,19 @@ public abstract class BaseApplication extends Application {
     // a simple date formatter in order to display formated dates or time value
     private SimpleDateFormat simpleDateFormat;
 
+    // the manager for handling the playback of sounds
+    private SoundManager soundManager;
+
+
+    //
+    // GETTERS AND SETTERS
+    //
+
     // Local user management
     public UserConfig getUserConfig(){ return userConfig; }
     public void setUserConfig(UserConfig userConfig) { this.userConfig = userConfig; }
+
+    public SoundManager getSoundManager(){ return soundManager.getInstance(); }
 
     public BaseApplication(Spieler spieler) {
         this.spieler = spieler;

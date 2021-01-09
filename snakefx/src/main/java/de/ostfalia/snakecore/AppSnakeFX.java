@@ -82,6 +82,9 @@ public class AppSnakeFX extends BaseApplication {
         new BannerPrinter().printBanner();
 
         ((LoginController) baseController).postInitialize();
+
+        String musicFile = "StayTheNight.mp3";     // For example
+
     }
 
 
