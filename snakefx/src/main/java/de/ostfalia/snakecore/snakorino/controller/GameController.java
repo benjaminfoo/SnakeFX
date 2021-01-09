@@ -747,7 +747,9 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
 
             for (Snake otherSnake : snakeList) {
+                //check that predator snake doesn't eat itself
                 if (otherSnake != snake){
+                    
                 for (Vector2 part : otherSnake.body) {
                     if (snake.head.equals(part)) {
                         if (!snake.isPredator) {
