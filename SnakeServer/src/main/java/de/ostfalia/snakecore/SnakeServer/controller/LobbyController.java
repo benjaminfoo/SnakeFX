@@ -7,6 +7,12 @@ import org.springframework.stereotype.Controller;
 import java.util.LinkedList;
 import java.util.List;
 
+
+/**
+ * @author Benjamin Wulfert
+ *
+ * The LobbyController handles the game-management aspects of the backend and the connected clients.
+ */
 @Controller
 public class LobbyController {
 

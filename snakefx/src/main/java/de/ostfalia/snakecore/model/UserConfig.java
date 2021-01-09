@@ -1,5 +1,11 @@
 package de.ostfalia.snakecore.model;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * Die Klasse UserConfig stellt ein Modell dar welches ähnlich zum Player Benutzer-Informationen bereithält.
+ * Die UserConfig wird ausschließlich im JavaFX-Client verwendet und entält keine Spieler-Modell-Instanzen.
+ */
 public class UserConfig {
 
     private String userName;

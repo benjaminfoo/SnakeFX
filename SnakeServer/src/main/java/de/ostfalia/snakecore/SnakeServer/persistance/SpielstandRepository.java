@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author Benjamin Wulfert
- * The Player DAO (Data Access Object) returns every object within the RDBMS
+ *
+ * CRUD-Repository for ORM / RDBMS related operations for the type: {@link Spielstand}
  */
 @Repository
 public interface SpielstandRepository extends JpaRepository<Spielstand, Long> {

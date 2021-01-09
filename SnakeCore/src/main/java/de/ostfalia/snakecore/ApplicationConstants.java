@@ -1,5 +1,11 @@
 package de.ostfalia.snakecore;
 
+/**
+ * @author Benjamin Wulfert
+ *
+ * Constants which are used throughout the project.
+ *
+ */
 public class ApplicationConstants {
 
     public static final String TITLE = "SnakeFX";

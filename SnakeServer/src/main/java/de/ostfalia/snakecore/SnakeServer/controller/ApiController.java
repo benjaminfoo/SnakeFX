@@ -19,6 +19,7 @@ import static de.ostfalia.snakecore.ProjectEndpoints.*;
 
 /**
  * @author Benjamin Wulfert
+ *
  * The ApiController handles the interaction between the web and the database, and other various mechanics from the system.
  */
 @RestController
