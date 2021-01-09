@@ -734,12 +734,13 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     Random ran = new Random();
                     int x = 1 + ran.nextInt(10);
 
-                    if (x > 10) {
+                    if (x < 8) {
                         // add an un-initialized body-part to the snake
                         snake.body.add(new Vector2(-1, -1));
                         snake.isPredator = false;
                     } else {
                         snake.isPredator = true;
+                        //EVTL FARBE VON SCHLANGE ÄNDERN UND SOUNDEFFEKT EINBAUEN. Geschmackssache. Oder man erkennt nur anhand der nicht geänderten länge, wenn man predator ist, dass es schwieriger wird
                     }
                 }
             }
