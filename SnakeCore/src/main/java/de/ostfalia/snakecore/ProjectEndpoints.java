@@ -7,7 +7,8 @@ package de.ostfalia.snakecore;
 public class ProjectEndpoints {
 
     // The base url of the backend
-    public static String URL_BASE = "http://localhost:8080/";
+    // public static String URL_BASE = "http://localhost:8080/";
+    public static String URL_BASE = "http://192.168.178.32:8080/";
 
     // The path to the api
     public static final String API_PATH = "api/";
@@ -34,6 +35,9 @@ public class ProjectEndpoints {
     // http://localhost:8080/api/historie/
     public static String URL_API_HISTORIE = URL_BASE + API_PATH + API_ENDPOINT_HISTORIE;
 
+    /**
+     * The method gets called before logging in - so any change to the paths will be reflected
+     */
     public static void resetURLs() {
         // http://localhost:8080/api/login/
         URL_API_LOGIN = URL_BASE + API_PATH + API_ENDPOINT_LOGIN;
@@ -46,6 +50,9 @@ public class ProjectEndpoints {
 
         // http://localhost:8080/api/lobby/
         URL_API_LOBBY = URL_BASE + API_PATH + API_ENDPOINT_LOBBY;
+
+        // this replaces the hardcoded path (localhost) and the protocol
+        URL_STOMP_BASE = URL_BASE.replace("http", "ws") + "/snakeserver";
     }
 
     // =============================
@@ -53,6 +60,7 @@ public class ProjectEndpoints {
     // =============================
 
     // The STOMP server base path
+    public static String URL_STOMP_BASE = "ws://localhost:8080/snakeserver";
 
     // ws://localhost:8080/stomp/
     public static final String STOMP_BROKER_TOPIC = "/topic";
@@ -62,7 +70,8 @@ public class ProjectEndpoints {
     public static final String STOMP_MESSAGE_MAPPING_CHAT = "/chat";
     public static final String STOMP_DESTINATION_CHAT = STOMP_APP_PREFIX + STOMP_MESSAGE_MAPPING_CHAT;
 
-    public static String URL_STOMP_BASE = URL_BASE.replace("http", "ws") + STOMP_MESSAGE_MAPPING_CHAT;
+    // the url which points to the stomp path related to chat messages
+    // public static String URL_STOMP_BASE = URL_BASE.replace("http", "ws") + STOMP_MESSAGE_MAPPING_CHAT;
 
 
 

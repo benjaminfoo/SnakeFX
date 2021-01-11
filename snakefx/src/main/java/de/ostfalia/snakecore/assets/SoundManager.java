@@ -48,6 +48,10 @@ public class SoundManager {
     private void initSound(String fileName){
         final URL resource = getClass().getClassLoader().getResource("sounds/" + fileName);
         final AudioClip clip = new AudioClip(resource.toString());
+
+        // play the sound once so it gets loaded into media query of javafx
+        clip.play(0);
+
         audioClipCache.put(fileName, clip);
     }
 

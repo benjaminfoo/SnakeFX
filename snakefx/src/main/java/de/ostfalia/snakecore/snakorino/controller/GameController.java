@@ -318,8 +318,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // check if something happened
         checkEatFood();
         checkGameOver();
-
-
     }
 
     /**
@@ -548,6 +546,10 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      * @param gc
      */
     private void drawBackground(GraphicsContext gc) {
+
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0,0,gameCanvas.getWidth(),gameCanvas.getHeight());
+
         // for each row ...
         for (int i = 0; i < config.rows; i++) {
             // for each column

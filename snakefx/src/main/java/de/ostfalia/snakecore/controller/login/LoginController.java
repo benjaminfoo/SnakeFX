@@ -137,7 +137,8 @@ public class LoginController extends BaseController {
             application.setUserConfig(new UserConfig(value.name, value.pass, jwtToken));
 
             // connect the stomp client to the stomp endpoint
-            application.getStompClient().connect("ws://localhost:8080/snakeserver", () -> {
+            // application.getStompClient().connect("ws://localhost:8080/snakeserver", () -> {
+            application.getStompClient().connect(ProjectEndpoints.URL_STOMP_BASE, () -> {
 
                 // register the player on the lobby
                 application.getStompClient().sendNewPlayerMessage(new PlayerMessage(

@@ -37,7 +37,7 @@ public class Snake {
     public int currentInputButton = 0;
 
     // the initial length of the snake
-    public int initialLength = 5;
+    public int initialLength = 2;
 
     public Snake() {
     }
