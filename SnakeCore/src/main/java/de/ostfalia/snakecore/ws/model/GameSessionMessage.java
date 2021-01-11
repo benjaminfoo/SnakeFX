@@ -7,6 +7,7 @@ import de.ostfalia.snakecore.model.game.Food;
 import de.ostfalia.snakecore.model.game.Snake;
 import javafx.scene.input.KeyCode;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -47,7 +48,7 @@ public class GameSessionMessage {
     public Set<Food> foods;
     public int amountOfFoodDrawables;
 
-    public List<Snake> snakeList;
+    public Collection<Snake> snakeList;
     public Config config;
 
     public Snake spielerSnake;
@@ -69,7 +70,7 @@ public class GameSessionMessage {
     /**
      * This constructor is used to generate new food / powerup positions
      */
-    public GameSessionMessage(GameState gameState, String nameOfTheGame, List<Snake> snakeList, Config config, boolean foodConsumed) {
+    public GameSessionMessage(GameState gameState, String nameOfTheGame, Collection<Snake> snakeList, Config config, boolean foodConsumed) {
         this.gameState = gameState;
         this.gameId = nameOfTheGame;
         this.snakeList = snakeList;
@@ -144,7 +145,7 @@ public class GameSessionMessage {
         this.foods = foods;
     }
 
-    public List<Snake> getSnakeList() {
+    public Collection<Snake> getSnakeList() {
         return snakeList;
     }
 

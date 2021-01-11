@@ -1,4 +1,4 @@
-package de.ostfalia.snakecore.snakorino.controller;
+package de.ostfalia.snakecore.util;
 
 public class GameResources {
 

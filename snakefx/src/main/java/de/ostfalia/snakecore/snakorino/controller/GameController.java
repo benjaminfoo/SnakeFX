@@ -9,6 +9,7 @@ import de.ostfalia.snakecore.model.game.Food;
 import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.game.SnakeColor;
 import de.ostfalia.snakecore.model.math.Vector2;
+import de.ostfalia.snakecore.util.GameResources;
 import de.ostfalia.snakecore.ws.client.StompMessageListener;
 import de.ostfalia.snakecore.ws.model.*;
 import javafx.animation.Animation;
@@ -48,7 +49,16 @@ import java.util.Set;
  */
 public class GameController extends BaseController implements EventHandler<KeyEvent>, StompMessageListener {
 
-    // the configuration in order to setup a game
+    // View related
+    @FXML
+    private Canvas gameCanvas;
+
+    @FXML
+    private ListView<Spieler> playerList;
+
+    @FXML
+    private Label gameDetails;
+    // View related
 
     // CHECK Config.java
     private Config config = new Config();
@@ -76,14 +86,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     // the graphicsContext which is used to draw to the screen manually
     private GraphicsContext gc;
 
-    @FXML
-    private Canvas gameCanvas;
-
-    @FXML
-    private ListView<Spieler> playerList;
-
-    @FXML
-    private Label gameDetails;
 
     // the current instance of the game
     private RunningGame runningGame;
@@ -92,12 +94,22 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     private Font playerNameFont = Font.font("Arial", 10);
     private Font gameOverFont = new Font("Digital-7", 70);
 
+    // a map which contains keycode to direction-vector relations
+    private Map<KeyCode, Vector2> inputDirectionMap = new HashMap<>();
+
 
     @Override
     public void postInitialize() {
         super.postInitialize();
         // before the introduction of the multiplayer mechanism the init. happened here
         // now it takes place in GameController.launchGame()
+
+        // initialize a map which maps a keycode to an direction-vector
+        inputDirectionMap.put(KeyCode.SPACE, Vector2.ZERO);
+        inputDirectionMap.put(KeyCode.UP, Vector2.UP);
+        inputDirectionMap.put(KeyCode.DOWN, Vector2.DOWN);
+        inputDirectionMap.put(KeyCode.RIGHT, Vector2.RIGHT);
+        inputDirectionMap.put(KeyCode.LEFT, Vector2.LEFT);
     }
 
     /**
@@ -222,15 +234,19 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // update the body-element positions for each snake
         for (Snake snake : playerSnakeMap.values()) {
 
-            // calculate the current position for each snake
-            for (int i = snake.body.size() - 1; i >= 1; i--) {
-                snake.body.get(i).x = snake.body.get(i - 1).x;
-                snake.body.get(i).y = snake.body.get(i - 1).y;
-            }
+            if (snake.currentDirection == Vector2.ZERO) {
+                // if the direction of a player is zero (= not moving) dont do anything
+            } else {
+                // calculate the current position for each snake
+                for (int i = snake.body.size() - 1; i >= 1; i--) {
+                    snake.body.get(i).x = snake.body.get(i - 1).x;
+                    snake.body.get(i).y = snake.body.get(i - 1).y;
+                }
 
-            // add the current direction vector to the head of the snake,
-            // make every element after the head follow its movements
-            snake.head = snake.head.add(snake.currentDirection);
+                // add the current direction vector to the head of the snake,
+                // make every element after the head follow its movements
+                snake.head = snake.head.add(snake.currentDirection);
+            }
 
         }
 
@@ -286,13 +302,10 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 // sync. the movement of the player
                 if (msg.getInput() != null) {
 
-                    Vector2 newDirection = Vector2.ZERO;
-                    if (msg.getInput() == KeyCode.UP) newDirection = Vector2.UP;
-                    if (msg.getInput() == KeyCode.DOWN) newDirection = Vector2.DOWN;
-                    if (msg.getInput() == KeyCode.RIGHT) newDirection = Vector2.RIGHT;
-                    if (msg.getInput() == KeyCode.LEFT) newDirection = Vector2.LEFT;
+                    // get the next direction by the input of the player
+                    Vector2 newDirection = inputDirectionMap.get(msg.getInput());
 
-                    // update the players snake, remotely
+                    // update the players snake from the remote site
                     Snake snake = playerSnakeMap.get(msg.getPlayer());
                     for (int i = 0; i < msg.spielerSnake.body.size(); i++) {
                         snake.body.get(i).set(msg.spielerSnake.body.get(i));
@@ -320,6 +333,18 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         // get the current input keycode of the last input
         KeyCode playerInput = event.getCode();
+
+        Snake currentSnake = playerSnakeMap.get(application.getSpieler());
+        Vector2 dir = currentSnake.currentDirection;
+
+        // prevent a player from moving into its own snake
+        // if a player moves right - changing his head direction to left would result in game over
+        // if a player moves up    - changing his head direction to down would result in game over
+        // ..
+        if (dir == Vector2.UP && playerInput == KeyCode.DOWN) return;
+        if (dir == Vector2.DOWN && playerInput == KeyCode.UP) return;
+        if (dir == Vector2.LEFT && playerInput == KeyCode.RIGHT) return;
+        if (dir == Vector2.RIGHT && playerInput == KeyCode.LEFT) return;
 
         // send the current input of the client to the backend
         GameSessionMessage gameInputMessage = new GameSessionMessage(
@@ -398,6 +423,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         }
 
         /*
+
         // manage removal of food
         // if a food has been marked for removal
         if (isFrameRemoval) {
@@ -438,6 +464,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             score += 5;
 
         }
+
         */
 
         //check that predator snake doesn't eat itself
