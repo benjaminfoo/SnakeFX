@@ -1,155 +1,291 @@
 
-        /*
+    /*
 
-        // setup everything related to the debug-mode
-        if(AppSnakeFX.inDebugMode){
+    // setup everything related to the debug-mode
+    if(AppSnakeFX.inDebugMode){
 
-            // we gonna be gentle to the cpu
-            if(DEBUG_LOWCORE){
-                numPlayers = 3;
-            }
-
-            // we gonna stress test the cpu
-            if(DEBUG_HARDCORE){
-                numPlayers = 20;
-            }
-
-            // generate the players related to low or hardcore
-            if(DEBUG_LOWCORE || DEBUG_HARDCORE){
-                for (int i = 0; i < numPlayers; i++) {
-                    int newY = i % 4 * 3 + 3;
-                    int newX = i / 4 * 5 + 3;
-                    snakeList.add (
-                        new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
-                    );
-                }
-            }
-
-            // we want to play alone
-            if(DEBUG_SINGLEPLAYER){
-                snakeList.add ( new Snake ( new Vector2(5,5), Color.PURPLE));
-            }
-
-            // every snake is controlled by random keystrokes or some pattern
-            if(DEBUG_EVERYBODY_NPC){
-                for (Snake snake : snakeList) {
-                    snake.isNPC = true;
-                }
-            }
-
-            */
-
-        /*
-        // Normal mode
-        } else {
-
+        // we gonna be gentle to the cpu
+        if(DEBUG_LOWCORE){
+            numPlayers = 3;
         }
-        */
 
-        /*
-        // setup everything related to the debug-mode
-        if(AppSnakeFX.inDebugMode){
+        // we gonna stress test the cpu
+        if(DEBUG_HARDCORE){
+            numPlayers = 20;
+        }
 
-            // we gonna be gentle to the cpu
-            if(DEBUG_LOWCORE){
-                numPlayers = 3;
-            }
-
-            // we gonna stress test the cpu
-            if(DEBUG_HARDCORE){
-                numPlayers = 20;
-            }
-
-            // generate the players related to low or hardcore
-            if(DEBUG_LOWCORE || DEBUG_HARDCORE){
-                for (int i = 0; i < numPlayers; i++) {
-                    int newY = i % 4 * 3 + 3;
-                    int newX = i / 4 * 5 + 3;
-                    snakeList.add (
-                            new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
-                    );
-                }
-            }
-
-            // we want to play alone
-            if(DEBUG_SINGLEPLAYER){
-                snakeList.add ( new Snake ( new Vector2(5,5), Color.PURPLE));
-            }
-
-            // every snake is controlled by random keystrokes or some pattern
-            if(DEBUG_EVERYBODY_NPC){
-                for (Snake snake : snakeList) {
-                    snake.isNPC = true;
-                }
-            }
-
-            // Normal mode
-        } else {
-            // regular game-play
-            // TODO: these values need to get retrieved from the backend
-            numPlayers = 1;
-            Color[] playerColors = {Color.PURPLE, Color.BLUE, Color.RED, Color.GREEN};
+        // generate the players related to low or hardcore
+        if(DEBUG_LOWCORE || DEBUG_HARDCORE){
             for (int i = 0; i < numPlayers; i++) {
-                snakeList.add ( new Snake ( new Vector2(0, 5 * i), playerColors[i]));
-            }
-        }
-        */
-
-
-
-
-    private void drawIndices(GraphicsContext gc) {
-        gc.setFont(arial10);
-        int tileSize = config.tileSize;
-        int halfTileSize = config.tileSize / 2;
-        for (int y = 0; y < config.rows; y++) {
-            for (int x = 0; x < config.columns; x++) {
-                gc.fillText("(" + x + "," + y + ")", x * tileSize , y * tileSize + halfTileSize);
-            }
-        }
-    }
-
-
-    private void drawDirections(GraphicsContext gc) {
-        if(DEBUG_DRAW_DIRECTIONS){
-            int tileSize = config.tileSize;
-            int halfTileSize = tileSize / 2;
-            for (Snake snake : snakeList) {
-                Vector2 current = snake.head;
-                Vector2 next = new Vector2(current).add(snake.currentDirection);
-
-                gc.setLineWidth(10);
-                gc.setStroke(Color.GREEN);
-                gc.strokeLine(
-                        current.x * tileSize + halfTileSize,
-                        current.y * tileSize + halfTileSize,
-                        next.x    * tileSize + halfTileSize,
-                        next.y    * tileSize + halfTileSize
+                int newY = i % 4 * 3 + 3;
+                int newX = i / 4 * 5 + 3;
+                snakeList.add (
+                    new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
                 );
             }
         }
-    }
 
+        // we want to play alone
+        if(DEBUG_SINGLEPLAYER){
+            snakeList.add ( new Snake ( new Vector2(5,5), Color.PURPLE));
+        }
 
-        // Instead of going game over when hitting a wall you can also use a wallteleport
-        /*
-        public checkWallTeleport();
-        ...
-        public void checkWallTeleport() {
-
-            // check for wall collision
+        // every snake is controlled by random keystrokes or some pattern
+        if(DEBUG_EVERYBODY_NPC){
             for (Snake snake : snakeList) {
+                snake.isNPC = true;
+            }
+        }
 
-                if (snake.head.x < 0){
-                    snake.head.x = config.rows;
-                }
-                else if (snake.head.y < 0){
-                    snake.head.y = config.rows;
-                }
-                else if (snake.head.x > config.rows){
-                    snake.head.x = 0;
-                }
-                else if (snake.head.y > config.columns) {
-                    snake.head.y = 0;
-                }
         */
+
+    /*
+    // Normal mode
+    } else {
+
+    }
+    */
+
+    /*
+    // setup everything related to the debug-mode
+    if(AppSnakeFX.inDebugMode){
+
+        // we gonna be gentle to the cpu
+        if(DEBUG_LOWCORE){
+            numPlayers = 3;
+        }
+
+        // we gonna stress test the cpu
+        if(DEBUG_HARDCORE){
+            numPlayers = 20;
+        }
+
+        // generate the players related to low or hardcore
+        if(DEBUG_LOWCORE || DEBUG_HARDCORE){
+            for (int i = 0; i < numPlayers; i++) {
+                int newY = i % 4 * 3 + 3;
+                int newX = i / 4 * 5 + 3;
+                snakeList.add (
+                        new Snake (new Vector2(newX, newY),Color.color(Math.random(), Math.random(), Math.random()))
+                );
+            }
+        }
+
+        // we want to play alone
+        if(DEBUG_SINGLEPLAYER){
+            snakeList.add ( new Snake ( new Vector2(5,5), Color.PURPLE));
+        }
+
+        // every snake is controlled by random keystrokes or some pattern
+        if(DEBUG_EVERYBODY_NPC){
+            for (Snake snake : snakeList) {
+                snake.isNPC = true;
+            }
+        }
+
+        // Normal mode
+    } else {
+        // regular game-play
+        // TODO: these values need to get retrieved from the backend
+        numPlayers = 1;
+        Color[] playerColors = {Color.PURPLE, Color.BLUE, Color.RED, Color.GREEN};
+        for (int i = 0; i < numPlayers; i++) {
+            snakeList.add ( new Snake ( new Vector2(0, 5 * i), playerColors[i]));
+        }
+    }
+    */
+
+
+
+
+private void drawIndices(GraphicsContext gc) {
+    gc.setFont(arial10);
+    int tileSize = config.tileSize;
+    int halfTileSize = config.tileSize / 2;
+    for (int y = 0; y < config.rows; y++) {
+        for (int x = 0; x < config.columns; x++) {
+            gc.fillText("(" + x + "," + y + ")", x * tileSize , y * tileSize + halfTileSize);
+        }
+    }
+}
+
+
+private void drawDirections(GraphicsContext gc) {
+    if(DEBUG_DRAW_DIRECTIONS){
+        int tileSize = config.tileSize;
+        int halfTileSize = tileSize / 2;
+        for (Snake snake : snakeList) {
+            Vector2 current = snake.head;
+            Vector2 next = new Vector2(current).add(snake.currentDirection);
+
+            gc.setLineWidth(10);
+            gc.setStroke(Color.GREEN);
+            gc.strokeLine(
+                    current.x * tileSize + halfTileSize,
+                    current.y * tileSize + halfTileSize,
+                    next.x    * tileSize + halfTileSize,
+                    next.y    * tileSize + halfTileSize
+            );
+        }
+    }
+}
+
+
+    // Instead of going game over when hitting a wall you can also use a wallteleport
+    /*
+    public checkWallTeleport();
+    ...
+    public void checkWallTeleport() {
+
+        // check for wall collision
+        for (Snake snake : snakeList) {
+
+            if (snake.head.x < 0){
+                snake.head.x = config.rows;
+            }
+            else if (snake.head.y < 0){
+                snake.head.y = config.rows;
+            }
+            else if (snake.head.x > config.rows){
+                snake.head.x = 0;
+            }
+            else if (snake.head.y > config.columns) {
+                snake.head.y = 0;
+            }
+    */
+
+
+            updateNPC();
+
+
+
+// TODO: Aus dem GameController nehmen.
+private void updateNPC() {
+    // cpu mechanism
+    for (Snake snake : snakeList) {
+
+        // if the current snake is marked as an npc
+        if (snake.isNPC) {
+
+            if (DEBUG_NPC_MOVEMENT_CIRCLING) {
+
+                // choose one of the four buttons as simulated player input
+                if (snake.currentInputButton == secondPlayerControls.length - 1) {
+                    snake.currentInputButton = 0;
+                } else {
+                    snake.currentInputButton++;
+                }
+
+                // set the newly calculated direction based on the current input as the new direction
+                snake.currentDirection = getDirectionForInput(snake.currentDirection, secondPlayerControls[snake.currentInputButton]);
+            }
+
+            if (DEBUG_NPC_MOVEMENT_RANDOM_PATHS) {
+
+                boolean nextDirectionInvalid;
+                Vector2 nextValidDirection = Vector2.ZERO;
+
+                do {
+
+                    // We calculate a new direction for the snake to go to, randomly based on a simulated player input between W,A,S and D
+                    Vector2 nextDirection = getDirectionForInput(snake.currentDirection, secondPlayerControls[RNG.getInstance().generate(0, firstPlayerControls.length)]);
+
+                    // We get a reference to the current position of the snakes head
+                    Vector2 currentPosition = new Vector2(snake.head);
+                    Vector2 nextPosition = new Vector2(snake.head).add(nextDirection);
+
+                    // we check if the snakes head + the next direction would result in a crash into the wall
+                    boolean hitWallX = currentPosition.x + nextDirection.x < 0 || currentPosition.x + nextDirection.x > config.rows - 1;
+                    boolean hitWallY = currentPosition.y + nextDirection.y < 0 || currentPosition.y + nextDirection.y > config.columns - 1;
+                    boolean snakeHitItself = false;
+                    boolean snakeHitAnotherSnake = false;
+
+                    for (Vector2 bodyPartPosition : snake.body) {
+                        if
+                        (
+                                currentPosition.x + nextDirection.x == bodyPartPosition.x &&
+                                        currentPosition.y + nextDirection.y == bodyPartPosition.y
+                        ) {
+                            snakeHitItself = true;
+                        }
+                    }
+
+                    // if one of the cases happens, the position is invalid <=> recalculate another position
+                    if (hitWallX || hitWallY || snakeHitItself || snakeHitAnotherSnake) {
+                        nextDirectionInvalid = true;
+
+                        // if this happens to often after a while, we can be sure the snake trapped / put itself in a box
+                        // by the walls and / or its body - this forces the game to hang / get stuck because it tries to
+                        // get a next valid position to go to - but there is none - a possible solution for this would be
+                        // to introduce a https://de.wikipedia.org/wiki/Hamiltonkreisproblem
+                        boxedSuicideCounter++;
+
+                        if (boxedSuicideCounter >= boxedSuicideCounterMax) {
+                            snakeTrappedItself = true;
+                            respawnSnake(snake);
+
+                            boxedSuicideCounter = 20;
+                            snakeTrappedItself = false;
+                        }
+                    } else {
+                        nextDirectionInvalid = false;
+                        nextValidDirection = nextDirection;
+
+                        // there was a valid next position so we can reset this counter
+                        boxedSuicideCounter = 0;
+                        snakeTrappedItself = false;
+
+                    }
+
+                } while (nextDirectionInvalid);
+
+                snake.currentDirection = nextValidDirection;
+
+            }
+
+        }
+    }
+}
+
+import static de.ostfalia.snakecore.util.DebugOptions.DEBUG_NPC_MOVEMENT_CIRCLING;
+import static de.ostfalia.snakecore.util.DebugOptions.DEBUG_NPC_MOVEMENT_RANDOM_PATHS;
+
+
+// related to npc handling
+private boolean snakeTrappedItself;
+private int boxedSuicideCounter = 0;
+private int boxedSuicideCounterMax = 20;
+
+
+
+    //If NPC Snake wraps itself it gets spawned somewhere else
+    private void respawnSnake(Snake snake) {
+        // despawn the current trapped snake
+        int newLength = snake.body.size();
+        snake.head = null;
+        snake.body.clear();
+        snake.body = null;
+        snakeList.remove(snake);
+
+        // respawn the snake somewhere else
+        int newX = RNG.getInstance().generate(0, config.columns);
+        int newY = RNG.getInstance().generate(0, config.rows);
+
+        boolean positionInvalid = false;
+
+        do {
+            for (Snake snakeOnBoard : snakeList) {
+                for (Vector2 bodyPart : snakeOnBoard.body) {
+                    if (newX == bodyPart.x && newY == bodyPart.y) {
+                        positionInvalid = true;
+                        break;
+                    }
+                }
+            }
+        } while (positionInvalid);
+
+        Snake newSnake = new Snake(new Vector2(newX, newY), snake.color, newLength);
+        newSnake.isNPC = true;
+        snakeList.add(newSnake);
+
+    }
