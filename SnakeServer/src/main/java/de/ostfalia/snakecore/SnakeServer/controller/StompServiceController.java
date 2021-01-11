@@ -147,6 +147,7 @@ public class StompServiceController {
         }
         */
 
+        // returning the message will automatically broadcast it to every other client
         return m;
     }
 
@@ -155,12 +156,7 @@ public class StompServiceController {
     @SendTo("/topic/games/{gameId}/{playerId}")
     public PlayerJoinsGameMessage broadcastPlayerJoinedGameToClients(@DestinationVariable String gameId, @DestinationVariable String playerId, PlayerJoinsGameMessage message) {
         System.out.println("");
-        System.out.println("");
         System.out.println("Player " + playerId + " wants to join the game " + gameId);
-        System.out.println("");
-        System.out.println("WOOP WOOOOOOOOOOOOOOOOOP");
-        System.out.println("WOOP WOOOOOOOOOOOOOOOOOP");
-        System.out.println("WOOP WOOOOOOOOOOOOOOOOOP");
         System.out.println("");
 
         // make the player join the lobby

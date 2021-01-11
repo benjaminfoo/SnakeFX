@@ -24,17 +24,10 @@ public class Snake {
     public List<Vector2> body = new ArrayList();
 
     // The current direction gets added to the heads position on every game tick (each iteration of the game-loop)
-    public Vector2 currentDirection = Vector2.RIGHT; // Snake property
+    public Vector2 currentDirection = Vector2.RIGHT;
 
     // the color of the snake
     public SnakeColor color;
-
-    // Flag that determines if this snake is controlled by a human player or by the pc
-    // !Communication from lobby nessacary!
-    public boolean isNPC;
-
-    // the current input button (W,A,S,D) - for example
-    public int currentInputButton = 0;
 
     // the initial length of the snake
     public int initialLength = 2;
@@ -86,16 +79,22 @@ public class Snake {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Snake snake = (Snake) o;
-        return isNPC == snake.isNPC &&
-                currentInputButton == snake.currentInputButton &&
+        return
                 Objects.equals(head, snake.head) &&
-                Objects.equals(body, snake.body) &&
-                currentDirection == snake.currentDirection &&
-                Objects.equals(color, snake.color);
+                        Objects.equals(body, snake.body) &&
+                        currentDirection == snake.currentDirection &&
+                        Objects.equals(color, snake.color);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(head, body, currentDirection, color, isNPC, currentInputButton);
+        return Objects.hash(head, body, currentDirection, color);
+    }
+
+    /**
+     * Adds an element to the snakes body
+     */
+    public void addBodyElement() {
+        body.add(new Vector2(-1, -1));
     }
 }

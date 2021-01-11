@@ -234,7 +234,7 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
                 System.out.println();
 
                 if (stompMessageListener != null) {
-                    stompMessageListener.onGameSessionMessageRecieved(msg);
+                    stompMessageListener.onGameSessionMessageReceived(msg);
                 }
 
             }
@@ -267,9 +267,9 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
     }
 
     @Override
-    public void onGameSessionMessageRecieved(GameSessionMessage msg) {
+    public void onGameSessionMessageReceived(GameSessionMessage msg) {
         if (stompMessageListener != null) {
-            stompMessageListener.onGameSessionMessageRecieved(msg);
+            stompMessageListener.onGameSessionMessageReceived(msg);
         }
     }
 

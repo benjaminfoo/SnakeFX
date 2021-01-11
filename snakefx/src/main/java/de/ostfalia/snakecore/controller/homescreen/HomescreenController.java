@@ -165,8 +165,8 @@ public class HomescreenController extends BaseController {
         application.getStompClient().setStompMessageListener(new StompMessageListener() {
 
             @Override
-            public void onGameSessionMessageRecieved(GameSessionMessage msg) {
-                if(msg.getGameState() == GameSessionMessage.GameState.STARTING) {
+            public void onGameSessionMessageReceived(GameSessionMessage msg) {
+                if (msg.getGameState() == GameSessionMessage.GameState.STARTING) {
                     Platform.runLater(() -> {
                         showGameScreen();
                         ((GameController) application.initializedController.get(GameController.class)).launchGame(msg);

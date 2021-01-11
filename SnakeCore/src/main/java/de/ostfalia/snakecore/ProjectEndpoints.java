@@ -52,7 +52,7 @@ public class ProjectEndpoints {
         URL_API_LOBBY = URL_BASE + API_PATH + API_ENDPOINT_LOBBY;
 
         // this replaces the hardcoded path (localhost) and the protocol
-        URL_STOMP_BASE = URL_BASE.replace("http", "ws") + "/snakeserver";
+        URL_STOMP_BASE = URL_BASE.replace("http", "ws") + "snakeserver";
     }
 
     // =============================

@@ -1,5 +1,6 @@
 package de.ostfalia.snakecore.controller.homescreen;
 
+import de.ostfalia.snakecore.ApplicationConstants;
 import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.model.SpielDefinition;
 import de.ostfalia.snakecore.model.Spielregel;
@@ -34,14 +35,25 @@ public class NewGameController extends BaseController {
     /**
      * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader
      */
-    public void initialize(){
+    public void initialize() {
         super.initialize();
 
-        numberOfPlayers.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2,10,1));
-        numberOfPowerups.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,50,3));
+        numberOfPlayers.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 10, 1));
+        numberOfPowerups.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50, 3));
 
-        newGame.setOnAction(onclick -> { executeCreateNewGame(); });
-        abort.setOnAction(onclick -> { showHomeScreen();});
+        newGame.setOnAction(onclick -> {
+            executeCreateNewGame();
+        });
+        abort.setOnAction(onclick -> {
+            showHomeScreen();
+        });
+    }
+
+    @Override
+    public void postInitialize() {
+        super.postInitialize();
+
+        setTitle(ApplicationConstants.TITLE_NEW_GAME);
     }
 
     /**

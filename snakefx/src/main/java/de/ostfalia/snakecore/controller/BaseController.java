@@ -1,6 +1,7 @@
 package de.ostfalia.snakecore.controller;
 
 import de.ostfalia.snakecore.ApplicationConstants;
+import de.ostfalia.snakecore.ProjectEndpoints;
 import de.ostfalia.snakecore.app.BaseApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,8 +36,13 @@ public abstract class BaseController {
         // accessing the UI within the initialize method would cause a NullPointerException
     }
 
-    public void setTitle(String title){
-        currentStage.setTitle(title);
+    public void setTitle(String title) {
+        if (title.equals(ApplicationConstants.TITLE_LOGIN)) {
+            currentStage.setTitle(title);
+        } else {
+            currentStage.setTitle(title + " - Connected to: " + ProjectEndpoints.URL_BASE + " | " + ProjectEndpoints.URL_STOMP_BASE);
+        }
+
     }
 
     /**
