@@ -1,6 +1,7 @@
 package de.ostfalia.snakecore.ws.model;
 
 import de.ostfalia.snakecore.model.RunningGame;
+import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.game.Config;
 import de.ostfalia.snakecore.model.game.Food;
 import de.ostfalia.snakecore.model.game.Snake;
@@ -27,7 +28,7 @@ public class GameSessionMessage {
     }
 
     // whom send the message?
-    private String player;
+    private Spieler player;
 
     // which game is this message targeted at?
     private String gameId;
@@ -49,6 +50,8 @@ public class GameSessionMessage {
     public List<Snake> snakeList;
     public Config config;
 
+    public Snake spielerSnake;
+
     public GameSessionMessage() {
 
     }
@@ -56,7 +59,7 @@ public class GameSessionMessage {
     /**
      * This constructor is used to indicate a started game session
      */
-    public GameSessionMessage(GameState gameState, String userName, RunningGame runningGame) {
+    public GameSessionMessage(GameState gameState, Spieler userName, RunningGame runningGame) {
         this.gameState = gameState;
         this.player = userName;
         this.runningGame = runningGame;
@@ -77,7 +80,7 @@ public class GameSessionMessage {
     /**
      * This constructor is used to exchange movement information of clients.
      */
-    public GameSessionMessage(GameState gameState, String playerName, String gameId, KeyCode input) {
+    public GameSessionMessage(GameState gameState, Spieler playerName, String gameId, KeyCode input) {
         this.gameState = gameState;
         this.gameId = gameId;
         this.player = playerName;
@@ -85,11 +88,11 @@ public class GameSessionMessage {
     }
 
 
-    public String getPlayer() {
+    public Spieler getPlayer() {
         return player;
     }
 
-    public void setPlayer(String player) {
+    public void setPlayer(Spieler player) {
         this.player = player;
     }
 

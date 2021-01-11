@@ -289,3 +289,50 @@ private int boxedSuicideCounterMax = 20;
         snakeList.add(newSnake);
 
     }
+
+
+
+    /**
+     * Get a direction vector based on the current playerInput.
+     *
+     * @param currentDirection
+     * @param playerInput
+     * @return
+     */
+    private Vector2 getDirectionForInput(Vector2 currentDirection, KeyCode playerInput) {
+
+        if (playerInput == firstPlayerControls[0] || playerInput == secondPlayerControls[0]) {
+            if (currentDirection != Vector2.DOWN) {
+                currentDirection = Vector2.UP;
+            }
+        } else if (playerInput == firstPlayerControls[1] || playerInput == secondPlayerControls[1]) {
+            if (currentDirection != Vector2.RIGHT) {
+                currentDirection = Vector2.LEFT;
+            }
+        } else if (playerInput == firstPlayerControls[2] || playerInput == secondPlayerControls[2]) {
+            if (currentDirection != Vector2.UP) {
+                currentDirection = Vector2.DOWN;
+            }
+        } else if (playerInput == firstPlayerControls[3] || playerInput == secondPlayerControls[3]) {
+            if (currentDirection != Vector2.LEFT) {
+                currentDirection = Vector2.RIGHT;
+            }
+        }
+
+        return currentDirection;
+
+    }
+
+
+    private KeyCode[] firstPlayerControls = {
+            KeyCode.W,
+            KeyCode.A,
+            KeyCode.S,
+            KeyCode.D
+    };
+    private KeyCode[] secondPlayerControls = {
+            KeyCode.UP,
+            KeyCode.LEFT,
+            KeyCode.DOWN,
+            KeyCode.RIGHT
+    };

@@ -41,6 +41,16 @@ public class Vector2 {
         return x;
     }
 
+    public void set(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void set(Vector2 v) {
+        this.x = v.x;
+        this.y = v.y;
+    }
+
     public void setX(int x) {
         this.x = x;
     }

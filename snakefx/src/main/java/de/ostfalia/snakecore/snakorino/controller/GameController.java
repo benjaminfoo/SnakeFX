@@ -28,7 +28,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -55,7 +58,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     // the amount of milliseconds each game-tick needs in order to update the games state
     // public double TICK_TIME_AMOUNT = 130;
-    public double TICK_TIME_AMOUNT = 200;
+    public double TICK_TIME_AMOUNT = 125;
 
     // The current instances of food objects
     private Set<Food> foodList = new HashSet<>();
@@ -67,23 +70,8 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     private int score = 0;
     // PLAYER STUFF
 
-    // refactor for multiplayer
+    // a map of players and there corresponding snakes
     private Map<Spieler, Snake> playerSnakeMap = new HashMap<>();
-    private List<Snake> snakeList = new LinkedList<>();
-
-    private KeyCode[] firstPlayerControls = {
-            KeyCode.W,
-            KeyCode.A,
-            KeyCode.S,
-            KeyCode.D
-    };
-    private KeyCode[] secondPlayerControls = {
-            KeyCode.UP,
-            KeyCode.LEFT,
-            KeyCode.DOWN,
-            KeyCode.RIGHT
-    };
-    // refactor for multiplayer
 
     // the graphicsContext which is used to draw to the screen manually
     private GraphicsContext gc;
@@ -135,8 +123,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             // put it into the hashmap for later use (player related, via communication)
             playerSnakeMap.put(spieler, playerSnake);
 
-            // put it into the list for local only usage (like drawing, etc.)
-            snakeList.add(playerSnake);
         }
 
         // setup the player view
@@ -209,28 +195,47 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      */
     private void update(GraphicsContext gc) {
 
+        // if a game for a client is over, indicate it
         if (gameOver) {
-            gc.setFill(Color.RED);
-            gc.setFont(gameOverFont);
-            gc.fillText("Game Over", config.width / 3.5, config.width / 2);
+            drawGameOver(gc);
             return;
         }
 
         // draw the checkerboard pattern, update the unused contents of the canvas
         drawBackground(gc);
 
+        updatePositions();
+
+        // visualize the game with its players (the snakes), the food, the score, etc.
+        drawFood(gc);
+        drawSnake(gc);
+        drawScore(gc);
+
+        // check if something happened
+        checkEatFood();
+        checkGameOver();
+
+    }
+
+    private void updatePositions() {
+
         // update the body-element positions for each snake
-        for (Snake snake : snakeList) {
+        for (Snake snake : playerSnakeMap.values()) {
+
             // calculate the current position for each snake
             for (int i = snake.body.size() - 1; i >= 1; i--) {
                 snake.body.get(i).x = snake.body.get(i - 1).x;
                 snake.body.get(i).y = snake.body.get(i - 1).y;
             }
+
+            // add the current direction vector to the head of the snake,
+            // make every element after the head follow its movements
             snake.head = snake.head.add(snake.currentDirection);
+
         }
 
-        // check for wall collision
-        for (Snake snake : snakeList) {
+        // check for player & wall collisions
+        for (Snake snake : playerSnakeMap.values()) {
 
             // hitting a wall teleports a player to the other side
             if (snake.head.x < 0) {
@@ -256,15 +261,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         }
 
-
-        // visualize the game with its players (the snakes), the food, the score, etc.
-        drawFood(gc);
-        drawSnake(gc);
-        drawScore(gc);
-
-        // check if something happened
-        checkEatFood();
-        checkGameOver();
     }
 
 
@@ -287,20 +283,26 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             // if the player is not null
             if (msg.getPlayer() != null && msg.getInput() != null) {
 
-                // find the player which belongs to a given playerSnake
-                String nameOfPlayer = msg.getPlayer();
-                Spieler destination = null;
-                for (Spieler spieler : playerSnakeMap.keySet()) {
-                    if (nameOfPlayer.equalsIgnoreCase(spieler.getName())) {
-                        destination = spieler;
+                // sync. the movement of the player
+                if (msg.getInput() != null) {
+
+                    Vector2 newDirection = Vector2.ZERO;
+                    if (msg.getInput() == KeyCode.UP) newDirection = Vector2.UP;
+                    if (msg.getInput() == KeyCode.DOWN) newDirection = Vector2.DOWN;
+                    if (msg.getInput() == KeyCode.RIGHT) newDirection = Vector2.RIGHT;
+                    if (msg.getInput() == KeyCode.LEFT) newDirection = Vector2.LEFT;
+
+                    // update the players snake, remotely
+                    Snake snake = playerSnakeMap.get(msg.getPlayer());
+                    for (int i = 0; i < msg.spielerSnake.body.size(); i++) {
+                        snake.body.get(i).set(msg.spielerSnake.body.get(i));
                     }
+                    snake.head.set(msg.spielerSnake.head);
+
+                    // change the direction of the corresponding players snake
+                    snake.currentDirection = newDirection;
                 }
 
-                // sync. the movement of the player
-                Snake playerSnake = playerSnakeMap.get(destination);
-                if (msg.getInput() != null) {
-                    playerSnake.currentDirection = getDirectionForInput(playerSnake.currentDirection, msg.getInput());
-                }
             }
 
         }
@@ -322,12 +324,13 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // send the current input of the client to the backend
         GameSessionMessage gameInputMessage = new GameSessionMessage(
                 GameSessionMessage.GameState.RUNNING,
-                application.getSpieler().getName(),
+                application.getSpieler(),
                 runningGame.getSpielDefinition().getNameOfTheGame(),
                 event.getCode()
         );
 
-        gameInputMessage.snakeList = snakeList;
+        // transfer the players snake
+        gameInputMessage.spielerSnake = playerSnakeMap.get(application.getSpieler());
 
         application.getStompClient().sendGameInputMessage(
                 runningGame.stompPath,
@@ -353,7 +356,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         Food toRemove = null;
 
         // iterate over every snake within the game
-        for (Snake snake : snakeList) {
+        for (Snake snake : playerSnakeMap.values()) {
 
             // the coordinates of the snakes head
             int sxcord = snake.head.getX();
@@ -471,6 +474,13 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     }
 
+
+    private void drawGameOver(GraphicsContext gc) {
+        gc.setFill(Color.RED);
+        gc.setFont(gameOverFont);
+        gc.fillText("Game Over", config.width / 3.5, config.width / 2);
+    }
+
     /**
      * Draw a players name to the given position
      */
@@ -489,20 +499,26 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         // for each row ...
         for (int i = 0; i < config.rows; i++) {
+
             // for each column
             for (int j = 0; j < config.columns; j++) {
+
+                // if i+j is even - draw a slightly brighter grey tone
                 if ((i + j) % 2 == 0) {
-                    // if i+j is even - draw a slightly brighter grey tone
                     gc.setFill(Color.web("161718"));
-                } else {
-                    // if i+j is odd - draw a slightly darker grey tone
+                }
+                // if i+j is odd - draw a slightly darker grey tone
+                else {
                     gc.setFill(Color.web("34383B"));
                 }
+
                 // draw the rect
                 gc.fillRect(i * config.tileSize, j * config.tileSize,
                         config.tileSize, config.tileSize);
             }
+
         }
+
     }
 
     /**
@@ -547,7 +563,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      */
     private void drawSnake(GraphicsContext gc) {
 
-        for (Snake snake : snakeList) {
+        for (Snake snake : playerSnakeMap.values()) {
 
             // draw the head of the snake
             gc.setFill(snake.color.toJavaFxColor().brighter());
@@ -601,8 +617,8 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     public void checkGameOver() {
 
         // check for snake-collision
-        for (Snake a : snakeList) {
-            for (Snake b : snakeList) {
+        for (Snake a : playerSnakeMap.values()) {
+            for (Snake b : playerSnakeMap.values()) {
                 if (a.head != b.head && a.head.x == b.head.x && a.head.y == b.head.y) {
                     gameOver = true;
                 }
@@ -624,55 +640,20 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         }
     }
 
-    /**
-     * Get a direction vector based on the current playerInput.
-     *
-     * @param currentDirection
-     * @param playerInput
-     * @return
-     */
-    private Vector2 getDirectionForInput(Vector2 currentDirection, KeyCode playerInput) {
-
-        if (playerInput == firstPlayerControls[0] || playerInput == secondPlayerControls[0]) {
-            if (currentDirection != Vector2.DOWN) {
-                currentDirection = Vector2.UP;
-            }
-        } else if (playerInput == firstPlayerControls[1] || playerInput == secondPlayerControls[1]) {
-            if (currentDirection != Vector2.RIGHT) {
-                currentDirection = Vector2.LEFT;
-            }
-        } else if (playerInput == firstPlayerControls[2] || playerInput == secondPlayerControls[2]) {
-            if (currentDirection != Vector2.UP) {
-                currentDirection = Vector2.DOWN;
-            }
-        } else if (playerInput == firstPlayerControls[3] || playerInput == secondPlayerControls[3]) {
-            if (currentDirection != Vector2.LEFT) {
-                currentDirection = Vector2.RIGHT;
-            }
-        }
-
-        return currentDirection;
-
-    }
-
     @Override
     public void onChatMessageReceived(ChatMessage msg) {
-
     }
 
     @Override
     public void onLobbyMessageReceived(LobbyMessage msg) {
-
     }
 
     @Override
     public void onPlayerMessageReceived(PlayerMessage msg) {
-
     }
-
 
     @Override
     public void onPlayerJoinedGameMessageReceived(PlayerJoinsGameMessage msg) {
-
     }
+
 }

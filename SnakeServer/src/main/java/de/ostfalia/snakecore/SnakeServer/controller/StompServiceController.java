@@ -15,6 +15,7 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 import java.util.*;
@@ -27,26 +28,19 @@ import java.util.*;
 @Controller
 public class StompServiceController {
 
+    @Autowired
     private SimpMessagingTemplate template;
 
     @Autowired
-    public StompServiceController(SimpMessagingTemplate template) {
-        this.template = template;
-    }
-
-    @Autowired
     public LobbyController lobbyController;
-
 
     @MessageMapping("/games") // "/app/games/
     @SendTo("/topic/games")
     public LobbyMessage broadcastGames(LobbyMessage lobbyMessage) {
 
         if (lobbyMessage.spielDefinition != null) {
-            System.out.println();
             System.out.println("New game definition recieved: " + lobbyMessage.spielDefinition.getNameOfTheGame());
             System.out.println("Adding it to the lobby ... ");
-            System.out.println();
 
             // create a new runningGame based on the SpielDefinition
             RunningGame newRunningGame = new RunningGame(
@@ -67,7 +61,6 @@ public class StompServiceController {
         return lobbyMessage;
     }
 
-
     @MessageMapping("/players") // "/app/players/
     @SendTo("/topic/players")
     public PlayerMessage broadCastPlayers(PlayerMessage playerMessage) {
@@ -79,6 +72,10 @@ public class StompServiceController {
         return playerMessage;
     }
 
+    @Scheduled(fixedRate = 5000)
+    public void broadcastGameFrame() {
+        this.template.convertAndSend("/topic/games/1", "Hello");
+    }
 
     /**
      * This method is used to communicate running-game related changes to subscribed clients.
@@ -91,7 +88,7 @@ public class StompServiceController {
     @SendTo("/topic/games/{gameId}")
     public GameSessionMessage broadcastPlayerInputToClients(@DestinationVariable String gameId, GameSessionMessage m) {
 
-        System.out.println("StompLobbyController - Recieved player input for game: " + gameId + " - " + m);
+        System.out.println("StompLobbyController - Received player input for game: " + gameId + " - " + m);
 
         // the game is starting
         if (m.getGameState() == GameSessionMessage.GameState.STARTING && m.getInput() == null) {

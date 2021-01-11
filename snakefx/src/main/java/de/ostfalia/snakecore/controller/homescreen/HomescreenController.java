@@ -109,7 +109,7 @@ public class HomescreenController extends BaseController {
             application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath());
 
             // send an initial game session message
-            GameSessionMessage gameInputMessage = new GameSessionMessage(GameSessionMessage.GameState.STARTING, application.getUserConfig().getUserName(), selectedGame);
+            GameSessionMessage gameInputMessage = new GameSessionMessage(GameSessionMessage.GameState.STARTING, application.getSpieler(), selectedGame);
             gameInputMessage.amountOfFoodDrawables = GameResources.FOOD_IMAGE_PATHS.length;
 
             application.getStompClient().sendGameInputMessage(

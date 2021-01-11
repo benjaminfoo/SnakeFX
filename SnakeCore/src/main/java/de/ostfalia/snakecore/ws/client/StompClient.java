@@ -92,11 +92,11 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
 
-                System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
+                // System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
 
                 ChatMessage msg = (ChatMessage) payload;
                 if (msg != null) {
-                    System.out.println("Received ChatMessage: " + msg.getText() + " from : " + msg.getFrom());
+                    // System.out.println("Received ChatMessage: " + msg.getText() + " from : " + msg.getFrom());
                     stompMessageListener.onChatMessageReceived(msg);
                 }
 
@@ -113,11 +113,11 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
+                // System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
 
                 LobbyMessage msg = (LobbyMessage) payload;
                 if (msg != null) {
-                    System.out.println("Received LobbyMessage: " + msg.toString());
+                    // System.out.println("Received LobbyMessage: " + msg.toString());
                     stompMessageListener.onLobbyMessageReceived(msg);
                 }
             }
@@ -134,11 +134,11 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
+                // System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
 
                 PlayerMessage msg = (PlayerMessage) payload;
                 if (msg != null) {
-                    System.out.println("Received PlayerMessage: " + msg.toString());
+                    // System.out.println("Received PlayerMessage: " + msg.toString());
                     stompMessageListener.onPlayerMessageReceived(msg);
                 }
             }
@@ -155,11 +155,11 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
+                // System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
 
                 PlayerJoinsGameMessage msg = (PlayerJoinsGameMessage) payload;
                 if (msg != null) {
-                    System.out.println("Received onPlayerJoinedGameMessageReceived: " + msg.toString());
+                    // System.out.println("Received onPlayerJoinedGameMessageReceived: " + msg.toString());
                     stompMessageListener.onPlayerJoinedGameMessageReceived(msg);
                 }
             }
@@ -175,29 +175,29 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
     }
 
     public void sendChatMessage(String user, String message) {
-        System.out.println("Sending message to /app/chat ... Message: " + message);
+        // System.out.println("Sending message to /app/chat ... Message: " + message);
         session.send("/app/chat", new ChatMessage(user, message));
     }
 
     public void sendLobbyMessage(LobbyMessage lobbyMessage) {
-        System.out.println("Sending lobby message");
+        // System.out.println("Sending lobby message");
         session.send("/app/games", lobbyMessage);
     }
 
     public void sendNewPlayerMessage(PlayerMessage playerMessage){
-        System.out.println("Sending player message");
+        // System.out.println("Sending player message");
         session.send("/app/players", playerMessage);
     }
 
     public void sendGameInputMessage(String stompPath, GameSessionMessage gameInputMessage) {
-        System.out.println("Sending player message to " + stompPath);
+        // System.out.println("Sending player message to " + stompPath);
         session.send("/app/games/1", gameInputMessage);
     }
 
     public void sendJoinGameMessage(String stompPath, Spieler spieler, RunningGame runningGame) {
-        System.out.println("Sending joinGame message ");
+        // System.out.println("Sending joinGame message ");
         String playerStompPath = "/app/games/1" + "/" + spieler.getName();
-        System.out.println("\t to path: " + playerStompPath);
+        //  System.out.println("\t to path: " + playerStompPath);
 
         session.send(playerStompPath, new PlayerJoinsGameMessage(spieler, runningGame, new LinkedList<>()));
     }
@@ -218,25 +218,10 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                System.out.println();
-                System.out.println();
-                System.out.println();
-                System.out.println("Received message: " + headers.getMessageId() + " | " + headers.getDestination());
-
                 GameSessionMessage msg = (GameSessionMessage) payload;
-                if (msg != null) {
-                    System.out.println("Received player input: " + msg.toString());
-
-                }
-                System.out.println();
-                System.out.println();
-                System.out.println();
-                System.out.println();
-
                 if (stompMessageListener != null) {
                     stompMessageListener.onGameSessionMessageReceived(msg);
                 }
-
             }
         });
     }
