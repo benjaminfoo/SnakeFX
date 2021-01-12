@@ -38,7 +38,14 @@ public class ProjectEndpoints {
     /**
      * The method gets called before logging in - so any change to the paths will be reflected
      */
-    public static void resetURLs() {
+    public static void resetURLs(String newBaseUrl) {
+        URL_BASE = newBaseUrl;
+
+        System.out.println("Changing url to: " + URL_BASE);
+        System.out.println("Changing url to: " + URL_BASE);
+        System.out.println("Changing url to: " + URL_BASE);
+        System.out.println("Changing url to: " + URL_BASE);
+
         // http://localhost:8080/api/login/
         URL_API_LOGIN = URL_BASE + API_PATH + API_ENDPOINT_LOGIN;
 

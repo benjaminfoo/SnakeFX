@@ -77,8 +77,10 @@ public class LoginController extends BaseController {
         btnRegister.disableProperty().bind(btnLogin.disableProperty());
 
         tfServerURL.setText(ProjectEndpoints.URL_BASE);
-        ProjectEndpoints.URL_BASE = tfServerURL.getText().trim();
-        ProjectEndpoints.resetURLs();
+
+        tfServerURL.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            ProjectEndpoints.resetURLs(tfServerURL.getText().trim());
+        });
 
     }
 
@@ -98,6 +100,7 @@ public class LoginController extends BaseController {
     }
 
     public void executeLogin() {
+
         System.out.println("Logging in ...");
 
         String username = tfName.getText();
@@ -119,14 +122,14 @@ public class LoginController extends BaseController {
         });
 
         loginTask.setOnCancelled(event -> {
-            lblStatus.setStyle("-fx-text-fill: #000000");
+            lblStatus.setStyle("-fx-text-fill: #FF0000");
             lblStatus.setText("Error on login!");
         });
 
         loginTask.setOnSucceeded(event -> {
             Spieler value = loginTask.getValue();
 
-            lblStatus.setStyle("-fx-text-fill: #FFFFFF");
+            lblStatus.setStyle("-fx-text-fill: #00FF00");
             System.out.println("Login successful for user: " + value);
             lblStatus.setText("Login succesful!");
 
