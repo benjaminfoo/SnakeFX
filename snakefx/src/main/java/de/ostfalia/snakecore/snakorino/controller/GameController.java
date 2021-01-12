@@ -9,6 +9,7 @@ import de.ostfalia.snakecore.model.game.Food;
 import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.game.SnakeColor;
 import de.ostfalia.snakecore.model.math.Vector2;
+import de.ostfalia.snakecore.model.rendering.CompositeShape;
 import de.ostfalia.snakecore.util.GameResources;
 import de.ostfalia.snakecore.ws.client.StompMessageListener;
 import de.ostfalia.snakecore.ws.model.*;
@@ -83,6 +84,10 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     // a map of players and there corresponding snakes
     private Map<Spieler, Snake> playerSnakeMap = new HashMap<>();
 
+    // a mapping of snakes and their composite shapes - a snake is represtend via a compositeshape,
+    // which is a set of shape instances
+    private Map<Snake, CompositeShape> snakeShapeMap = new HashMap<>();
+
     // the graphicsContext which is used to draw to the screen manually
     private GraphicsContext gc;
 
@@ -135,6 +140,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             // put it into the hashmap for later use (player related, via communication)
             playerSnakeMap.put(spieler, playerSnake);
 
+            // snakeShapeMap.put(playerSnake, new CompositeShape());
         }
 
         // setup the player view
