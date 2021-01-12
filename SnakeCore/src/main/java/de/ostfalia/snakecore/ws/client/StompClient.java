@@ -202,6 +202,22 @@ public class StompClient extends StompSessionHandlerAdapter implements StompMess
         session.send(playerStompPath, new PlayerJoinsGameMessage(spieler, runningGame, new LinkedList<>()));
     }
 
+
+    /**
+     * Uses a lobby message to disconnect a player from the server and do cleanup tasks
+     * (like removing the player from the lobby, etc.)
+     *
+     * @param spieler
+     */
+    public void sendLogoutMessage(Spieler spieler) {
+        LobbyMessage lobbyMessage = new LobbyMessage();
+
+        lobbyMessage.logout = true;
+        lobbyMessage.logoutSpieler = spieler;
+
+        session.send("/app/games", lobbyMessage);
+    }
+
     /**
      * Sends a message to a game topic with gameDestinationTopic
      *

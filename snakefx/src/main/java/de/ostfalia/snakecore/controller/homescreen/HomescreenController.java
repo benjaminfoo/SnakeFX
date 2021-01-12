@@ -81,6 +81,9 @@ public class HomescreenController extends BaseController {
                 if (btnType == ButtonType.OK) {
                     // TODO - disconnect via stomp
                     // TODO - eventually cleanup everything
+
+                    getApplication().getStompClient().sendLogoutMessage(getApplication().getSpieler());
+
                     closeStage();
                 }
                 if (btnType == ButtonType.CANCEL) {
@@ -94,8 +97,8 @@ public class HomescreenController extends BaseController {
             RunningGame selectedGame = (RunningGame) activeGames.getSelectionModel().getSelectedItem();
             System.out.println("Subscribing to: " + selectedGame.getStompPath());
 
-            application.getStompClient().sendJoinGameMessage(selectedGame.getStompPath(), application.getSpieler(), selectedGame);
-            application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath());
+            getApplication().getStompClient().sendJoinGameMessage(selectedGame.getStompPath(), getApplication().getSpieler(), selectedGame);
+            getApplication().getStompClient().subscribeToGameTopic(selectedGame.getStompPath());
         });
 
         // manage clicks on the admin-menu -> start game button
@@ -106,13 +109,13 @@ public class HomescreenController extends BaseController {
             System.out.println("Subscribing to: " + selectedGame.getStompPath());
 
             // subscribe to the newly created game
-            application.getStompClient().subscribeToGameTopic(selectedGame.getStompPath());
+            getApplication().getStompClient().subscribeToGameTopic(selectedGame.getStompPath());
 
             // send an initial game session message
-            GameSessionMessage gameInputMessage = new GameSessionMessage(GameSessionMessage.GameState.STARTING, application.getSpieler(), selectedGame);
+            GameSessionMessage gameInputMessage = new GameSessionMessage(GameSessionMessage.GameState.STARTING, getApplication().getSpieler(), selectedGame);
             gameInputMessage.amountOfFoodDrawables = GameResources.FOOD_IMAGE_PATHS.length;
 
-            application.getStompClient().sendGameInputMessage(
+            getApplication().getStompClient().sendGameInputMessage(
                     selectedGame.stompPath,
                     gameInputMessage
             );
@@ -126,7 +129,7 @@ public class HomescreenController extends BaseController {
 
             RunningGame selectedItem = newValue;
 
-            boolean currentPlayerIsAdminOfSelection = selectedItem.admin.getName().equalsIgnoreCase(application.getSpieler().getName());
+            boolean currentPlayerIsAdminOfSelection = selectedItem.admin.getName().equalsIgnoreCase(getApplication().getSpieler().getName());
 
             // we have to invert the statement because the button gets disabled if set to true
             adminStartGame.setDisable(!currentPlayerIsAdminOfSelection);
@@ -136,7 +139,7 @@ public class HomescreenController extends BaseController {
             // disable the join-game button when the player limit is reached - enable it if not
             boolean playerLimitReached = selectedItem.activeClients.size() == selectedItem.getSpielDefinition().getNumberOfPlayer();
             // disable the join game button then the player already joined the game
-            boolean playerAlreadyInLobby = selectedItem.activeClients.contains(application.getSpieler());
+            boolean playerAlreadyInLobby = selectedItem.activeClients.contains(getApplication().getSpieler());
 
             joinGame.setDisable(playerLimitReached || playerAlreadyInLobby);
 
@@ -150,7 +153,7 @@ public class HomescreenController extends BaseController {
     public void postInitialize() {
         super.postInitialize();
 
-        userNameLabel.setText("Hello, " + application.getUserConfig().getUserName() + "!");
+        userNameLabel.setText("Hello, " + getApplication().getUserConfig().getUserName() + "!");
 
         // prepare the ui for displaying listCells
         activeGames.setCellFactory(listView -> new RunningGameCell());
@@ -162,21 +165,21 @@ public class HomescreenController extends BaseController {
         updateLobbyList();
 
         // register callbacks for updating the UI and getting information about currently running games, etc.
-        application.getStompClient().setStompMessageListener(new StompMessageListener() {
+        getApplication().getStompClient().setStompMessageListener(new StompMessageListener() {
 
             @Override
             public void onGameSessionMessageReceived(GameSessionMessage msg) {
                 if (msg.getGameState() == GameSessionMessage.GameState.STARTING) {
                     Platform.runLater(() -> {
                         showGameScreen();
-                        ((GameController) application.initializedController.get(GameController.class)).launchGame(msg);
+                        ((GameController) getApplication().initializedController.get(GameController.class)).launchGame(msg);
                     });
                 }
             }
 
             @Override
             public void onChatMessageReceived(ChatMessage msg) {
-                chatContent.appendText("(" + application.getSimpleDateFormat().format( new Date()) + "): " + msg.getFrom() + ": " + msg.getText() + "\n");
+                chatContent.appendText("(" + getApplication().getSimpleDateFormat().format(new Date()) + "): " + msg.getFrom() + ": " + msg.getText() + "\n");
             }
 
             @Override
@@ -187,14 +190,25 @@ public class HomescreenController extends BaseController {
                     activeGames.getItems().add(runningGame);
                 }
 
+                if (msg.activeClients != null) {
+                    Platform.runLater(() -> {
+                        activePlayers.getItems().clear();
+                        for (Spieler spieler : msg.activeClients) {
+                            activePlayers.getItems().add(spieler);
+                        }
+                    });
+                }
+
             }
 
             @Override
             public void onPlayerMessageReceived(PlayerMessage msg) {
 
-                activePlayers.getItems().clear();
-                for (Spieler spieler : msg.playersInLobby) {
-                    activePlayers.getItems().add(spieler);
+                if (msg.newPlayer != null) {
+                    activePlayers.getItems().clear();
+                    for (Spieler spieler : msg.playersInLobby) {
+                        activePlayers.getItems().add(spieler);
+                    }
                 }
 
             }
@@ -214,8 +228,8 @@ public class HomescreenController extends BaseController {
 
         // if the user presses the "send" button on the lower right, send the chat message to the server
         sendUserContent.setOnAction(onClick -> {
-            application.getStompClient().sendChatMessage(
-                    application.getUserConfig().getUserName(),
+            getApplication().getStompClient().sendChatMessage(
+                    getApplication().getUserConfig().getUserName(),
                     userContent.getText()
             );
             userContent.clear();

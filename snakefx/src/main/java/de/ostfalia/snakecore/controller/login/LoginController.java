@@ -88,14 +88,14 @@ public class LoginController extends BaseController {
     public void postInitialize() {
         super.postInitialize();
 
-        List<String> startParams = application.getStartParams();
-        if(startParams != null){
-            application.setUserConfig(new UserConfig(startParams.get(0), startParams.get(1), null));
+        List<String> startParams = getApplication().getStartParams();
+        if (startParams != null) {
+            getApplication().setUserConfig(new UserConfig(startParams.get(0), startParams.get(1), null));
         }
 
-        if(application.getUserConfig() != null){
-            tfName.setText(application.getUserConfig().getUserName());
-            tfPassword.setText(application.getUserConfig().getPass());
+        if (getApplication().getUserConfig() != null) {
+            tfName.setText(getApplication().getUserConfig().getUserName());
+            tfPassword.setText(getApplication().getUserConfig().getPass());
         }
     }
 
@@ -137,15 +137,15 @@ public class LoginController extends BaseController {
 
             // TODO: retrieve JWT Token from server when logging in
             String jwtToken = "NONE";
-            application.setUserConfig(new UserConfig(value.name, value.pass, jwtToken));
+            getApplication().setUserConfig(new UserConfig(value.name, value.pass, jwtToken));
 
             // connect the stomp client to the stomp endpoint
             // application.getStompClient().connect("ws://localhost:13373/snakeserver", () -> {
-            application.getStompClient().connect(ProjectEndpoints.URL_STOMP_BASE, () -> {
+            getApplication().getStompClient().connect(ProjectEndpoints.URL_STOMP_BASE, () -> {
 
                 // register the player on the lobby
-                application.getStompClient().sendNewPlayerMessage(new PlayerMessage(
-                        new Spieler(-1337L, application.getUserConfig().getUserName(), application.getUserConfig().getPass())
+                getApplication().getStompClient().sendNewPlayerMessage(new PlayerMessage(
+                        new Spieler(-1337L, getApplication().getUserConfig().getUserName(), getApplication().getUserConfig().getPass())
                 ));
 
                 // execute on the ui-thread

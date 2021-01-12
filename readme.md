@@ -51,7 +51,6 @@ Die folgenden URLs dienen als Adresse / Endpoints für die Kommunikation mittels
 
 #### HTTP / REST
 Die folgenden URLs dienen als Adresse für die Kommunikation mittels HTTP-Protokoll
-
 - http://localhost:13373/h2 (user: sa | pass: <none>)
 - http://localhost:13373/api/spieler/
 - http://localhost:13373/api/spieler/name

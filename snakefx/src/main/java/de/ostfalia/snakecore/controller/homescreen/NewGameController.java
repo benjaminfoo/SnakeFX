@@ -81,7 +81,7 @@ public class NewGameController extends BaseController {
 
         // we've created a spielDefinition within the ui - now transmit it to the backend
         Platform.runLater(() -> {
-            application.getStompClient().sendLobbyMessage(new LobbyMessage(application.getSpieler(), spielDefinition));
+            getApplication().getStompClient().sendLobbyMessage(new LobbyMessage(getApplication().getSpieler(), spielDefinition));
         });
 
         // switch to the homescreen again

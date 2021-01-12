@@ -182,7 +182,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // this will result in:
         // - sending messages to the server when a player omits input
         // - receiving messages from the server when something game related happens
-        application.getStompClient().setStompMessageListener(this);
+        getApplication().getStompClient().setStompMessageListener(this);
 
         // display the rendering canvas
         gc = gameCanvas.getGraphicsContext2D();
@@ -334,7 +334,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // get the current input keycode of the last input
         KeyCode playerInput = event.getCode();
 
-        Snake currentSnake = playerSnakeMap.get(application.getSpieler());
+        Snake currentSnake = playerSnakeMap.get(getApplication().getSpieler());
         Vector2 dir = currentSnake.currentDirection;
 
         // prevent a player from moving into its own snake
@@ -349,15 +349,15 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // send the current input of the client to the backend
         GameSessionMessage gameInputMessage = new GameSessionMessage(
                 GameSessionMessage.GameState.RUNNING,
-                application.getSpieler(),
+                getApplication().getSpieler(),
                 runningGame.getSpielDefinition().getNameOfTheGame(),
                 event.getCode()
         );
 
         // transfer the players snake
-        gameInputMessage.spielerSnake = playerSnakeMap.get(application.getSpieler());
+        gameInputMessage.spielerSnake = playerSnakeMap.get(getApplication().getSpieler());
 
-        application.getStompClient().sendGameInputMessage(
+        getApplication().getStompClient().sendGameInputMessage(
                 runningGame.stompPath,
                 gameInputMessage
         );
@@ -415,7 +415,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     */
 
                     // play pickup sound when player collects some food.
-                    application.getSoundManager().playPickup2();
+                    getApplication().getSoundManager().playPickup2();
 
                 }
             }
@@ -454,7 +454,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
 
             // send the message
-            application.getStompClient().sendGameInputMessage(
+            getApplication().getStompClient().sendGameInputMessage(
                     runningGame.stompPath,
                     gameInputMessage
             );

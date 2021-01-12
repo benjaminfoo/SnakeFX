@@ -38,6 +38,13 @@ public class StompServiceController {
     @SendTo("/topic/games")
     public LobbyMessage broadcastGames(LobbyMessage lobbyMessage) {
 
+        if (lobbyMessage.logout && lobbyMessage.logoutSpieler != null) {
+            lobbyController.getCurrentPlayers().remove(lobbyMessage.logoutSpieler);
+            System.out.println("Removing player: " + lobbyMessage.logoutSpieler + " from the active players of the lobby ...");
+
+            lobbyMessage.activeClients = lobbyController.getCurrentPlayers();
+        }
+
         if (lobbyMessage.spielDefinition != null) {
             System.out.println("New game definition recieved: " + lobbyMessage.spielDefinition.getNameOfTheGame());
             System.out.println("Adding it to the lobby ... ");

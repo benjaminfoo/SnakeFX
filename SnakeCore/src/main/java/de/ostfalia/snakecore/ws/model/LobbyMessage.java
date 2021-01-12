@@ -20,6 +20,10 @@ public class LobbyMessage {
     public SpielDefinition spielDefinition;
     public List<RunningGame> runningGames = new LinkedList<>();
 
+    public boolean logout;
+    public Spieler logoutSpieler;
+    public List<Spieler> activeClients;
+
     public LobbyMessage() {
     }
 

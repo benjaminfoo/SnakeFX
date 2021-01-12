@@ -49,7 +49,7 @@ public class AppSnakeFX extends BaseApplication {
 
         BaseController baseController = fxmlLoader.getController();
         baseController.currentStage = window;
-        baseController.application = this;
+        baseController.setApplication(this);
         baseController.currentStage.getIcons().add(new Image("icon.png"));
         baseController.setTitle(ApplicationConstants.TITLE_LOGIN);
 

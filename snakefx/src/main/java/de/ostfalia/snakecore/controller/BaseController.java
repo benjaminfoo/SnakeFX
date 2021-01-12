@@ -1,5 +1,6 @@
 package de.ostfalia.snakecore.controller;
 
+import de.ostfalia.snakecore.AppSnakeFX;
 import de.ostfalia.snakecore.ApplicationConstants;
 import de.ostfalia.snakecore.ProjectEndpoints;
 import de.ostfalia.snakecore.app.BaseApplication;
@@ -20,7 +21,7 @@ import java.io.IOException;
 public abstract class BaseController {
 
     public Stage currentStage;
-    public BaseApplication application;
+    private BaseApplication application;
 
     /**
      * Initialize gets called when the Controller is loaded by the JavaFX's-FXMLLoader
@@ -73,7 +74,7 @@ public abstract class BaseController {
             baseController.currentStage.getIcons().add(new Image("icon.png"));
             baseController.setTitle(newTitle);
 
-            application.initializedController.put(baseController.getClass(), baseController);
+            getApplication().initializedController.put(baseController.getClass(), baseController);
             System.out.println("Putting: " + baseController.getClass() + " with " + baseController.getClass() + " into controller cache");
 
             // initialize everything related to the user-interface
@@ -111,7 +112,7 @@ public abstract class BaseController {
             // setup the title and the icon of the application
             baseController.currentStage.getIcons().add(new Image("icon.png"));
             baseController.setTitle(newTitle);
-            application.initializedController.put(baseController.getClass(), baseController);
+            getApplication().initializedController.put(baseController.getClass(), baseController);
 
             // initialize everything related to the user-interface
             baseController.postInitialize();
@@ -131,12 +132,19 @@ public abstract class BaseController {
         currentStage.close();
     }
 
-    public void showHomeScreen(){
+    public void showHomeScreen() {
         showLayout(Scenes.VIEW_HOMESCREEN, ApplicationConstants.TITLE_HOMESCREEN);
     }
 
-    public void showGameScreen(){
+    public void showGameScreen() {
         showLayout(Scenes.VIEW_GAME_CANVAS, ApplicationConstants.TITLE_CURRENT_GAME);
     }
 
+    public BaseApplication getApplication() {
+        return application;
+    }
+
+    public void setApplication(AppSnakeFX appSnakeFX) {
+        this.application = appSnakeFX;
+    }
 }
