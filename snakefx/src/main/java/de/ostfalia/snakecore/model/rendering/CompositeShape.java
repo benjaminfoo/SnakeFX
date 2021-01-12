@@ -9,7 +9,7 @@ import java.util.Set;
 public class CompositeShape implements Shape {
 
     public Vector2 position;
-    public Set<Shape> shapes;
+    private Set<Shape> shapes;
 
     public CompositeShape(Vector2 position) {
         this.position = position;
@@ -28,4 +28,15 @@ public class CompositeShape implements Shape {
         return null;
     }
 
+    public void addShape(Shape shape) {
+        shapes.add(shape);
+    }
+
+    public Set<Shape> getShapes() {
+        return shapes;
+    }
+
+    public int size() {
+        return shapes.size();
+    }
 }

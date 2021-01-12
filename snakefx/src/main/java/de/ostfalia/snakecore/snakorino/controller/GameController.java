@@ -9,7 +9,9 @@ import de.ostfalia.snakecore.model.game.Food;
 import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.game.SnakeColor;
 import de.ostfalia.snakecore.model.math.Vector2;
+import de.ostfalia.snakecore.model.rendering.Circle;
 import de.ostfalia.snakecore.model.rendering.CompositeShape;
+import de.ostfalia.snakecore.model.rendering.Shape;
 import de.ostfalia.snakecore.util.GameResources;
 import de.ostfalia.snakecore.ws.client.StompMessageListener;
 import de.ostfalia.snakecore.ws.model.*;
@@ -135,12 +137,27 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             Spieler spieler = runningGame.getActiveClients().get(i);
 
             // create a corresponding snake
-            Snake playerSnake = new Snake(new Vector2(3, 3 * i), new SnakeColor(playerColors[i]));
+            final SnakeColor snakeColor = new SnakeColor(playerColors[i]);
+            Snake playerSnake = new Snake(new Vector2(3, 3 * i), snakeColor);
 
             // put it into the hashmap for later use (player related, via communication)
             playerSnakeMap.put(spieler, playerSnake);
 
-            // snakeShapeMap.put(playerSnake, new CompositeShape());
+            // create a composite shape for each snake
+            CompositeShape snakeShape = new CompositeShape(playerSnake.head);
+            snakeShape.addShape(new Circle(new Vector2(32, 32), new Vector2(3, 3 * i), snakeColor));
+
+            snakeShapeMap.put(playerSnake, snakeShape);
+
+            // automatically add a new element to the snake
+            /*
+            playerSnake.body.addListener((ListChangeListener<Vector2>) change -> {
+                change.getAddedSubList().forEach(newlyAddedPositionVector -> {
+                    snakeShape.addShape(new Circle(new Vector2(32,32), newlyAddedPositionVector, snakeColor));
+                });
+            });
+            */
+
         }
 
         // setup the player view
@@ -243,10 +260,17 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             if (snake.currentDirection == Vector2.ZERO) {
                 // if the direction of a player is zero (= not moving) dont do anything
             } else {
+
                 // calculate the current position for each snake
                 for (int i = snake.body.size() - 1; i >= 1; i--) {
-                    snake.body.get(i).x = snake.body.get(i - 1).x;
-                    snake.body.get(i).y = snake.body.get(i - 1).y;
+                    Vector2 current = snake.body.get(i);
+                    Vector2 prev = snake.body.get(i - 1);
+                    current.set(prev);
+
+                    CompositeShape snakeShape = snakeShapeMap.get(snake);
+                    for (Shape shape : snakeShape.getShapes()) {
+                        shape.getPosition().set(current);
+                    }
                 }
 
                 // add the current direction vector to the head of the snake,
@@ -405,6 +429,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
                     // make the corresponding snake of the player one element longer
                     snake.addBodyElement();
+                    snakeShapeMap.get(snake).addShape(new Circle(new Vector2(32, 32), new Vector2(32, 32), snake.color));
 
                     /*
                     // deciding effect of food based on randomness
@@ -596,6 +621,12 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      */
     private void drawSnake(GraphicsContext gc) {
 
+        for (Snake value : playerSnakeMap.values()) {
+            CompositeShape snakeShape = snakeShapeMap.get(value);
+            snakeShape.draw(gc);
+        }
+
+        /*
         for (Snake snake : playerSnakeMap.values()) {
 
             // draw the head of the snake
@@ -631,6 +662,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                 }
             }
         }
+         */
     }
 
     /**

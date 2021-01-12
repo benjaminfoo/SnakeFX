@@ -34,11 +34,47 @@ public class SnakeColor {
         return new SnakeColor(color.getRed(), color.getGreen(), color.getBlue());
     }
 
-    public Color toJavaFxColor(){
-        if(javaFXColor == null){
+    public Color toJavaFxColor() {
+        if (javaFXColor == null) {
             javaFXColor = new Color(red, green, blue, 1);
         }
         return javaFXColor;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SnakeColor that = (SnakeColor) o;
+
+        if (Double.compare(that.red, red) != 0) return false;
+        if (Double.compare(that.green, green) != 0) return false;
+        if (Double.compare(that.blue, blue) != 0) return false;
+        return javaFXColor != null ? javaFXColor.equals(that.javaFXColor) : that.javaFXColor == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(red);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(green);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(blue);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (javaFXColor != null ? javaFXColor.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SnakeColor{" +
+                "red=" + red +
+                ", green=" + green +
+                ", blue=" + blue +
+                ", javaFXColor=" + javaFXColor +
+                '}';
+    }
 }

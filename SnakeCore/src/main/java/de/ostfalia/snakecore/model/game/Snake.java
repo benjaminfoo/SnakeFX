@@ -2,9 +2,8 @@ package de.ostfalia.snakecore.model.game;
 
 import de.ostfalia.snakecore.model.math.Vector2;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Benjamin Wulfert
@@ -21,7 +20,7 @@ public class Snake {
     public Vector2 head;
 
     // the body parts of the snake
-    public List<Vector2> body = new ArrayList();
+    public List<Vector2> body = new LinkedList<>();
 
     // The current direction gets added to the heads position on every game tick (each iteration of the game-loop)
     public Vector2 currentDirection = Vector2.RIGHT;
@@ -74,27 +73,51 @@ public class Snake {
         isPredator = false;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Snake snake = (Snake) o;
-        return
-                Objects.equals(head, snake.head) &&
-                        Objects.equals(body, snake.body) &&
-                        currentDirection == snake.currentDirection &&
-                        Objects.equals(color, snake.color);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(head, body, currentDirection, color);
-    }
 
     /**
      * Adds an element to the snakes body
      */
     public void addBodyElement() {
         body.add(new Vector2(-1, -1));
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Snake snake = (Snake) o;
+
+        if (isPredator != snake.isPredator) return false;
+        if (initialLength != snake.initialLength) return false;
+        if (head != null ? !head.equals(snake.head) : snake.head != null) return false;
+        if (body != null ? !body.equals(snake.body) : snake.body != null) return false;
+        if (currentDirection != null ? !currentDirection.equals(snake.currentDirection) : snake.currentDirection != null)
+            return false;
+        return color != null ? color.equals(snake.color) : snake.color == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (isPredator ? 1 : 0);
+        result = 31 * result + (head != null ? head.hashCode() : 0);
+        result = 31 * result + (body != null ? body.hashCode() : 0);
+        result = 31 * result + (currentDirection != null ? currentDirection.hashCode() : 0);
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        result = 31 * result + initialLength;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Snake{" +
+                "isPredator=" + isPredator +
+                ", head=" + head +
+                ", body=" + body +
+                ", currentDirection=" + currentDirection +
+                ", color=" + color +
+                ", initialLength=" + initialLength +
+                '}';
     }
 }
