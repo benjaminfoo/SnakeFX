@@ -41,19 +41,22 @@ Die folgenden Befehle werden für den Datenaustausch verwendet:
 
 #### STOMP-Endpoints
 Die folgenden URLs dienen als Adresse / Endpoints für die Kommunikation mittels WebSockets
-- ws://localhost:8080/snakeserver - HTTP-Handshake und WebSocket / STOMP Upgrade
-- ws://localhost:8080/app/games/{gameId} - Übertragung von Spielerdaten an das Backend - wird gebroadcastet an alle verbundenen Clients
-- ws://localhost:8080/app/games/{gameId}/{playerId} - Bekanntgabe von Spielern aus der Lobby welche einem Spiel beitreten
-- ws://localhost:8080/app/games/ - Veröffentlichung neuer Spiele
-- ws://localhost:8080/app/players/ - Bekanntgabe des Beitritts von Spielern in die Lobby 
+- ws://localhost:13373/snakeserver - HTTP-Handshake und WebSocket / STOMP Upgrade
+- ws://localhost:13373/app/games/{gameId} - Übertragung von Spielerdaten an das Backend - wird gebroadcastet an alle
+  verbundenen Clients
+- ws://localhost:13373/app/games/{gameId}/{playerId} - Bekanntgabe von Spielern aus der Lobby welche einem Spiel
+  beitreten
+- ws://localhost:13373/app/games/ - Veröffentlichung neuer Spiele
+- ws://localhost:13373/app/players/ - Bekanntgabe des Beitritts von Spielern in die Lobby
 
 #### HTTP / REST
 Die folgenden URLs dienen als Adresse für die Kommunikation mittels HTTP-Protokoll
-- http://localhost:8080/h2 (user: sa | pass: <none>)
-- http://localhost:8080/api/spieler/
-- http://localhost:8080/api/spieler/name
-- http://localhost:8080/api/lobby
-- http://localhost:8080/api/historie
+
+- http://localhost:13373/h2 (user: sa | pass: <none>)
+- http://localhost:13373/api/spieler/
+- http://localhost:13373/api/spieler/name
+- http://localhost:13373/api/lobby
+- http://localhost:13373/api/historie
 
 ## Architektur: Frontend
 **BaseController** \

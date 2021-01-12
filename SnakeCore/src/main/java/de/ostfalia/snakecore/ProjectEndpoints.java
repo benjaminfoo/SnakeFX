@@ -7,8 +7,8 @@ package de.ostfalia.snakecore;
 public class ProjectEndpoints {
 
     // The base url of the backend
-    // public static String URL_BASE = "http://localhost:8080/";
-    public static String URL_BASE = "http://192.168.178.32:8080/";
+    // public static String URL_BASE = "http://localhost:13373/";
+    public static String URL_BASE = "http://192.168.178.32:13373/";
 
     // The path to the api
     public static final String API_PATH = "api/";
@@ -20,19 +20,19 @@ public class ProjectEndpoints {
     public static final String API_ENDPOINT_LOBBY = "lobby/";
     public static final String API_ENDPOINT_HISTORIE = "historie/";
 
-    // http://localhost:8080/api/login/
+    // http://localhost:13373/api/login/
     public static String URL_API_LOGIN = URL_BASE + API_PATH + API_ENDPOINT_LOGIN;
 
-    // http://localhost:8080/api/register/
+    // http://localhost:13373/api/register/
     public static String URL_API_REGISTER = URL_BASE + API_PATH + API_ENDPOINT_REGISTER;
 
-    // http://localhost:8080/api/spieler/
+    // http://localhost:13373/api/spieler/
     public static String URL_API_SPIELER = URL_BASE + API_PATH + API_ENDPOINT_SPIELER;
 
-    // http://localhost:8080/api/lobby/
+    // http://localhost:13373/api/lobby/
     public static String URL_API_LOBBY = URL_BASE + API_PATH + API_ENDPOINT_LOBBY;
 
-    // http://localhost:8080/api/historie/
+    // http://localhost:13373/api/historie/
     public static String URL_API_HISTORIE = URL_BASE + API_PATH + API_ENDPOINT_HISTORIE;
 
     /**
@@ -46,16 +46,16 @@ public class ProjectEndpoints {
         System.out.println("Changing url to: " + URL_BASE);
         System.out.println("Changing url to: " + URL_BASE);
 
-        // http://localhost:8080/api/login/
+        // http://localhost:13373/api/login/
         URL_API_LOGIN = URL_BASE + API_PATH + API_ENDPOINT_LOGIN;
 
-        // http://localhost:8080/api/register/
+        // http://localhost:13373/api/register/
         URL_API_REGISTER = URL_BASE + API_PATH + API_ENDPOINT_REGISTER;
 
-        // http://localhost:8080/api/spieler/
+        // http://localhost:13373/api/spieler/
         URL_API_SPIELER = URL_BASE + API_PATH + API_ENDPOINT_SPIELER;
 
-        // http://localhost:8080/api/lobby/
+        // http://localhost:13373/api/lobby/
         URL_API_LOBBY = URL_BASE + API_PATH + API_ENDPOINT_LOBBY;
 
         // this replaces the hardcoded path (localhost) and the protocol
@@ -67,9 +67,9 @@ public class ProjectEndpoints {
     // =============================
 
     // The STOMP server base path
-    public static String URL_STOMP_BASE = "ws://localhost:8080/snakeserver";
+    public static String URL_STOMP_BASE = "ws://localhost:13373/snakeserver";
 
-    // ws://localhost:8080/stomp/
+    // ws://localhost:13373/stomp/
     public static final String STOMP_BROKER_TOPIC = "/topic";
     public static final String STOMP_TOPIC_MESSAGES = "/topic/messages";
 

@@ -16,7 +16,7 @@ public class StompClientApp {
     // This is just for testing the stompClient solely
     public static void main(String[] args) {
         StompClient s = new StompClient();
-        // s.connect("ws://localhost:8080/snakeserver", () -> {
+        // s.connect("ws://localhost:13373/snakeserver", () -> {
         s.connect(ProjectEndpoints.URL_STOMP_BASE, () -> {
             System.out.println("Connected");
         });

@@ -23,7 +23,7 @@ import java.util.LinkedList;
  */
 public class StompClient extends StompSessionHandlerAdapter implements StompMessageListener {
 
-    // ws://localhost:8080/snakeserver/
+    // ws://localhost:13373/snakeserver/
     private String connectionUrl;
 
     private StompSessionHandler sessionHandler;
