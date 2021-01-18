@@ -1,7 +1,7 @@
 package de.ostfalia.snakecore.model.game;
 
 import de.ostfalia.snakecore.model.math.Vector2;
-import javafx.scene.image.Image;
+import javafx.scene.image  .Image;
 
 import java.util.Objects;
 
