@@ -25,11 +25,11 @@ public class ApplicationConstants {
     // Test-User, Bot-User
     public static final String BOT_USER_NAME = "BotUser";
 
-    public static final String TEST_USER_ONE_NAME = "otto"; // <- username
-    public static final String TEST_USER_ONE_PASS = "otto"; // <- passwort - kannst du auch ändern wie du willst
+    public static final String TEST_USER_ONE_NAME = "Benjamin";
+    public static final String TEST_USER_ONE_PASS = "Benjamin_Passwort";
 
-    public static final String TEST_USER_TWO_NAME = "Eugene";
-    public static final String TEST_USER_TWO_PASS = "password-b";
+    public static final String TEST_USER_TWO_NAME = "Franziska";
+    public static final String TEST_USER_TWO_PASS = "Franziska_Passwort";
 
 
 
