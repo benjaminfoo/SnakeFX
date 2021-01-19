@@ -1,7 +1,6 @@
 package de.ostfalia.snakecore.model;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 /**
  * @author Benjami Wulfert
@@ -64,12 +63,18 @@ public class Spieler {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Spieler spieler = (Spieler) o;
-        return Objects.equals(name, spieler.name);
+
+        if (name != null ? !name.equals(spieler.name) : spieler.name != null) return false;
+        return pass != null ? pass.equals(spieler.pass) : spieler.pass == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (pass != null ? pass.hashCode() : 0);
+        return result;
     }
+
 }

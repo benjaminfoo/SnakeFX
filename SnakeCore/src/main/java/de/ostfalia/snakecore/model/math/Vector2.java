@@ -1,7 +1,5 @@
 package de.ostfalia.snakecore.model.math;
 
-import java.util.Objects;
-
 /**
  * @author Benjamin Wulfert
  *
@@ -73,14 +71,18 @@ public class Vector2 {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Vector2 vector2 = (Vector2) o;
-        return x == vector2.x &&
-                y == vector2.y;
+
+        if (x != vector2.x) return false;
+        return y == vector2.y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        int result = x;
+        result = 31 * result + y;
+        return result;
     }
 
     @Override

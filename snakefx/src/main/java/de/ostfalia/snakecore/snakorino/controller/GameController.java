@@ -74,15 +74,15 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     // The current instances of food objects
     private Set<Food> foodList = new HashSet<>();
 
-    // States
-    private boolean gameOver;
-
     // PLAYER STUFF - REFACTOR TO THE SNAKE CLASS
     private int score = 0;
     // PLAYER STUFF
 
-    // a map of players and there corresponding snakes
+    // a map of players and there corresponding snakes - snake => player
+    // we also need a bidirectional mapping to get a player for a snake - player => snake
     private Map<Spieler, Snake> playerSnakeMap = new HashMap<>();
+    // we're only updating references on this and never remove elements of the map
+    private Map<Snake, Spieler> snakePlayerMap = new HashMap<>();
 
     // a mapping of snakes and their composite shapes - a snake is represtend via a compositeshape,
     // which is a set of shape instances
@@ -90,7 +90,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     // the graphicsContext which is used to draw to the screen manually
     private GraphicsContext gc;
-
 
     // the current instance of the game
     private RunningGame runningGame;
@@ -101,6 +100,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     // a map which contains keycode to direction-vector relations
     private Map<KeyCode, Vector2> inputDirectionMap = new HashMap<>();
+
+
+    // a map which contains a player to boolean relation which indicates
+    // that a player is gameOver
+    private Map<Spieler, Boolean> spielerGameOverMap = new HashMap<>();
 
 
     @Override
@@ -142,11 +146,14 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
             // create a corresponding snake
             Snake playerSnake = new Snake(new Vector2(3, 3 * i), new SnakeColor(playerColors[i]));
+            playerSnake.owner = spieler.getName();
 
             // put it into the hashmap for later use (player related, via communication)
             playerSnakeMap.put(spieler, playerSnake);
+            snakePlayerMap.put(playerSnake, spieler);
 
             // snakeShapeMap.put(playerSnake, new CompositeShape());
+            spielerGameOverMap.put(spieler, false);
         }
 
         // setup the player view
@@ -220,9 +227,16 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     private void update(GraphicsContext gc) {
 
         // if a game for a client is over, indicate it
-        if (gameOver) {
-            drawGameOver(gc);
-            return;
+        // iterate over each player to get a valid reference for the local player
+        for (Spieler derBenutzerWelcherDasFrontendGeradeAktivAufSeinemRechnerAusfuehrt : playerSnakeMap.keySet()) {
+            // if the name of the local player equals to one player instance within the games list
+            if (derBenutzerWelcherDasFrontendGeradeAktivAufSeinemRechnerAusfuehrt.name.equalsIgnoreCase(getApplication().getSpieler().getName())) {
+                // if this user is indicated as game over
+                if (spielerGameOverMap.get(derBenutzerWelcherDasFrontendGeradeAktivAufSeinemRechnerAusfuehrt)) {
+                    drawGameOver(gc);
+                    return;
+                }
+            }
         }
 
         // draw the checkerboard pattern, update the unused contents of the canvas
@@ -282,7 +296,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             // if a snake hits itself, the related player of the snake has lost the game
             for (int i = 1; i < snake.body.size(); i++) {
                 if (snake.head.x == snake.body.get(i).getX() && snake.head.getY() == snake.body.get(i).getY()) {
-                    gameOver = true;
+
+                    // update the game-over state for this player
+                    Spieler currentPlayerForSnake = snakePlayerMap.get(snake);
+                    spielerGameOverMap.put(currentPlayerForSnake, true);
+
                     break;
                 }
             }
@@ -659,8 +677,16 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // check for snake-collision
         for (Snake a : playerSnakeMap.values()) {
             for (Snake b : playerSnakeMap.values()) {
+
                 if (a.head != b.head && a.head.x == b.head.x && a.head.y == b.head.y) {
-                    gameOver = true;
+
+                    // Get the player who has lost
+                    Spieler lostTheGamePlayer = snakePlayerMap.get(a);
+                    spielerGameOverMap.put(lostTheGamePlayer, true);
+
+                    System.out.println("Lost the Game: " + lostTheGamePlayer.getName());
+
+
                 }
 
                 for (Vector2 abody : a.body) {
@@ -670,9 +696,13 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                         // check if y of snake a is y of snake b
                         if (abody != bbody && abody.x == bbody.x && abody.y == bbody.y
                                 && abody.x != -1 && abody.y != -1 && bbody.x != -1 && bbody.y != -1) {
-                            gameOver = true;
-                            // System.out.println("Schlange A: " + abody);
-                            // System.out.println("Schlange B: " + bbody);
+
+                            // Get the player who has lost
+                            Spieler lostTheGamePlayer = snakePlayerMap.get(a);
+                            spielerGameOverMap.put(lostTheGamePlayer, true);
+
+                            System.out.println("Lost the Game: " + lostTheGamePlayer.getName());
+
                         }
                     }
                 }
