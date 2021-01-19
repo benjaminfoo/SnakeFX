@@ -115,6 +115,12 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         inputDirectionMap.put(KeyCode.DOWN, Vector2.DOWN);
         inputDirectionMap.put(KeyCode.RIGHT, Vector2.RIGHT);
         inputDirectionMap.put(KeyCode.LEFT, Vector2.LEFT);
+
+        inputDirectionMap.put(KeyCode.R, Vector2.ZERO);
+        inputDirectionMap.put(KeyCode.W, Vector2.UP);
+        inputDirectionMap.put(KeyCode.S, Vector2.DOWN);
+        inputDirectionMap.put(KeyCode.D, Vector2.RIGHT);
+        inputDirectionMap.put(KeyCode.A, Vector2.LEFT);
     }
 
     /**

@@ -25,8 +25,8 @@ public class ApplicationConstants {
     // Test-User, Bot-User
     public static final String BOT_USER_NAME = "BotUser";
 
-    public static final String TEST_USER_ONE_NAME = "Benjamin";
-    public static final String TEST_USER_ONE_PASS = "Benjamin_Passwort";
+    public static final String TEST_USER_ONE_NAME = "benni";
+    public static final String TEST_USER_ONE_PASS = "WiSe2020!";
 
     public static final String TEST_USER_TWO_NAME = "Franziska";
     public static final String TEST_USER_TWO_PASS = "Franziska_Passwort";
