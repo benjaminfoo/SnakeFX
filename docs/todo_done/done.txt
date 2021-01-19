@@ -9,4 +9,66 @@
  - Der Spieler wird aus der Lobby entfernt 
 - was passiert, wenn ein Spieler ein aktives Spiel verlässt, oder evtl. die Verbindung unterbrochen wird?
  - Der Spieler wird als NOOP markiert, bleibt im Spiel zwar enthalten bewegt sich aber nicht mehr und kann auch nicht mehr gewinnen
- 
+
+- Magic Strings in konstanten refactoren
+- Dokumentation ausarbeiten
+- Test-Szenario: Ein Server -> drei Clients realisieren
+- Test-Szenario: Mehrere Spiele hintereinander durchführen
+- Code refactoren und vereinfachen
+
+- Event für Konsum wird versendet und empfangen [done]
+- Position der Elemente muss valide sein [done]
+- Es darf nur eine initiale Position generiert werden <-> unabhängig vom Client [done]
+- Food / PowerUps werden generiert und synchronisiert [done]
+- Konsum an Backend übertragen -> initial [done]
+
+- Spieler müssen sich durch Wände teleportieren können
+
+- Akzeptanz von Registrierungs-Anforderungen (API)  [DONE]
+  - Erstelle einen neuen Benutzer / Spieler im Backend (DB)  [DONE]
+- Akzeptanz von Login-Anforderungen (API, Session-Handling)  [DONE]
+  - Abgleich mit Usern in der Datenbank, erstelle eine Session falls b vorhanden  [DONE]
+- Absicherung des Logins (z.B. mit bCrypt & Salts)
+- Senden der Lobbydaten für Lobby auf dem Client  [DONE]
+  - Verwaltung der Lobby  [DONE]
+  - Empfang neuer Spielrunden-Definition vom Backend  [DONE]
+- Bezug der Spielhistorie-Daten (Spielrunden) vom Backend zum Client (Auf Anfrage) (API) [DONE]
+
+### Frontend
+- Neue UI "LoginScreen"
+  - Refactoring des RegisterScreens in den LoginScreen [DONE]
+  - Impl. des User-Interfaces [DONE]
+  - Anfrage an den Server -> Login [DONE]
+  - Registrierung mittels Frontend am Backend [DONE]
+  - Login mittels Frontend am Backend [DONE]
+- Neue UI "Homescreen"
+  - Impl. des User-Interfaces [DONE]
+  - Wechsel von Login auf Homescreen (Scene-Handling) [DONE]
+  - Neue UI "Lobby" - ist Teil vom Homescreen [DONE]
+  - Button: Betrete existierendes Spiel
+- Neue UI "Erstelle Spiel"
+  - Impl. des User-Interfaces [DONE]
+  - Definition einer Spielrunde [DONE]
+  - Senden der SpielDefinition an das Backend  [DONE]
+- Neue UI "Spielhistorie" [DONE]
+  - Impl. des User-Interfaces [DONE]
+  - Bezug bisheriger Spielerunden vom Backend [DONE]
+  - Anbindung von Front- and Backend und vice versa [DONE]
+  - Impl. der ListCells [DONE]
+- Neue UI "Spielrunde" o. "Aktives Spiel"
+  - Beinhaltet alle Spieler einer Spielrunde [DONE]
+  - Stellt die Spieler, deren Figuren, das Spielfeld und den Punktestand dar
+    - Die Spielerfiguren müssen bewegt werden [DONE]
+    - PowerUps dargestellt werden
+    - Die Map, evtl. Hindernisse oder sonstiges
+    - Punktestand jedes Spielers
+- Spieler kann Ende eines anderen Spielers abbeißen
+- Erzeugung eines Spiels anhand der Spieldefinition [DONE]
+- Teilnahme an Spiel in Lobby [DONE]
+- UI zum starten des Spiels (nur für Admin d. Spiels) [DONE]
+- Generation des STOMP-Path's für Running-Games i.d. Lobby
+- Teilnahme an Spiel anhand von Stomp-Path [DONE]
+- Freigabe des Admin-Buttons zum starten des Spiels [DONE]
+- Starten des Spiels [DONE]
+  - Initialisierung des Spiels auf allen Clients [DONE]
+  - Sync. des Spiels [DONE]
