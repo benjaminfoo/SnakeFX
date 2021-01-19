@@ -29,7 +29,7 @@ public class LoginTask extends Task<Spieler> {
 
         System.out.println("Login -> ");
 
-        Spieler neuerSpieler = new Spieler(-1L, username, password);
+        Spieler neuerSpieler = new Spieler(username, password);
         Gson gson = new Gson();
 
         HttpResponse<String> res = null;

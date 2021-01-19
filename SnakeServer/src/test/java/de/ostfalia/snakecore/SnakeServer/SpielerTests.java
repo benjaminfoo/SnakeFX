@@ -16,17 +16,17 @@ class SpielerTests {
 	@Test
 	void Test_Save_Player_To_Database_And_Retrieve_It() {
 
-		// Create a new player
-		Spieler testSpieler = new Spieler(1L, "Test-Spieler", "Test-Passwort");
+        // Create a new player
+        Spieler testSpieler = new Spieler("Test-Spieler", "Test-Passwort");
 
-		// save it to the database
-		spielerRepository.save(testSpieler);
+        // save it to the database
+        spielerRepository.save(testSpieler);
 
-		// retrieve it
-		Spieler testSpielerAusDB = spielerRepository.findByName(testSpieler.name);
+        // retrieve it
+        Spieler testSpielerAusDB = spielerRepository.findByName(testSpieler.name);
 
-		// check that its present
-		Assert.assertTrue(testSpielerAusDB != null);
+        // check that its present
+        Assert.assertTrue(testSpielerAusDB != null);
 
 		// check that the contents are equal
 		Assert.assertEquals(testSpieler.name, testSpielerAusDB.name);

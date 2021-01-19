@@ -25,19 +25,19 @@ class SpielStandTest {
 	@Test
 	void Test_Save_Spielstand() {
 
-        // Definition Test-Spieler
-        Spieler testSpieler = new Spieler(1L, "Test-Spieler", "Test-Passwort");
-        Spieler testSpieler2 = new Spieler(2L, "Test-Spieler2", "Test-Passwort");
+		// Definition Test-Spieler
+		Spieler testSpieler = new Spieler("Test-Spieler", "Test-Passwort");
+		Spieler testSpieler2 = new Spieler("Test-Spieler2", "Test-Passwort");
 
-        // Def. eines Ergebnisses
-        SpielstandErgebnis s = new SpielstandErgebnis(37, testSpieler);
-        SpielstandErgebnis s2 = new SpielstandErgebnis(100, testSpieler2);
+		// Def. eines Ergebnisses
+		SpielstandErgebnis s = new SpielstandErgebnis(37, testSpieler);
+		SpielstandErgebnis s2 = new SpielstandErgebnis(100, testSpieler2);
 
-        // Speichern des Ergebnisses
-        // spielstandErgebnisRepository.save(s);
+		// Speichern des Ergebnisses
+		// spielstandErgebnisRepository.save(s);
 
-        // Definition eines Spielstands
-        Spielstand spielstand = new Spielstand();
+		// Definition eines Spielstands
+		Spielstand spielstand = new Spielstand();
         spielstand.getErgebnisse().add(s);
         spielstand.getErgebnisse().add(s2);
 

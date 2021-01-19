@@ -50,7 +50,7 @@ public class DataInitRunner implements ApplicationRunner {
     }
 
     private void prepopulateBotUser() {
-        Spieler botPlayer = new Spieler(4L, BOT_USER_NAME, BOT_USER_NAME + "Pw123!"); // they'll never know
+        Spieler botPlayer = new Spieler(BOT_USER_NAME, BOT_USER_NAME + "Pw123!"); // they'll never know
         spielerRepository.save(botPlayer);
 
         lobbyController.getCurrentPlayers().add(botPlayer);
@@ -96,8 +96,8 @@ public class DataInitRunner implements ApplicationRunner {
     private void prepopulateGameHistoryData() {
 
         // Szenario 1 - Zwei Spieler
-        Spieler testSpieler = new Spieler(1L, ApplicationConstants.TEST_USER_ONE_NAME, ApplicationConstants.TEST_USER_ONE_PASS);
-        Spieler testSpieler2 = new Spieler(2L, ApplicationConstants.TEST_USER_TWO_NAME, ApplicationConstants.TEST_USER_TWO_PASS);
+        Spieler testSpieler = new Spieler(ApplicationConstants.TEST_USER_ONE_NAME, ApplicationConstants.TEST_USER_ONE_PASS);
+        Spieler testSpieler2 = new Spieler(ApplicationConstants.TEST_USER_TWO_NAME, ApplicationConstants.TEST_USER_TWO_PASS);
 
         spielerRepository.save(testSpieler);
         spielerRepository.save(testSpieler2);
@@ -116,7 +116,7 @@ public class DataInitRunner implements ApplicationRunner {
         spielstandErgebnisRepository.save(ergebnis2);
 
         // Szenario 2 - Drei Spieler
-        Spieler testSpieler3 = new Spieler(3L, "p3", "p3");
+        Spieler testSpieler3 = new Spieler("p3", "p3");
         spielerRepository.save(testSpieler3);
 
         Spielstand spielstand2 = new Spielstand();

@@ -2,6 +2,7 @@ package de.ostfalia.snakecore.ws.model;
 
 import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
+import de.ostfalia.snakecore.model.SpielstandErgebnis;
 import de.ostfalia.snakecore.model.game.Config;
 import de.ostfalia.snakecore.model.game.Food;
 import de.ostfalia.snakecore.model.game.Snake;
@@ -29,7 +30,7 @@ public class GameSessionMessage {
     }
 
     // whom send the message?
-    private Spieler player;
+    private Spieler sender;
 
     // which game is this message targeted at?
     private String gameId;
@@ -53,16 +54,20 @@ public class GameSessionMessage {
 
     public Snake spielerSnake;
 
+    public SpielstandErgebnis winnerResult;
+    public List<SpielstandErgebnis> loserResults;
+
     public GameSessionMessage() {
 
     }
+
 
     /**
      * This constructor is used to indicate a started game session
      */
     public GameSessionMessage(GameState gameState, Spieler userName, RunningGame runningGame) {
         this.gameState = gameState;
-        this.player = userName;
+        this.sender = userName;
         this.runningGame = runningGame;
     }
 
@@ -84,17 +89,17 @@ public class GameSessionMessage {
     public GameSessionMessage(GameState gameState, Spieler playerName, String gameId, KeyCode input) {
         this.gameState = gameState;
         this.gameId = gameId;
-        this.player = playerName;
+        this.sender = playerName;
         this.input = input;
     }
 
 
-    public Spieler getPlayer() {
-        return player;
+    public Spieler getSender() {
+        return sender;
     }
 
-    public void setPlayer(Spieler player) {
-        this.player = player;
+    public void setSender(Spieler sender) {
+        this.sender = sender;
     }
 
     public String getGameId() {
@@ -166,18 +171,18 @@ public class GameSessionMessage {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GameSessionMessage that = (GameSessionMessage) o;
-        return foodConsumed == that.foodConsumed && Objects.equals(player, that.player) && Objects.equals(gameId, that.gameId) && Objects.equals(runningGame, that.runningGame) && gameState == that.gameState && input == that.input;
+        return foodConsumed == that.foodConsumed && Objects.equals(sender, that.sender) && Objects.equals(gameId, that.gameId) && Objects.equals(runningGame, that.runningGame) && gameState == that.gameState && input == that.input;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(player, gameId, runningGame, gameState, input, foodConsumed);
+        return Objects.hash(sender, gameId, runningGame, gameState, input, foodConsumed);
     }
 
     @Override
     public String toString() {
         return "GameSessionMessage{" +
-                "player='" + player + '\'' +
+                "player='" + sender + '\'' +
                 ", gameId='" + gameId + '\'' +
                 ", runningGame=" + runningGame +
                 ", gameState=" + gameState +

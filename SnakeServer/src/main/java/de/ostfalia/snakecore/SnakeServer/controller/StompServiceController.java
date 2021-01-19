@@ -1,7 +1,11 @@
 package de.ostfalia.snakecore.SnakeServer.controller;
 
+import de.ostfalia.snakecore.SnakeServer.persistance.SpielerRepository;
+import de.ostfalia.snakecore.SnakeServer.persistance.SpielstandRepository;
 import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
+import de.ostfalia.snakecore.model.Spielstand;
+import de.ostfalia.snakecore.model.SpielstandErgebnis;
 import de.ostfalia.snakecore.model.game.Food;
 import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.math.Vector2;
@@ -28,11 +32,18 @@ import java.util.*;
 @Controller
 public class StompServiceController {
 
+
     @Autowired
     private SimpMessagingTemplate template;
 
     @Autowired
     public LobbyController lobbyController;
+
+    @Autowired
+    private SpielstandRepository spielstandRepository;
+
+    @Autowired
+    private SpielerRepository spielerRepository;
 
     @MessageMapping("/games") // "/app/games/
     @SendTo("/topic/games")
@@ -134,6 +145,52 @@ public class StompServiceController {
             }
 
             */
+        }
+
+        // if there is an incoming message ...
+        // ... with the state of FINISHING
+        if (m.getGameState() == GameSessionMessage.GameState.FINISHING) {
+
+            // ... and there is a winner and a loser result defined
+            if (m.winnerResult != null && m.loserResults != null) {
+
+                // create a new saveState
+                Spielstand spielstand = new Spielstand();
+                spielstand.ergebnisse.add(m.winnerResult);
+                spielstand.ergebnisse.addAll(m.loserResults);
+
+                // write that mofo to the database
+                spielstandRepository.save(spielstand);
+
+            }
+
+        }
+
+
+        // if there is an incoming message ...
+        // ... with the state of FINISHING
+        if (m.getGameState() == GameSessionMessage.GameState.FINISHING) {
+
+            // ... and there is a winner and a loser result defined
+            if (m.loserResults != null && m.winnerResult == null) {
+
+                // create a new saveState
+                Spielstand spielstand = new Spielstand();
+
+                spielstand.date = System.currentTimeMillis();
+
+                for (SpielstandErgebnis loserResult : m.loserResults) {
+                    spielerRepository.save(loserResult.spieler);
+                    loserResult.spielstand = spielstand;
+                }
+
+                spielstand.ergebnisse.addAll(m.loserResults);
+
+                // write that mofo to the database
+                spielstandRepository.save(spielstand);
+
+            }
+
         }
 
 

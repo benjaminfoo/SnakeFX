@@ -24,7 +24,7 @@ public class Spieler {
     public Spieler() {
     }
 
-    public Spieler(Long id, String name, String pass) {
+    public Spieler(String name, String pass) {
         this.id = id;
         this.name = name;
         this.pass = pass;

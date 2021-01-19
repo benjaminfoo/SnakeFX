@@ -4,6 +4,7 @@ import de.ostfalia.snakecore.ApplicationConstants;
 import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
+import de.ostfalia.snakecore.model.SpielstandErgebnis;
 import de.ostfalia.snakecore.model.game.Config;
 import de.ostfalia.snakecore.model.game.Food;
 import de.ostfalia.snakecore.model.game.Snake;
@@ -31,10 +32,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -226,6 +225,8 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         timeline = new Timeline(new KeyFrame(Duration.millis(TICK_TIME_AMOUNT), event -> update(gc)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
+
     }
 
     /**
@@ -234,7 +235,13 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      *
      * @param gc - The graphics context in order to draw something on the canvas
      */
-    private void update(GraphicsContext gc) {
+    private synchronized void update(GraphicsContext gc) {
+
+        // if every player is in game over state we dont need to update anything anymore
+        if (spielerGameOverMap.values().stream().allMatch(v -> v)) {
+            timeline.stop();
+            return;
+        }
 
         // draw the checkerboard pattern, update the unused contents of the canvas
         drawBackground(gc);
@@ -261,6 +268,71 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
             drawGameOver(gc);
 
+        }
+
+        // check game state
+        // if there is only one not-gameover player left, send a message that the game has been played
+        // there exists only one winner, so for a 1 on 1 or two player game there can only be one winner and one loser
+        // for three players there are 2 loosers and one winner, and so on.
+        int totalLosers = (int) spielerGameOverMap.keySet().stream().filter(spieler -> {
+            // if the current element within the stream equals true it means the player lost the game
+            return spielerGameOverMap.get(spieler);
+        }).count();
+
+        if (totalLosers == playerSnakeMap.size()) {
+            // prepare game message to inform the backend that a game has been played and a winner and some loosers have been found.
+            GameSessionMessage winnerLoserMessage = new GameSessionMessage();
+
+            List<Spieler> loser = spielerGameOverMap.keySet().stream().filter(spieler -> {
+                return spielerGameOverMap.get(spieler);
+            }).collect(Collectors.toList());
+
+
+            List<SpielstandErgebnis> loserResults = new LinkedList<>();
+            loser.forEach(noob -> {
+                SpielstandErgebnis noobResult = new SpielstandErgebnis(score, noob);
+                loserResults.add(noobResult);
+            });
+
+            winnerLoserMessage.loserResults = loserResults;
+
+            winnerLoserMessage.setGameState(GameSessionMessage.GameState.FINISHING);
+
+            getApplication().getStompClient().sendGameInputMessage(
+                    runningGame.stompPath,
+                    winnerLoserMessage
+            );
+        }
+
+        // if there is one player who is not a loser, it must mean he is the winner
+        if (totalLosers - 1 == playerSnakeMap.keySet().size()) {
+
+            // prepare game message to inform the backend that a game has been played and a winner and some loosers have been found.
+            GameSessionMessage winnerLoserMessage = new GameSessionMessage();
+
+            Spieler winner = spielerGameOverMap.keySet().stream().filter(spieler -> {
+                return !spielerGameOverMap.get(spieler);
+            }).findFirst().get();
+            List<Spieler> loser = spielerGameOverMap.keySet().stream().filter(spieler -> {
+                return spielerGameOverMap.get(spieler);
+            }).collect(Collectors.toList());
+
+
+            List<SpielstandErgebnis> loserResults = new LinkedList<>();
+            loser.forEach(noob -> {
+                SpielstandErgebnis noobResult = new SpielstandErgebnis(score, noob);
+                loserResults.add(noobResult);
+            });
+
+            winnerLoserMessage.loserResults = loserResults;
+            winnerLoserMessage.winnerResult = new SpielstandErgebnis(score, winner);
+
+            winnerLoserMessage.setGameState(GameSessionMessage.GameState.FINISHING);
+
+            getApplication().getStompClient().sendGameInputMessage(
+                    runningGame.stompPath,
+                    winnerLoserMessage
+            );
         }
 
     }
@@ -337,7 +409,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             }
 
             // if the player is not null
-            if (msg.getPlayer() != null && msg.getInput() != null) {
+            if (msg.getSender() != null && msg.getInput() != null) {
 
                 // sync. the movement of the player
                 if (msg.getInput() != null) {
@@ -346,7 +418,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     Vector2 newDirection = inputDirectionMap.get(msg.getInput());
 
                     // update the players snake from the remote site
-                    Snake snake = playerSnakeMap.get(msg.getPlayer());
+                    Snake snake = playerSnakeMap.get(msg.getSender());
                     for (int i = 0; i < msg.spielerSnake.body.size(); i++) {
                         snake.body.get(i).set(msg.spielerSnake.body.get(i));
                     }
@@ -370,7 +442,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      * @param event - The input event
      */
     @Override
-    public void handle(KeyEvent event) {
+    public synchronized void handle(KeyEvent event) {
 
         // get the current input keycode of the last input
         KeyCode playerInput = event.getCode();

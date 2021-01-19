@@ -103,19 +103,14 @@ Im Package **runner** befinden sich verschiedene Ausprägungen von Spring-Applic
 Im Package **ws.server** befinden sich verschiedene Spring-Konfigurationsklassen welche zur Initialisierung von WebSockets und Security-Aspekten genutzt werden.
 
 ## Bugs / Offene Tasks
-
 - Das Spielfeld muss mit der Spieldefinition und Config gekoppelt werden:
   - wenn im Frontend bspw. eine Map-Höhe von 16 und eine Map-Breite von 48 eingestellt wird muss das im Spiel
     wiedergespiegelt werden
-
 - Auf SpielEnde / GameOver eines Clients reagieren
   - Sieger definieren
   - Persistenz des aktuellen Spiels für die SpielHistorie
-  - switch zur Lobby zurück
   - unsubscribe des letzten game topics
-
 - Regeln des Spiels einhalten
-
 - Liste von Spielen wird nicht mehr korrekt dargestellt - Trat irgendwo zwischen Commit 100 und Commit 120 auf
 - Spieler müssen einander das Ende des jeweils anderen abbeißen und "gut geschrieben" bekommen - TESTEN
 - Spieler tritt einem existierenden Spiel in der Lobby bei (Joining) [In Progress]
@@ -127,9 +122,21 @@ Im Package **ws.server** befinden sich verschiedene Spring-Konfigurationsklassen
 - Konsum von Food an Backend übertragen -> nicht nur initiial! [in progress]
 - Valide Endpoints für Spiele in der Lobby generieren und an RunningGames anhängen (aktuell immer "1", evtl. sowas wie
   eine UUID nehmen?)
-  - Beendigung des Spiels
-  - Persistenz d. Runde in DB
-  - Return to Lobby
-  - Cleanup
-    - Unsubscribe von Lobby-Topics
-    - Re-Subscribe nach erneuten beitreten eines Spiels
+- Beendigung des Spiels
+- Persistenz d. Runde in DB
+- Return to Lobby
+- Cleanup
+  - Unsubscribe von Lobby-Topics
+  - Re-Subscribe nach erneuten beitreten eines Spiels
+- Pro Spieler einen eigenen Highscore
+
+## Post-Abgabe-Done
+
+Diese Tasks wurden nach der Abgabe des Berichts erledigt.
+
+- Auf SpielEnde / GameOver eines Clients reagieren
+  - Asynchrones GameOver - für jede Front-End Instanz eine eigene GameOver-Behandlung [done]
+  - Sieger definieren
+  - Persistenz des aktuellen Spiels für die SpielHistorie
+  - switch zur Lobby zurück [done]
+  - unsubscribe des letzten game topics

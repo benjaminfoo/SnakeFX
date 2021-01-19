@@ -19,7 +19,7 @@ public class RegisterTask {
 
     public void register(String username, String password){
 
-        Spieler neuerSpieler = new Spieler(-1L, username, password);
+        Spieler neuerSpieler = new Spieler(username, password);
         Gson gson = new Gson();
 
         try {

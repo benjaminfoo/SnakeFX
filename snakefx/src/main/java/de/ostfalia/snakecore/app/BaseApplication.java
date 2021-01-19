@@ -118,7 +118,7 @@ public abstract class BaseApplication extends Application {
 
     public Spieler getSpieler() {
         if(spieler == null){
-            this.spieler = new Spieler(-1337L, userConfig.getUserName(), userConfig.getPass());
+            this.spieler = new Spieler(userConfig.getUserName(), userConfig.getPass());
         }
         return spieler;
     }

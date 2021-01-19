@@ -145,7 +145,7 @@ public class LoginController extends BaseController {
 
                 // register the player on the lobby
                 getApplication().getStompClient().sendNewPlayerMessage(new PlayerMessage(
-                        new Spieler(-1337L, getApplication().getUserConfig().getUserName(), getApplication().getUserConfig().getPass())
+                        new Spieler(getApplication().getUserConfig().getUserName(), getApplication().getUserConfig().getPass())
                 ));
 
                 // execute on the ui-thread
