@@ -6,6 +6,7 @@ import de.ostfalia.snakecore.model.SpielDefinition;
 import de.ostfalia.snakecore.model.Spielregel;
 import de.ostfalia.snakecore.ws.model.LobbyMessage;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -40,6 +41,8 @@ public class NewGameController extends BaseController {
 
         numberOfPlayers.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 10, 1));
         numberOfPowerups.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50, 3));
+        ruleSet.setItems(FXCollections.observableArrayList(new Spielregel("Last Snake standing - letzter Spieler gewinnt.")));
+        ruleSet.getSelectionModel().select(0);
 
         newGame.setOnAction(onclick -> {
             executeCreateNewGame();

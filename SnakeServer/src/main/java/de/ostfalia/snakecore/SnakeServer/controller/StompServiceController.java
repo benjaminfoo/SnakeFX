@@ -212,7 +212,6 @@ public class StompServiceController {
         return m;
     }
 
-
     @MessageMapping("/games/{gameId}/{playerId}")
     @SendTo("/topic/games/{gameId}/{playerId}")
     public PlayerJoinsGameMessage broadcastPlayerJoinedGameToClients(@DestinationVariable String gameId, @DestinationVariable String playerId, PlayerJoinsGameMessage message) {

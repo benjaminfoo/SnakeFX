@@ -29,6 +29,10 @@ public class Spielregel {
     public Spielregel() {
     }
 
+    public Spielregel(String name) {
+        this.name = name;
+    }
+
     public Spielregel(String name, Type type) {
         this.name = name;
         this.type = type;
@@ -48,5 +52,10 @@ public class Spielregel {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Regel: " + name;
     }
 }

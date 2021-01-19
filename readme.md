@@ -105,38 +105,35 @@ Im Package **ws.server** befinden sich verschiedene Spring-Konfigurationsklassen
 ## Bugs / Offene Tasks
 - Das Spielfeld muss mit der Spieldefinition und Config gekoppelt werden:
   - wenn im Frontend bspw. eine Map-Höhe von 16 und eine Map-Breite von 48 eingestellt wird muss das im Spiel
-    wiedergespiegelt werden
-- Auf SpielEnde / GameOver eines Clients reagieren
-  - Sieger definieren
-  - Persistenz des aktuellen Spiels für die SpielHistorie
-  - unsubscribe des letzten game topics
-- Regeln des Spiels einhalten
-- Liste von Spielen wird nicht mehr korrekt dargestellt - Trat irgendwo zwischen Commit 100 und Commit 120 auf
-- Spieler müssen einander das Ende des jeweils anderen abbeißen und "gut geschrieben" bekommen - TESTEN
+    wiedergegeben werden
+- Liste von Spielen in Lobby wird (nicht immer) nicht korrekt dargestellt - trat irgendwo zwischen Commit 100 und Commit
+  120 auf
+- Spieler müssen einander das Ende des jeweils anderen abbeißen und "gut geschrieben" bekommen - [In progress] [TEST]
 - Spieler tritt einem existierenden Spiel in der Lobby bei (Joining) [In Progress]
-- Spieler verlässt Spiel
+- Spieler verlässt Spiel während aktiver Spielrunde
+  - Dieser Spieler sollte als Verlierer markiert werden
 - Abschließende Integration der Design-Pattern
 - Food / PowerUps generieren - Design Patterns anwenden [in progress]
-- sout statements minimieren
-- Präsentation ausarbeiten
 - Konsum von Food an Backend übertragen -> nicht nur initiial! [in progress]
 - Valide Endpoints für Spiele in der Lobby generieren und an RunningGames anhängen (aktuell immer "1", evtl. sowas wie
   eine UUID nehmen?)
-- Beendigung des Spiels
-- Persistenz d. Runde in DB
-- Return to Lobby
-- Cleanup
-  - Unsubscribe von Lobby-Topics
+- Bei Spielende
+  - Unsubscribe von GameSessionMessages -> ansonsten empfängt man in einem weiteren Spiel alte Daten
   - Re-Subscribe nach erneuten beitreten eines Spiels
 - Pro Spieler einen eigenen Highscore
+- Nach Spiel:
+  - unsubscribe des letzten game topics
+- Präsentation ausarbeiten
 
 ## Post-Abgabe-Done
 
 Diese Tasks wurden nach der Abgabe des Berichts erledigt.
 
-- Auf SpielEnde / GameOver eines Clients reagieren
+- Auf SpielEnde / GameOver eines Clients reagieren [done]
   - Asynchrones GameOver - für jede Front-End Instanz eine eigene GameOver-Behandlung [done]
-  - Sieger definieren
-  - Persistenz des aktuellen Spiels für die SpielHistorie
+  - Sieger definieren [done]
+  - Persistenz des aktuellen Spiels in die SpielHistorie [done]
   - switch zur Lobby zurück [done]
-  - unsubscribe des letzten game topics
+- Regeln des Spiels einhalten [done]
+  - Aktuell existiert nur "Last Snake Standing" - Der letzte überlebende Spieler gewinnt [done]
+- sout statements minimieren [done]
