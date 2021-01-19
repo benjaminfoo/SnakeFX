@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -59,6 +60,9 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     @FXML
     private Label gameDetails;
+
+    @FXML
+    private Button backToHomeScreen;
     // View related
 
     // CHECK Config.java
@@ -159,6 +163,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // setup the player view
         playerList.getItems().addAll(runningGame.getActiveClients());
 
+        // if a player has lost - allow him to get back to the homescreen
+        backToHomeScreen.setOnAction(onClick -> {
+            showHomeScreen();
+        });
+
         // setup the game details
         gameDetails.setText(
                 "Admin: " + runningGame.admin + "\n" +
@@ -203,6 +212,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // - receiving messages from the server when something game related happens
         getApplication().getStompClient().setStompMessageListener(this);
 
+
         // display the rendering canvas
         gc = gameCanvas.getGraphicsContext2D();
 
@@ -226,19 +236,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      */
     private void update(GraphicsContext gc) {
 
-        // if a game for a client is over, indicate it
-        // iterate over each player to get a valid reference for the local player
-        for (Spieler derBenutzerWelcherDasFrontendGeradeAktivAufSeinemRechnerAusfuehrt : playerSnakeMap.keySet()) {
-            // if the name of the local player equals to one player instance within the games list
-            if (derBenutzerWelcherDasFrontendGeradeAktivAufSeinemRechnerAusfuehrt.name.equalsIgnoreCase(getApplication().getSpieler().getName())) {
-                // if this user is indicated as game over
-                if (spielerGameOverMap.get(derBenutzerWelcherDasFrontendGeradeAktivAufSeinemRechnerAusfuehrt)) {
-                    drawGameOver(gc);
-                    return;
-                }
-            }
-        }
-
         // draw the checkerboard pattern, update the unused contents of the canvas
         drawBackground(gc);
 
@@ -252,6 +249,19 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // check if something happened
         checkEatFood();
         checkGameOver();
+
+        // if the user of the front-end is indicated as game over
+        // draw the game over message as THE LAST STEP in the rendering pipeline
+        if (isLocalPlayerGameOver()) {
+
+            // if the player has lost, allow him to interact with the sidebar
+            backToHomeScreen.setDisable(false);
+            playerList.setDisable(false);
+            playerList.getParent().setDisable(false);
+
+            drawGameOver(gc);
+
+        }
 
     }
 
@@ -352,6 +362,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     }
 
+
     /**
      * Handles the input of the players.
      * Every time a player enters an input, a message containing this input is sent to the server
@@ -363,6 +374,12 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         // get the current input keycode of the last input
         KeyCode playerInput = event.getCode();
+
+
+        // if the local player has lost the game we dont accept any key inputs anymore
+        if (isLocalPlayerGameOver()) {
+            return;
+        }
 
         Snake currentSnake = playerSnakeMap.get(getApplication().getSpieler());
         Vector2 dir = currentSnake.currentDirection;
@@ -683,9 +700,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     // Get the player who has lost
                     Spieler lostTheGamePlayer = snakePlayerMap.get(a);
                     spielerGameOverMap.put(lostTheGamePlayer, true);
-
-                    System.out.println("Lost the Game: " + lostTheGamePlayer.getName());
-
+                    playerSnakeMap.get(lostTheGamePlayer).currentDirection = Vector2.ZERO;
 
                 }
 
@@ -700,8 +715,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                             // Get the player who has lost
                             Spieler lostTheGamePlayer = snakePlayerMap.get(a);
                             spielerGameOverMap.put(lostTheGamePlayer, true);
-
-                            System.out.println("Lost the Game: " + lostTheGamePlayer.getName());
+                            playerSnakeMap.get(lostTheGamePlayer).currentDirection = Vector2.ZERO;
 
                         }
                     }
@@ -724,6 +738,42 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
     @Override
     public void onPlayerJoinedGameMessageReceived(PlayerJoinsGameMessage msg) {
+    }
+
+    // getter & setter & utils
+
+    /**
+     * Get a player instance from within this game canvas based on the currently logged in user
+     *
+     * @return - the player for the currently logged in user
+     */
+    public Spieler getLocalPlayer() {
+        Spieler result = null;
+        for (Spieler spieler : playerSnakeMap.keySet()) {
+            if (spieler.name.equalsIgnoreCase(getApplication().getSpieler().getName())) {
+                result = spieler;
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * Indicates if the current / local player (the user who useses the front end currently) has lost the game.
+     *
+     * @return - true if the local user has lost the game
+     */
+    public boolean isLocalPlayerGameOver() {
+        boolean result = false;
+
+        Spieler current = getLocalPlayer();
+        if (current != null && spielerGameOverMap.containsKey(current)) {
+            if (spielerGameOverMap.get(current)) {
+                result = true;
+            }
+        }
+
+        return result;
     }
 
 }
