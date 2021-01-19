@@ -416,7 +416,8 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                         snake.isPredator = false;
                     } else {
                         snake.isPredator = true;
-                        //EVTL FARBE VON SCHLANGE ÄNDERN UND SOUNDEFFEKT EINBAUEN. Geschmackssache. Oder man erkennt nur anhand der nicht geänderten länge, wenn man predator ist, dass es schwieriger wird
+                        //EVTL FARBE VON SCHLANGE ÄNDERN UND SOUNDEFFEKT EINBAUEN. Geschmackssache.
+                        //Oder man erkennt nur anhand der nicht geänderten länge, wenn man predator ist, dass es schwieriger wird
                     }
                     */
 
