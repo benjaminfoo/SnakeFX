@@ -45,6 +45,9 @@ public class StompServiceController {
     @Autowired
     private SpielerRepository spielerRepository;
 
+
+
+
     @MessageMapping("/games") // "/app/games/
     @SendTo("/topic/games")
     public LobbyMessage broadcastGames(LobbyMessage lobbyMessage) {
@@ -95,6 +98,7 @@ public class StompServiceController {
         this.template.convertAndSend("/topic/games/1", "Hello");
     }
 
+
     /**
      * This method is used to communicate running-game related changes to subscribed clients.
      *
@@ -118,10 +122,16 @@ public class StompServiceController {
 
             Set<MapEntity> result = new HashSet<>();
             for (int i = 0; i < m.getRunningGame().getSpielDefinition().getMaxNumberOfPowerUps(); i++) {
-                Vector2 foodPosition = generateFoodPosition(newX, newY, Collections.emptyList());
-                MapEntity newMapEntity = new MapEntity(null, foodPosition);
+                Vector2 entityPosition = generateEntityPosition(newX, newY, Collections.emptyList());
+
+                MapEntity newMapEntity = new MapEntity(null, entityPosition);
+
+                // we generate zeros from 1 - N because
+                newMapEntity.kindOf = RNG.getInstance().generate(1, MapEntity.MAP_ENTITY_KINDS.length);
+
                 newMapEntity.drawableId = RNG.getInstance().generate(0, m.amountOfFoodDrawables);
                 result.add(newMapEntity);
+
             }
             m.setFoods(result);
 
@@ -247,7 +257,7 @@ public class StompServiceController {
      * @param snakeList
      * @return
      */
-    private Vector2 generateFoodPosition(int x, int y, List<Snake> snakeList) {
+    private Vector2 generateEntityPosition(int x, int y, List<Snake> snakeList) {
 
         boolean invalidFoodPosition = true;
 

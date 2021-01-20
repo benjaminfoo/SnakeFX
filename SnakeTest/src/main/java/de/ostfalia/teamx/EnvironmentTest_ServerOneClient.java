@@ -23,8 +23,9 @@ import org.springframework.context.ConfigurableApplicationContext;
  * The first client automatically creates a new game, while the other one connects to it via the lobby ui.
  *
  */
-public class EnvironmentTest_ServerOneClient extends Application {
+public class EnvironmentTest_ServerOneClient  {
 
+    /*
     public static void main(String[] args) {
         launch(args);
     }
@@ -83,6 +84,6 @@ public class EnvironmentTest_ServerOneClient extends Application {
 
 
     }
-
+*/
 
 }

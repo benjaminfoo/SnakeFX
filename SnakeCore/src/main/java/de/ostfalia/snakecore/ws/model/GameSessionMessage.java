@@ -38,14 +38,14 @@ public class GameSessionMessage {
     // Reference to the game in the lobby -> active player can be identified with this
     private RunningGame runningGame;
 
-    // related to game state -> should be an enum like GameState {STARTED, RUNNING, FINISHED} - TODO
+    // related to game state
     private GameState gameState;
 
     // related to player input
     private KeyCode input;
 
-    // related to food
-    public boolean foodConsumed;
+    // related to map-entities
+    public boolean entityConsumed;
     public Set<MapEntity> mapEntities;
     public int amountOfFoodDrawables;
 
@@ -75,12 +75,12 @@ public class GameSessionMessage {
     /**
      * This constructor is used to generate new food / powerup positions
      */
-    public GameSessionMessage(GameState gameState, String nameOfTheGame, Collection<Snake> snakeList, Config config, boolean foodConsumed) {
+    public GameSessionMessage(GameState gameState, String nameOfTheGame, Collection<Snake> snakeList, Config config, boolean entityConsumed) {
         this.gameState = gameState;
         this.gameId = nameOfTheGame;
         this.snakeList = snakeList;
         this.config = config;
-        this.foodConsumed = foodConsumed;
+        this.entityConsumed = entityConsumed;
     }
 
     /**
@@ -134,15 +134,15 @@ public class GameSessionMessage {
         this.input = input;
     }
 
-    public boolean isFoodConsumed() {
-        return foodConsumed;
+    public boolean isEntityConsumed() {
+        return entityConsumed;
     }
 
-    public void setFoodConsumed(boolean foodConsumed) {
-        this.foodConsumed = foodConsumed;
+    public void setEntityConsumed(boolean entityConsumed) {
+        this.entityConsumed = entityConsumed;
     }
 
-    public Set<MapEntity> getFoods() {
+    public Set<MapEntity> getEntities() {
         return mapEntities;
     }
 
@@ -171,12 +171,12 @@ public class GameSessionMessage {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GameSessionMessage that = (GameSessionMessage) o;
-        return foodConsumed == that.foodConsumed && Objects.equals(sender, that.sender) && Objects.equals(gameId, that.gameId) && Objects.equals(runningGame, that.runningGame) && gameState == that.gameState && input == that.input;
+        return entityConsumed == that.entityConsumed && Objects.equals(sender, that.sender) && Objects.equals(gameId, that.gameId) && Objects.equals(runningGame, that.runningGame) && gameState == that.gameState && input == that.input;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sender, gameId, runningGame, gameState, input, foodConsumed);
+        return Objects.hash(sender, gameId, runningGame, gameState, input, entityConsumed);
     }
 
     @Override

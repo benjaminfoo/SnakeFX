@@ -28,8 +28,8 @@ public class ApplicationConstants {
     public static final String TEST_USER_ONE_NAME = "benni";
     public static final String TEST_USER_ONE_PASS = "WiSe2020!";
 
-    public static final String TEST_USER_TWO_NAME = "Franziska";
-    public static final String TEST_USER_TWO_PASS = "Franziska_Passwort";
+    public static final String TEST_USER_TWO_NAME = "leonard";
+    public static final String TEST_USER_TWO_PASS = "WiSe2020!";
 
 
 

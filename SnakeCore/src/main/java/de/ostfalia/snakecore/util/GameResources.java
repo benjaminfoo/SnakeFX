@@ -14,4 +14,7 @@ public class GameResources {
             "food/ic_pomegranate.png"
     };
 
+    public static String POWER_UP_PREDATOR = "/powerups/snake.png";
+    public static String POWER_UP_FREEZE_OTHERS = "/powerups/snowflake.png";
+
 }

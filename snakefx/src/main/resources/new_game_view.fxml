@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.ostfalia.snakecore.controller.homescreen.NewGameController">
    <top>
       <Label text="SnakeFX - Neues Spiel" BorderPane.alignment="CENTER_LEFT">
@@ -44,7 +51,7 @@
             </VBox>
             <VBox>
                <children>
-                  <Label text="Anzahl der maximalen Powerups" />
+                  <Label text="Anzahl der maximalen Entities (Power-Ups + Food-Elemente)" />
                   <Spinner fx:id="numberOfPowerups" maxWidth="1.7976931348623157E308" />
                </children>
             </VBox>

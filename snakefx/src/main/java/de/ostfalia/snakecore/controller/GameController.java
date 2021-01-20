@@ -1,7 +1,6 @@
 package de.ostfalia.snakecore.controller;
 
 import de.ostfalia.snakecore.ApplicationConstants;
-import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.SpielstandErgebnis;
@@ -11,7 +10,7 @@ import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.game.SnakeColor;
 import de.ostfalia.snakecore.model.math.Vector2;
 import de.ostfalia.snakecore.model.rendering.CompositeShape;
-import de.ostfalia.snakecore.util.GameResources;
+import de.ostfalia.snakecore.pattern.MapEntityFactory;
 import de.ostfalia.snakecore.ws.client.StompMessageListener;
 import de.ostfalia.snakecore.ws.model.*;
 import javafx.animation.Animation;
@@ -24,7 +23,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -74,11 +72,14 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     // public double TICK_TIME_AMOUNT = 130;
     public double TICK_TIME_AMOUNT = 125;
 
-    // The current instances of food objects
+    // the factory which generate map_entity instances (mapEntity-elements, power-ups)
+    MapEntityFactory mapEntityFactory = new MapEntityFactory();
+
+    // The current instances of map-entities objects
     private Set<MapEntity> mapEntityList = new HashSet<>();
 
     // PLAYER STUFF - REFACTOR TO THE SNAKE CLASS
-    private int score = 0;
+    private Map<Spieler, Integer> playerScoreMap = new HashMap<>();
     // PLAYER STUFF
 
     // a map of players and there corresponding snakes - snake => player
@@ -158,6 +159,9 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
             // snakeShapeMap.put(playerSnake, new CompositeShape());
             spielerGameOverMap.put(spieler, false);
+
+            // initialize the players and their initial scores
+            playerScoreMap.put(spieler, 0);
         }
 
         // setup the player view
@@ -201,9 +205,9 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // update the title
         setTitle(ApplicationConstants.TITLE_CURRENT_GAME);
 
-        // generate the initial food position
-        if (gameSessionMessage.getFoods() != null) {
-            spawnFood(gameSessionMessage.getFoods());
+        // generate the initial mapEntity position
+        if (gameSessionMessage.getEntities() != null) {
+            spawnMapEntities(gameSessionMessage.getEntities());
         }
 
         // register the stompClient to this instance of a gameController
@@ -227,7 +231,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
-
     }
 
     /**
@@ -249,13 +252,13 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         updatePositions();
 
-        // visualize the game with its players (the snakes), the food, the score, etc.
-        drawFood(gc);
+        // visualize the game with its players (the snakes), the mapEntity, the score, etc.
+        drawEntity(gc);
         drawSnake(gc);
         drawScore(gc);
 
         // check if something happened
-        checkEatFood();
+        checkConsumeEntity();
         checkGameOver();
 
         // if the user of the front-end is indicated as game over
@@ -291,7 +294,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
             List<SpielstandErgebnis> loserResults = new LinkedList<>();
             loser.forEach(noob -> {
-                SpielstandErgebnis noobResult = new SpielstandErgebnis(score, noob);
+                SpielstandErgebnis noobResult = new SpielstandErgebnis(playerScoreMap.get(noob), noob);
                 loserResults.add(noobResult);
             });
 
@@ -321,12 +324,12 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
             List<SpielstandErgebnis> loserResults = new LinkedList<>();
             loser.forEach(noob -> {
-                SpielstandErgebnis noobResult = new SpielstandErgebnis(score, noob);
+                SpielstandErgebnis noobResult = new SpielstandErgebnis(playerScoreMap.get(noob), noob);
                 loserResults.add(noobResult);
             });
 
             winnerLoserMessage.loserResults = loserResults;
-            winnerLoserMessage.winnerResult = new SpielstandErgebnis(score, winner);
+            winnerLoserMessage.winnerResult = new SpielstandErgebnis(playerScoreMap.get(winner), winner);
 
             winnerLoserMessage.setGameState(GameSessionMessage.GameState.FINISHING);
 
@@ -404,9 +407,9 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // handle events while the game is actively running
         if (msg.getGameState() == GameSessionMessage.GameState.RUNNING) {
 
-            // spawn a food instance with a valid position calculated by the server
-            if (msg.getFoods() != null) {
-                spawnFood(msg.getFoods());
+            // spawn a mapEntity instance with a valid position calculated by the server
+            if (msg.getEntities() != null) {
+                spawnMapEntities(msg.getEntities());
             }
 
             // if the player is not null
@@ -492,11 +495,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
 
     /**
-     * Check if a snake has eat some food.
+     * Check if a snake has consumend some mapEntity.
      */
-    private void checkEatFood() {
+    private void checkConsumeEntity() {
 
-        // we'll have to collect the food which got to be removed after looping or else well get a concurrentModificationException
+        // we'll have to collect the mapEntity which got to be removed after looping or else well get a concurrentModificationException
         boolean isFrameRemoval = false;
         MapEntity toRemove = null;
 
@@ -507,13 +510,13 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             int sxcord = snake.head.getX();
             int sycord = snake.head.getY();
 
-            // iterate over every food instance
+            // iterate over every mapEntity instance
             for (MapEntity mapEntity : mapEntityList) {
 
-                // if the head matches the position of a food
+                // if the head matches the position of a mapEntity
                 if (sxcord == mapEntity.getPosition().x && sycord == mapEntity.getPosition().y) {
 
-                    // mark the corresponding food to be removed from the game board
+                    // mark the corresponding mapEntity to be removed from the game board
                     isFrameRemoval = true;
                     toRemove = mapEntity;
 
@@ -521,7 +524,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     snake.addBodyElement();
 
                     /*
-                    // deciding effect of food based on randomness
+                    // deciding effect of mapEntity based on randomness
                     Random ran = new Random();
                     int x = 1 + ran.nextInt(10);
 
@@ -535,8 +538,6 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     }
                     */
 
-                    // play pickup sound when player collects some food.
-                    getApplication().getSoundManager().playPickup2();
 
                 }
             }
@@ -545,14 +546,14 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         /*
 
-        // manage removal of food
-        // if a food has been marked for removal
+        // manage removal of mapEntity
+        // if a mapEntity has been marked for removal
         if (isFrameRemoval) {
 
-            // remove the current food - by adding it to the removal collection
-            foodList.remove(toRemove);
+            // remove the current mapEntity - by adding it to the removal collection
+            mapEntityList.remove(toRemove);
 
-            // send a gameSessionMessage which indicates that a food has been removed
+            // send a gameSessionMessage which indicates that a mapEntity has been removed
             GameSessionMessage gameInputMessage = new GameSessionMessage(
                     GameSessionMessage.GameState.RUNNING,
                     runningGame.getSpielDefinition().getNameOfTheGame(),
@@ -563,15 +564,15 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             gameInputMessage.setRunningGame(runningGame);
             gameInputMessage.setInput(null);
 
-            // before sending - we nullify the drawables of the food
+            // before sending - we nullify the drawables of the mapEntity
             // else sending a message will result in a marshalling exception
-            for (Food food : foodList) {
-                food.drawable = null;
+            for (mapEntity mapEntity : mapEntityList) {
+                mapEntity.drawable = null;
             }
 
-            // send all food positions to the backend
-            gameInputMessage.setFoods(foodList);
-            gameInputMessage.amountOfFoodDrawables = GameResources.FOOD_IMAGE_PATHS.length;
+            // send all mapEntity positions to the backend
+            gameInputMessage.setmapEntitys(mapEntityList);
+            gameInputMessage.amountOfmapEntityDrawables = GameResources.mapEntity_IMAGE_PATHS.length;
 
 
             // send the message
@@ -670,29 +671,79 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     }
 
     /**
-     * Generate food for the players within the map.
-     * - Dont generate a food below a players head
-     * - Dont generate a food below a players body
+     * Generate entity for the players within the map.
+     * - Dont generate a entity below a players head
+     * - Dont generate a entity below a players body
      */
-    private void spawnFood(Set<MapEntity> foodsToSpawn) {
+    private void spawnMapEntities(Set<MapEntity> entitiesToSpawn) {
 
-        // remove any food on the gamefield
+        // remove any entity on the gamefield
         mapEntityList.clear();
 
-        // System.out.println("Generating food: " + foodsToSpawn.size());
-        for (MapEntity mapEntity : foodsToSpawn) {
-            mapEntity.drawable = new Image(GameResources.FOOD_IMAGE_PATHS[mapEntity.drawableId]); // TODO - Update food drawable id generation
-            mapEntityList.add(mapEntity);
+        // callbacks cant get serialized, so we have to map them to some kind of ID
+        // the ID gets generated within the backend's StompServiceController.java instance
+        for (MapEntity basicMapEntityFromBackend : entitiesToSpawn) {
+
+            MapEntity initializedEntity = mapEntityFactory.create(basicMapEntityFromBackend.kindOf, basicMapEntityFromBackend.drawableId, basicMapEntityFromBackend.position);
+
+            if(initializedEntity.kindOf == MapEntity.MAP_ENTITY_KIND_FOOD)
+            {
+                initializedEntity.mapEntityAction = (spieler, snake, thisRunningGame) -> {
+
+                    // if the player consumed a predator entity, deactivate this effect
+                    snake.isPredator = false;
+
+                    playerScoreMap.put(spieler, playerScoreMap.get(spieler) + 5);
+                    // TODO: maybe different kinds of mapEntity get different amounts of scores ?
+
+                    // play pickup sound when player collects some mapEntity.
+                    getApplication().getSoundManager().playPickup2();
+                };
+            }
+
+            if(initializedEntity.kindOf == MapEntity.MAP_ENTITY_KIND_PREDATOR_ENTITY)
+            {
+                initializedEntity.mapEntityAction = (spieler, snake, thisRunningGame) -> {
+                    snake.isPredator = true;
+
+                    // play sound when player collects predator entity
+                    getApplication().getSoundManager().playPowerup1();
+                };
+            }
+
+            if(initializedEntity.kindOf == MapEntity.MAP_ENTITY_KIND_FREEZE_OTHER_PLAYERS_ENTITY){
+                initializedEntity.mapEntityAction = (spieler, snake, thisRunningGame) -> {
+
+                    // get a list of all players without the player which collected this powerup
+                    List<Spieler> playersWithoutTheLocalPlayer = playerSnakeMap.keySet().stream()
+                            .filter(playerFromStream -> playerFromStream != getLocalPlayer()).collect(Collectors.toList());
+
+                    // iterate over each player
+                    for (Spieler thePlayerWhichIsNotTheExecutingOne : playersWithoutTheLocalPlayer) {
+
+                        // for each player - set the direction vector to zero so he doesnt move
+                        // TODO: @leonard - make this time dependant (like the player cant move for 10 ticks or something like that)
+                        playerSnakeMap.get(thePlayerWhichIsNotTheExecutingOne).currentDirection = Vector2.ZERO;
+                    }
+
+                    getApplication().getSoundManager().playPowerup2();
+
+                };
+            }
+
+            mapEntityList.add(initializedEntity);
+
         }
+
+        System.out.print("");
 
     }
 
     /**
-     * Draw the food, which has been generated bevor
-     *
+     * Draw the entity, which has been generated before
      * @param gc
      */
-    private void drawFood(GraphicsContext gc) {
+    private void drawEntity(GraphicsContext gc) {
         for (MapEntity mapEntity : mapEntityList) {
             gc.drawImage(
                     mapEntity.drawable,
@@ -756,7 +807,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     private void drawScore(GraphicsContext gc) {
         gc.setFill(Color.WHITE);
         gc.setFont(new Font("", 35));
-        gc.fillText("Score: " + score, 10, 35);
+        gc.fillText("Score: " + getLocalPlayerScore(), 10, 35);
     }
 
     /**
@@ -847,6 +898,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         }
 
         return result;
+    }
+
+    // returns the score of an player
+    public Integer getLocalPlayerScore(){
+        return playerScoreMap.get(getLocalPlayer());
     }
 
 }

@@ -1,16 +1,5 @@
 package de.ostfalia.teamx;
 
-import de.ostfalia.snakecore.AppSnakeFX;
-import de.ostfalia.snakecore.ApplicationConstants;
-import de.ostfalia.snakecore.SnakeServer.SnakeServerApplication;
-import de.ostfalia.snakecore.controller.homescreen.HomescreenController;
-import de.ostfalia.snakecore.controller.homescreen.NewGameController;
-import de.ostfalia.snakecore.controller.login.LoginController;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.stage.Stage;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  *
@@ -23,8 +12,9 @@ import org.springframework.context.ConfigurableApplicationContext;
  * The first client automatically creates a new game, while the other one connects to it via the lobby ui.
  *
  */
-public class EnvironmentTest_ServerTwoClients extends Application {
+public class EnvironmentTest_ServerTwoClients {
 
+    /*
     public static void main(String[] args) {
         launch(args);
     }
@@ -133,6 +123,8 @@ public class EnvironmentTest_ServerTwoClients extends Application {
         });
 
     }
+
+    */
 
 
 }
