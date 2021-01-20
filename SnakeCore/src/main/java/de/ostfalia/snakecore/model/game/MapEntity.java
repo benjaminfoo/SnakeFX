@@ -1,5 +1,6 @@
 package de.ostfalia.snakecore.model.game;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.ostfalia.snakecore.model.math.Vector2;
 import javafx.scene.image  .Image;
 
@@ -8,21 +9,29 @@ import java.util.Objects;
 /**
  * @author Benjamin Wulfert
  *
- * Model class for a food.
+ * Model class for a MapEntity.
  * Contains a image which gets drawn on the screen and a position in order to determine its position.
  */
+public class MapEntity {
 
-public class Food {
-
+    // the bitmap which gets drawn on the game-canvas
     public Image drawable;
 
+    // the id of the bitmap which gets loaded (and set by the backend)
     public int drawableId;
+
+    // the position where the bitmap gets drawn on the canvas
     public Vector2 position;
 
-    public Food() {
+    @JsonIgnore
+    public transient MapEntityAction mapEntityAction = (spieler, snake, runningGame) -> {
+
+    };
+
+    public MapEntity() {
     }
 
-    public Food(Image drawable, Vector2 position) {
+    public MapEntity(Image drawable, Vector2 position) {
         this.drawable = drawable;
         this.position = position;
     }
@@ -47,8 +56,8 @@ public class Food {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Food food = (Food) o;
-        return drawableId == food.drawableId && Objects.equals(position, food.position);
+        MapEntity mapEntity = (MapEntity) o;
+        return drawableId == mapEntity.drawableId && Objects.equals(position, mapEntity.position);
     }
 
     @Override

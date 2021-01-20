@@ -6,7 +6,7 @@ import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.Spielstand;
 import de.ostfalia.snakecore.model.SpielstandErgebnis;
-import de.ostfalia.snakecore.model.game.Food;
+import de.ostfalia.snakecore.model.game.MapEntity;
 import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.math.Vector2;
 import de.ostfalia.snakecore.util.RNG;
@@ -116,12 +116,12 @@ public class StompServiceController {
             int newX = m.getRunningGame().getSpielDefinition().getMapWidth();
             int newY = m.getRunningGame().getSpielDefinition().getMapHeight();
 
-            Set<Food> result = new HashSet<>();
+            Set<MapEntity> result = new HashSet<>();
             for (int i = 0; i < m.getRunningGame().getSpielDefinition().getMaxNumberOfPowerUps(); i++) {
                 Vector2 foodPosition = generateFoodPosition(newX, newY, Collections.emptyList());
-                Food newFood = new Food(null, foodPosition);
-                newFood.drawableId = RNG.getInstance().generate(0, m.amountOfFoodDrawables);
-                result.add(newFood);
+                MapEntity newMapEntity = new MapEntity(null, foodPosition);
+                newMapEntity.drawableId = RNG.getInstance().generate(0, m.amountOfFoodDrawables);
+                result.add(newMapEntity);
             }
             m.setFoods(result);
 

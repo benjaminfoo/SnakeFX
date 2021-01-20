@@ -6,7 +6,7 @@ import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.SpielstandErgebnis;
 import de.ostfalia.snakecore.model.game.Config;
-import de.ostfalia.snakecore.model.game.Food;
+import de.ostfalia.snakecore.model.game.MapEntity;
 import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.game.SnakeColor;
 import de.ostfalia.snakecore.model.math.Vector2;
@@ -75,7 +75,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
     public double TICK_TIME_AMOUNT = 125;
 
     // The current instances of food objects
-    private Set<Food> foodList = new HashSet<>();
+    private Set<MapEntity> mapEntityList = new HashSet<>();
 
     // PLAYER STUFF - REFACTOR TO THE SNAKE CLASS
     private int score = 0;
@@ -497,7 +497,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
         // we'll have to collect the food which got to be removed after looping or else well get a concurrentModificationException
         boolean isFrameRemoval = false;
-        Food toRemove = null;
+        MapEntity toRemove = null;
 
         // iterate over every snake within the game
         for (Snake snake : playerSnakeMap.values()) {
@@ -507,14 +507,14 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             int sycord = snake.head.getY();
 
             // iterate over every food instance
-            for (Food food : foodList) {
+            for (MapEntity mapEntity : mapEntityList) {
 
                 // if the head matches the position of a food
-                if (sxcord == food.getPosition().x && sycord == food.getPosition().y) {
+                if (sxcord == mapEntity.getPosition().x && sycord == mapEntity.getPosition().y) {
 
                     // mark the corresponding food to be removed from the game board
                     isFrameRemoval = true;
-                    toRemove = food;
+                    toRemove = mapEntity;
 
                     // make the corresponding snake of the player one element longer
                     snake.addBodyElement();
@@ -673,15 +673,15 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      * - Dont generate a food below a players head
      * - Dont generate a food below a players body
      */
-    private void spawnFood(Set<Food> foodsToSpawn) {
+    private void spawnFood(Set<MapEntity> foodsToSpawn) {
 
         // remove any food on the gamefield
-        foodList.clear();
+        mapEntityList.clear();
 
         // System.out.println("Generating food: " + foodsToSpawn.size());
-        for (Food food : foodsToSpawn) {
-            food.drawable = new Image(GameResources.FOOD_IMAGE_PATHS[food.drawableId]); // TODO - Update food drawable id generation
-            foodList.add(food);
+        for (MapEntity mapEntity : foodsToSpawn) {
+            mapEntity.drawable = new Image(GameResources.FOOD_IMAGE_PATHS[mapEntity.drawableId]); // TODO - Update food drawable id generation
+            mapEntityList.add(mapEntity);
         }
 
     }
@@ -692,11 +692,11 @@ public class GameController extends BaseController implements EventHandler<KeyEv
      * @param gc
      */
     private void drawFood(GraphicsContext gc) {
-        for (Food food : foodList) {
+        for (MapEntity mapEntity : mapEntityList) {
             gc.drawImage(
-                    food.drawable,
-                    food.getPosition().x * config.tileSize,
-                    food.getPosition().y * config.tileSize,
+                    mapEntity.drawable,
+                    mapEntity.getPosition().x * config.tileSize,
+                    mapEntity.getPosition().y * config.tileSize,
                     config.tileSize,
                     config.tileSize
             );

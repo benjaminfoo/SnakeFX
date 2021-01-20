@@ -4,7 +4,7 @@ import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.SpielstandErgebnis;
 import de.ostfalia.snakecore.model.game.Config;
-import de.ostfalia.snakecore.model.game.Food;
+import de.ostfalia.snakecore.model.game.MapEntity;
 import de.ostfalia.snakecore.model.game.Snake;
 import javafx.scene.input.KeyCode;
 
@@ -46,7 +46,7 @@ public class GameSessionMessage {
 
     // related to food
     public boolean foodConsumed;
-    public Set<Food> foods;
+    public Set<MapEntity> mapEntities;
     public int amountOfFoodDrawables;
 
     public Collection<Snake> snakeList;
@@ -142,12 +142,12 @@ public class GameSessionMessage {
         this.foodConsumed = foodConsumed;
     }
 
-    public Set<Food> getFoods() {
-        return foods;
+    public Set<MapEntity> getFoods() {
+        return mapEntities;
     }
 
-    public void setFoods(Set<Food> foods) {
-        this.foods = foods;
+    public void setFoods(Set<MapEntity> mapEntities) {
+        this.mapEntities = mapEntities;
     }
 
     public Collection<Snake> getSnakeList() {
