@@ -102,6 +102,7 @@ public class AppSnakeFX extends BaseApplication {
                 alert.showAndWait().ifPresent((btnType) -> {
                     if (btnType == ButtonType.CANCEL){
                         alert.close();
+                        we.consume();
                         // Schließt auch bei Abbrechen - ungewiss warum
                     }
                     if (btnType == ButtonType.OK) {
