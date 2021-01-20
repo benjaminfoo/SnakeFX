@@ -38,6 +38,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/GameController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/controller/homescreen/NewGameController.java">
           <value>
             <set />
@@ -49,6 +54,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/snakefx/src/main/java/de/ostfalia/snakecore/view/RunningGameCell.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/snakefx/src/main/resources/new_game_view.fxml">
           <value>
             <set />
           </value>
