@@ -1,4 +1,4 @@
-package de.ostfalia.snakecore.snakorino.controller;
+package de.ostfalia.snakecore.controller;
 
 import de.ostfalia.snakecore.ApplicationConstants;
 import de.ostfalia.snakecore.controller.BaseController;
@@ -6,7 +6,7 @@ import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.SpielstandErgebnis;
 import de.ostfalia.snakecore.model.game.Config;
-import de.ostfalia.snakecore.model.game.MapEntity;
+import de.ostfalia.snakecore.pattern.MapEntity;
 import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.game.SnakeColor;
 import de.ostfalia.snakecore.model.math.Vector2;
@@ -116,13 +116,14 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         // before the introduction of the multiplayer mechanism the init. happened here
         // now it takes place in GameController.launchGame()
 
-        // initialize a map which maps a keycode to an direction-vector
+        // initialize the map with keycode to direction-vector entries
         inputDirectionMap.put(KeyCode.SPACE, Vector2.ZERO);
         inputDirectionMap.put(KeyCode.UP, Vector2.UP);
         inputDirectionMap.put(KeyCode.DOWN, Vector2.DOWN);
         inputDirectionMap.put(KeyCode.RIGHT, Vector2.RIGHT);
         inputDirectionMap.put(KeyCode.LEFT, Vector2.LEFT);
 
+        // initialize the map with alternative keycode to direction-vector entries
         inputDirectionMap.put(KeyCode.R, Vector2.ZERO);
         inputDirectionMap.put(KeyCode.W, Vector2.UP);
         inputDirectionMap.put(KeyCode.S, Vector2.DOWN);
@@ -141,7 +142,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
         int numPlayers = runningGame.getActiveClients().size();
 
         // iterate over the n players - create an instance of a snake and add it to the player <-> snake map
-        Color[] playerColors = {Color.PURPLE, Color.BLUE, Color.RED, Color.GREEN};
+        Color[] playerColors = {Color.PURPLE, Color.BLUE, Color.RED, Color.GREEN, Color.CYAN, Color.AQUA, Color.AQUAMARINE};
         for (int i = 0; i < numPlayers; i++) {
 
             // get a reference to a player

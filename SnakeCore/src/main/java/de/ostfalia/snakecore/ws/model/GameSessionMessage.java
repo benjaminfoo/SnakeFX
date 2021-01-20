@@ -4,7 +4,7 @@ import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.SpielstandErgebnis;
 import de.ostfalia.snakecore.model.game.Config;
-import de.ostfalia.snakecore.model.game.MapEntity;
+import de.ostfalia.snakecore.pattern.MapEntity;
 import de.ostfalia.snakecore.model.game.Snake;
 import javafx.scene.input.KeyCode;
 

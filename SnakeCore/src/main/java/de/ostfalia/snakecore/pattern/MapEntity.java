@@ -1,4 +1,4 @@
-package de.ostfalia.snakecore.model.game;
+package de.ostfalia.snakecore.pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.ostfalia.snakecore.model.math.Vector2;
@@ -23,9 +23,10 @@ public class MapEntity {
     // the position where the bitmap gets drawn on the canvas
     public Vector2 position;
 
+    // a callback which is used to execute some kind of action within the snake-game
     @JsonIgnore
     public transient MapEntityAction mapEntityAction = (spieler, snake, runningGame) -> {
-
+        System.out.println("Default action - nothing more is done");
     };
 
     public MapEntity() {

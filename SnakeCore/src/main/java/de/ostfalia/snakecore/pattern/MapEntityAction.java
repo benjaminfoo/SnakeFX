@@ -1,7 +1,8 @@
-package de.ostfalia.snakecore.model.game;
+package de.ostfalia.snakecore.pattern;
 
 import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
+import de.ostfalia.snakecore.model.game.Snake;
 
 /**
  * @author Benjamin Wulfert

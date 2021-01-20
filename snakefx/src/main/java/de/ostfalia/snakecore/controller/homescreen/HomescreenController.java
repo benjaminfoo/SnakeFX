@@ -6,7 +6,7 @@ import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.controller.Scenes;
 import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
-import de.ostfalia.snakecore.snakorino.controller.GameController;
+import de.ostfalia.snakecore.controller.GameController;
 import de.ostfalia.snakecore.task.GetGamesTask;
 import de.ostfalia.snakecore.task.GetPlayerTask;
 import de.ostfalia.snakecore.util.GameResources;

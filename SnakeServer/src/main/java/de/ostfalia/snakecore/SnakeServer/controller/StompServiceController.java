@@ -6,7 +6,7 @@ import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.Spielstand;
 import de.ostfalia.snakecore.model.SpielstandErgebnis;
-import de.ostfalia.snakecore.model.game.MapEntity;
+import de.ostfalia.snakecore.pattern.MapEntity;
 import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.math.Vector2;
 import de.ostfalia.snakecore.util.RNG;
