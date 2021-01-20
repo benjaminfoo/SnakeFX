@@ -62,7 +62,7 @@ public class NewGameController extends BaseController {
     /**
      * Create a new game based on the inputs from the user interface
      */
-    private void executeCreateNewGame() {
+    private void executeCreateNewGame(/*int hoehe, int breite*/) {
 
         String newName = nameOfTheGame.getText().trim();
         int numberOfPlayer = numberOfPlayers.getValue();
@@ -73,6 +73,10 @@ public class NewGameController extends BaseController {
         // TODO: maybe put a regex on the textfields or use some other control
         int mapSizeX = Integer.parseInt(mapWidth.getText());
         int mapSizeY = Integer.parseInt(mapHeight.getText());
+
+        //
+        //int mapSizeX = breite;
+        //int mapSizeY = hoehe;
 
         SpielDefinition spielDefinition = new SpielDefinition();
         spielDefinition.setNameOfTheGame(newName);
