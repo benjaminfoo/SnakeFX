@@ -5,17 +5,22 @@ import de.ostfalia.snakecore.controller.BaseController;
 import de.ostfalia.snakecore.controller.Scenes;
 import de.ostfalia.snakecore.controller.login.LoginController;
 import de.ostfalia.snakecore.util.BannerPrinter;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
 
 /**
  * @author Benjamin Wulfert
+ * @author Leonard Reidel
  *
  * The entry point of the javafx-application.
  * Diese Klasse ausführen um den JavaFX-Client zu starten.
@@ -59,7 +64,7 @@ public class AppSnakeFX extends BaseApplication {
         Scene current = window.getScene();
         double width = 800;
         double height = 600;
-        if(current != null){
+        if (current != null) {
             width = window.getScene().getWidth();
             height = window.getScene().getHeight();
         }
@@ -74,7 +79,7 @@ public class AppSnakeFX extends BaseApplication {
 
         // if the user presses F12 on his keyboard, the debug scene-viewer gets called and displayed
         window.getScene().setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.F12){
+            if (event.getCode() == KeyCode.F12) {
                 baseController.showLayoutInNewWindow(Scenes.VIEW_DEBUG, ApplicationConstants.TITLE_DEBUG_CHOOSER);
             }
         });
@@ -85,7 +90,30 @@ public class AppSnakeFX extends BaseApplication {
 
         String musicFile = "StayTheNight.mp3";     // For example
 
+
+        window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent we) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Abmelden");
+                alert.setHeaderText("Möchten Sie sich wirklich abmelden?");
+                alert.setContentText("Ihre Sessions sowie alle laufenden Verbindungen werden beendet.");
+
+                alert.showAndWait().ifPresent((btnType) -> {
+                    if (btnType == ButtonType.CANCEL){
+                        alert.close();
+                        // Schließt auch bei Abbrechen - ungewiss warum
+                    }
+                    if (btnType == ButtonType.OK) {
+                        window.close();
+                        // TODO - disconnect via stomp
+                        //this.getStompClient().sendLogoutMessage(getApplication().getSpieler());
+
+                        // TODO - eventually cleanup everything
+                    }
+
+                });
+            }
+        });
     }
-
-
 }
