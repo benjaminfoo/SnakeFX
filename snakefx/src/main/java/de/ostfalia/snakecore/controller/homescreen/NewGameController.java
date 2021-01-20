@@ -40,7 +40,7 @@ public class NewGameController extends BaseController {
         super.initialize();
 
         numberOfPlayers.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 10, 1));
-        numberOfPowerups.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50, 3));
+        numberOfPowerups.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 50, 5));
         ruleSet.setItems(FXCollections.observableArrayList(new Spielregel("Last Snake standing - letzter Spieler gewinnt.")));
         ruleSet.getSelectionModel().select(0);
 

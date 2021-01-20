@@ -5,11 +5,11 @@ import de.ostfalia.snakecore.model.RunningGame;
 import de.ostfalia.snakecore.model.Spieler;
 import de.ostfalia.snakecore.model.SpielstandErgebnis;
 import de.ostfalia.snakecore.model.game.Config;
-import de.ostfalia.snakecore.pattern.MapEntity;
 import de.ostfalia.snakecore.model.game.Snake;
 import de.ostfalia.snakecore.model.game.SnakeColor;
 import de.ostfalia.snakecore.model.math.Vector2;
 import de.ostfalia.snakecore.model.rendering.CompositeShape;
+import de.ostfalia.snakecore.pattern.MapEntity;
 import de.ostfalia.snakecore.pattern.MapEntityFactory;
 import de.ostfalia.snakecore.ws.client.StompMessageListener;
 import de.ostfalia.snakecore.ws.model.*;
@@ -520,8 +520,8 @@ public class GameController extends BaseController implements EventHandler<KeyEv
                     isFrameRemoval = true;
                     toRemove = mapEntity;
 
-                    // make the corresponding snake of the player one element longer
-                    snake.addBodyElement();
+                    // call the callback of the map entity
+                    mapEntity.mapEntityAction.onExecute(snakePlayerMap.get(snake), snake, this.runningGame);
 
                     /*
                     // deciding effect of mapEntity based on randomness
@@ -686,12 +686,16 @@ public class GameController extends BaseController implements EventHandler<KeyEv
 
             MapEntity initializedEntity = mapEntityFactory.create(basicMapEntityFromBackend.kindOf, basicMapEntityFromBackend.drawableId, basicMapEntityFromBackend.position);
 
+
             if(initializedEntity.kindOf == MapEntity.MAP_ENTITY_KIND_FOOD)
             {
                 initializedEntity.mapEntityAction = (spieler, snake, thisRunningGame) -> {
 
                     // if the player consumed a predator entity, deactivate this effect
                     snake.isPredator = false;
+
+                    // make the snake longer
+                    snake.addBodyElement();
 
                     playerScoreMap.put(spieler, playerScoreMap.get(spieler) + 5);
                     // TODO: maybe different kinds of mapEntity get different amounts of scores ?
@@ -732,6 +736,7 @@ public class GameController extends BaseController implements EventHandler<KeyEv
             }
 
             mapEntityList.add(initializedEntity);
+
 
         }
 

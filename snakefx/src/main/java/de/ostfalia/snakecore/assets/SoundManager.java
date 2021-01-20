@@ -22,16 +22,17 @@ public class SoundManager {
 
     public SoundManager(){
         soundFileNames = new String[]{
-            "explosion.wav",
-            "hit_1.wav",
-            "hit_2.wav",
-            "pickup.wav",
-            "pickup_2.wav",
-            "powerup_1.wav",
-            "powerup_2.wav",
-            "powerup_3.wav",
-            "select_1.wav",
-            "select_2.wav",
+                "explosion.wav",
+                "hit_1.wav",
+                "hit_2.wav",
+                "pickup.wav",
+                "pickup_2.wav",
+                "powerup_1.wav",
+                "powerup_2.wav",
+                "powerup_3.wav",
+                "select_1.wav",
+                "select_2.wav",
+                "move.wav",
         };
 
         audioClipCache = new HashMap<>();
@@ -73,6 +74,13 @@ public class SoundManager {
     public void playPowerup2(){ audioClipCache.get("powerup_2.wav").play(); }
     public void playPowerup3(){ audioClipCache.get("powerup_3.wav").play(); }
     public void playSelect1(){ audioClipCache.get("select_1.wav").play(); }
-    public void playSelect2(){ audioClipCache.get("select_2.wav").play(); }
+
+    public void playSelect2() {
+        audioClipCache.get("select_2.wav").play();
+    }
+
+    public void playMove() {
+        audioClipCache.get("move.wav").play();
+    }
 
 }

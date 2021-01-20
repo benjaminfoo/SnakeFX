@@ -37,11 +37,14 @@ public class MapEntityFactory {
             result.drawable = new Image(GameResources.POWER_UP_PREDATOR);
         }
 
-        if(kindOfEntity == MapEntity.MAP_ENTITY_KIND_FREEZE_OTHER_PLAYERS_ENTITY ){ // = 3
+        if (kindOfEntity == MapEntity.MAP_ENTITY_KIND_FREEZE_OTHER_PLAYERS_ENTITY) { // = 3
             result = new FreezeOtherPlayersEntity();
             result.position = preGeneratedPositionVector;
             result.drawable = new Image(GameResources.POWER_UP_FREEZE_OTHERS);
         }
+
+        // pass this value to be able to reacreate the callbacks on all servers
+        result.kindOf = kindOfEntity;
 
         return result;
     }
